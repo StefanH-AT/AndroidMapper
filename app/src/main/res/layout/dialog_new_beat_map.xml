@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/songName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="Song name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/songSubName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="Song Sub Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/songAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="Song Author"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/levelAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="Map Author"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/bpm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="BPM"
+        android:inputType="number" />
+
+</LinearLayout>
