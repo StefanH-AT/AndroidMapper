@@ -2,6 +2,7 @@ package at.tewan.androidmapper;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -56,7 +56,13 @@ public class MainmenuActivity extends AppCompatActivity {
         beatmapList.setAdapter(new BeatmapListAdapter(getApplicationContext(), beatmaps));
 
         beatmapList.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(getApplicationContext(), BeatmapPropertiesActivity.class);
 
+            Log.i(LOG_TAG, "A: " + beatmaps.get(position).getSongName().hashCode());
+
+            intent.putExtra("beatmap_hash", beatmaps.get(position).getSongName().hashCode() + "");
+
+            startActivity(intent);
         });
 
         beatmapList.setOnItemLongClickListener((parent, view, position, id) -> {
@@ -94,10 +100,10 @@ public class MainmenuActivity extends AppCompatActivity {
 
         Dialog dialog = dialogBuilder.show();
 
-        EditText songName = dialog.findViewById(R.id.songName);
-        EditText songAuthor = dialog.findViewById(R.id.songAuthor);
-        EditText levelAuthor = dialog.findViewById(R.id.levelAuthor);
-        EditText bpm = dialog.findViewById(R.id.bpm);
+        EditText songName = dialog.findViewById(R.id.inputSongName);
+        EditText songAuthor = dialog.findViewById(R.id.inputSongAuthor);
+        EditText levelAuthor = dialog.findViewById(R.id.inputLevelAuthor);
+        EditText bpm = dialog.findViewById(R.id.inputbpm);
         Button createButton = dialog.findViewById(R.id.create);
 
 

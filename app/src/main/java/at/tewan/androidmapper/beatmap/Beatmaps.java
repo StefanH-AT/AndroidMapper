@@ -176,6 +176,27 @@ public class Beatmaps {
         return true;
     }
 
+    public static Info readStoredBeatmap(String container) {
+        File beatmapInfo = new File(beatmapsRoot, container + System.getProperty("file.separator") + BEATMAP_INFO_FILE);
+
+        if(beatmapInfo.exists()) {
+
+            try {
+
+                FileReader reader = new FileReader(beatmapInfo);
+
+                return gson.fromJson(reader, Info.class);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+        } else {
+            return null;
+        }
+    }
+
     public static ArrayList<Info> readStoredBeatmapInfos(Context context) {
         File[] beatmapContainers = beatmapsRoot.listFiles(File::isDirectory);
 
