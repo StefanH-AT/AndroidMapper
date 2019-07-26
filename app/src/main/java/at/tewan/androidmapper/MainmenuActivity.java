@@ -26,6 +26,8 @@ public class MainmenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
 
+
+
         Beatmaps.init();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
