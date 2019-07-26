@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
 
     <EditText
         android:id="@+id/songName"
@@ -10,16 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="Song name"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/songSubName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:hint="Song Sub Name"
+        android:hint="@string/songName"
         android:inputType="textPersonName" />
 
     <EditText
@@ -28,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="Song Author"
+        android:hint="@string/songAuthor"
         android:inputType="textPersonName" />
 
     <EditText
@@ -37,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="Map Author"
+        android:hint="@string/levelAuthor"
         android:inputType="textPersonName" />
 
     <EditText
@@ -46,7 +39,15 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="BPM"
+        android:hint="@string/bpm"
         android:inputType="number" />
+
+    <Button
+        android:id="@+id/create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:enabled="false"
+        android:text="@string/create" />
 
 </LinearLayout>

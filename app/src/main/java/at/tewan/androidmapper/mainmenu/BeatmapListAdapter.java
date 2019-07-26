@@ -1,16 +1,19 @@
 package at.tewan.androidmapper.mainmenu;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import at.tewan.androidmapper.R;
+import at.tewan.androidmapper.beatmap.Beatmaps;
 import at.tewan.androidmapper.beatmap.info.Info;
 
 /**
@@ -33,6 +36,8 @@ public class BeatmapListAdapter extends BaseAdapter {
         if(convertView == null)
             convertView = LayoutInflater.from(context).inflate(R.layout.adapter_beatmap, parent, false);
 
+
+
         Info beatmap = getItem(position);
 
         ImageView icon = convertView.findViewById(R.id.icon);
@@ -40,9 +45,6 @@ public class BeatmapListAdapter extends BaseAdapter {
 
         icon.setImageResource(R.drawable.android_cat_32);
         title.setText(beatmap.getSongName());
-
-
-
 
         return convertView;
     }

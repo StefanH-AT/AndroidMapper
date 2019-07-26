@@ -32,9 +32,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation files('libs/processing-core.jar')
-    implementation files('libs/vr.jar')
-    implementation files('libs/sdk-common-1.170.0.jar')
-    implementation files('libs/sdk-base-1.170.0.jar')
-    implementation files('libs/sdk-audio-1.170.0.jar')
+    compileOnly files('libs/processing-core.jar')
+    compileOnly files('libs/vr.jar')
+    compileOnly files('libs/sdk-common-1.170.0.jar')
+    compileOnly files('libs/sdk-base-1.170.0.jar')
+    compileOnly files('libs/sdk-audio-1.170.0.jar')
+    compileOnly files('libs/commons-io-2.6.jar')
 }

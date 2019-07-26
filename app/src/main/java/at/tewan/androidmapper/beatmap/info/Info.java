@@ -13,13 +13,13 @@ public class Info {
 
     private String _version = "2.0";
     private String _songName;
-    private String _songSubName;
+    private String _songSubName = "Created with AndroidMapper";
     private String _songAuthorName;
     private String _levelAuthorName;
     private float _beatsPerMinute = 150;
     private float _songTimeOffset = 0;
     private float _shuffle = 0;
-    private float _shufflePeriod = 0;
+    private float _shufflePeriod = 0.5f;
     private float _previewStartTime = 12;
     private float _previewDuration = 10;
     private String _songFilename = "song.egg";
