@@ -1,13 +1,13 @@
-package at.tewan.androidmapper.beatmap;
+package at.tewan.androidmapper.beatmap.info;
 
 import java.util.ArrayList;
 
-public class DifficultySet {
+public class InfoDifficultySet {
 
     private String _beatmapCharacteristicName;
-    private ArrayList<Difficulty> _difficultyBeatmaps;
+    private ArrayList<InfoDifficulty> _difficultyBeatmaps;
 
-    public ArrayList<Difficulty> getDifficultyBeatmaps() {
+    public ArrayList<InfoDifficulty> getDifficultyBeatmaps() {
         return _difficultyBeatmaps;
     }
 
@@ -19,7 +19,7 @@ public class DifficultySet {
         this._beatmapCharacteristicName = beatmapCharacteristicName;
     }
 
-    public void setDifficultyBeatmaps(ArrayList<Difficulty> difficultyBeatmaps) {
+    public void setDifficultyBeatmaps(ArrayList<InfoDifficulty> difficultyBeatmaps) {
         this._difficultyBeatmaps = difficultyBeatmaps;
     }
 }

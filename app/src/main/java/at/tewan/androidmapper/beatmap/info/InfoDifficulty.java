@@ -1,15 +1,15 @@
-package at.tewan.androidmapper.beatmap;
+package at.tewan.androidmapper.beatmap.info;
 
-public class Difficulty {
+public class InfoDifficulty {
 
     private String difficulty;
     private int _difficultyRank;
     private String _beatmapFilename;
     private float _noteJumpMovementSpeed;
     private float _noteJumpStartBeatOffset;
-    private DifficultyCustomData _customData;
+    private InfoDifficultyCustomData _customData;
 
-    public DifficultyCustomData getCustomData() {
+    public InfoDifficultyCustomData getCustomData() {
         return _customData;
     }
 
@@ -37,7 +37,7 @@ public class Difficulty {
         this._beatmapFilename = beatmapFilename;
     }
 
-    public void setCustomData(DifficultyCustomData customData) {
+    public void setCustomData(InfoDifficultyCustomData customData) {
         this._customData = customData;
     }
 

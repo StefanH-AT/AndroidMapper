@@ -1,13 +1,13 @@
-package at.tewan.androidmapper.beatmap;
+package at.tewan.androidmapper.beatmap.info;
 
 
-public class Contributer {
+public class InfoCustomDataContributer {
 
     private String _role;
     private String _name;
     private String _iconPath;
 
-    public Contributer(String role, String name, String iconPath) {
+    public InfoCustomDataContributer(String role, String name, String iconPath) {
         this._role = role;
         this._name = name;
         this._iconPath = iconPath;

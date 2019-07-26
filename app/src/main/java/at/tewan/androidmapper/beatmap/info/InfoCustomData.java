@@ -1,20 +1,20 @@
-package at.tewan.androidmapper.beatmap;
+package at.tewan.androidmapper.beatmap.info;
 
 import java.util.ArrayList;
 
-public class BeatmapCustomData {
+public class InfoCustomData {
 
-    private ArrayList<Contributer> _contributers;
+    private ArrayList<InfoCustomDataContributer> _contributers;
     private String _customEnvironment;
     private String _customEnvironmentHash;
 
-    public BeatmapCustomData(ArrayList<Contributer> contributers, String customEnvironment, String customEnvironmentHash) {
+    public InfoCustomData(ArrayList<InfoCustomDataContributer> contributers, String customEnvironment, String customEnvironmentHash) {
         this._contributers = contributers;
         this._customEnvironment = customEnvironment;
         this._customEnvironmentHash = customEnvironmentHash;
     }
 
-    public ArrayList<Contributer> getContributers() {
+    public ArrayList<InfoCustomDataContributer> getContributers() {
         return _contributers;
     }
 
@@ -26,7 +26,7 @@ public class BeatmapCustomData {
         return _customEnvironmentHash;
     }
 
-    public void setContributers(ArrayList<Contributer> contributers) {
+    public void setContributers(ArrayList<InfoCustomDataContributer> contributers) {
         this._contributers = contributers;
     }
 

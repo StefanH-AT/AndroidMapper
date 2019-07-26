@@ -1,22 +1,22 @@
-package at.tewan.androidmapper.beatmap;
+package at.tewan.androidmapper.beatmap.info;
 
-public class DifficultyCustomData {
+public class InfoDifficultyCustomData {
 
     private String _difficultyLabel;
     private float _editorOffset;
     private float _editorOldOffset;
-    private DifficultyColor _colorLeft;
-    private DifficultyColor _colorRight;
+    private InfoDifficultyCustomDataColor _colorLeft;
+    private InfoDifficultyCustomDataColor _colorRight;
     private String _warnings;
     private String _information;
     private String _suggestions;
     private String _requirements;
 
-    public DifficultyColor getColorLeft() {
+    public InfoDifficultyCustomDataColor getColorLeft() {
         return _colorLeft;
     }
 
-    public DifficultyColor getColorRight() {
+    public InfoDifficultyCustomDataColor getColorRight() {
         return _colorRight;
     }
 
@@ -48,11 +48,11 @@ public class DifficultyCustomData {
         return _warnings;
     }
 
-    public void setColorLeft(DifficultyColor colorLeft) {
+    public void setColorLeft(InfoDifficultyCustomDataColor colorLeft) {
         this._colorLeft = colorLeft;
     }
 
-    public void setColorRight(DifficultyColor colorRight) {
+    public void setColorRight(InfoDifficultyCustomDataColor colorRight) {
         this._colorRight = colorRight;
     }
 

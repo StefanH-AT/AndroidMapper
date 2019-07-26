@@ -3,19 +3,20 @@ package at.tewan.androidmapper;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import at.tewan.androidmapper.beatmap.Beatmap;
+import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.beatmap.Beatmaps;
+import at.tewan.androidmapper.beatmap.info.InfoDifficulty;
+import at.tewan.androidmapper.beatmap.info.InfoDifficultySet;
+import at.tewan.androidmapper.beatmap.enums.Characteristics;
 import at.tewan.androidmapper.mainmenu.BeatmapListAdapter;
 
 public class MainmenuActivity extends AppCompatActivity {
@@ -35,15 +36,31 @@ public class MainmenuActivity extends AppCompatActivity {
 
         ListView beatmapList = findViewById(R.id.beatmapList);
 
-        ArrayList<Beatmap> beatmaps = new ArrayList<>();
+        ArrayList<Info> beatmaps = new ArrayList<>();
 
-        Beatmap debugBeatmap = new Beatmap();
+        Info debugBeatmap = new Info();
         debugBeatmap.setSongName("Debug beatmap!");
 
-        Beatmap debugBeatmap2 = new Beatmap();
+        InfoDifficultySet set = new InfoDifficultySet();
+        set.setBeatmapCharacteristicName(Characteristics.STANDARD.getName());
+
+        InfoDifficulty difficulty = new InfoDifficulty();
+        difficulty.setBeatmapFilename("ExpertPlus.dat");
+
+        ArrayList<InfoDifficulty> difficulties = new ArrayList<>();
+        difficulties.add(difficulty);
+
+        set.setDifficultyBeatmaps(difficulties);
+
+        ArrayList<InfoDifficultySet> sets = new ArrayList<>();
+        sets.add(set);
+
+        debugBeatmap.setDifficultyBeatmapSets(sets);
+
+        Info debugBeatmap2 = new Info();
         debugBeatmap2.setSongName("Debug beatmap2 !");
 
-        Beatmap debugBeatmap3 = new Beatmap();
+        Info debugBeatmap3 = new Info();
         debugBeatmap3.setSongName("Debug beatmap 3!");
 
         beatmaps.add(debugBeatmap);
@@ -52,7 +69,7 @@ public class MainmenuActivity extends AppCompatActivity {
 
         beatmapList.setAdapter(new BeatmapListAdapter(getApplicationContext(), beatmaps));
 
-        Beatmaps.saveBeatmap(debugBeatmap);
+        Beatmaps.saveBeatmap(this, debugBeatmap);
     }
 
     View.OnClickListener newBeatmapListener = view -> {

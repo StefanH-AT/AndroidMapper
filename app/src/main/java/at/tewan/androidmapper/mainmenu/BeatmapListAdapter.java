@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import at.tewan.androidmapper.R;
-import at.tewan.androidmapper.beatmap.Beatmap;
+import at.tewan.androidmapper.beatmap.info.Info;
 
 /**
  * The ListView adapter seen in the main menu
@@ -20,9 +20,9 @@ import at.tewan.androidmapper.beatmap.Beatmap;
 public class BeatmapListAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Beatmap> items;
+    private ArrayList<Info> items;
 
-    public BeatmapListAdapter(Context context, ArrayList<Beatmap> items) {
+    public BeatmapListAdapter(Context context, ArrayList<Info> items) {
         this.context = context;
         this.items = items;
     }
@@ -33,7 +33,7 @@ public class BeatmapListAdapter extends BaseAdapter {
         if(convertView == null)
             convertView = LayoutInflater.from(context).inflate(R.layout.adapter_beatmap, parent, false);
 
-        Beatmap beatmap = getItem(position);
+        Info beatmap = getItem(position);
 
         ImageView icon = convertView.findViewById(R.id.icon);
         TextView title = convertView.findViewById(R.id.title);
@@ -55,7 +55,7 @@ public class BeatmapListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Beatmap getItem(int position) {
+    public Info getItem(int position) {
         return items.get(position);
     }
 
