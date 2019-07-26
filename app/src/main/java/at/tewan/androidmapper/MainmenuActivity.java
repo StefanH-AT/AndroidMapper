@@ -4,13 +4,19 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +35,7 @@ public class MainmenuActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "Mainmenu";
 
-    private ListView beatmapList;
+    private RecyclerView beatmapList;
     private ArrayList<Info> beatmaps;
 
     @Override
@@ -49,22 +55,15 @@ public class MainmenuActivity extends AppCompatActivity {
 
 
         beatmapList = findViewById(R.id.beatmapList);
+        beatmapList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        beatmapList.setItemAnimator(new DefaultItemAnimator());
 
         beatmaps = Beatmaps.readStoredBeatmapInfos(this);
 
 
         beatmapList.setAdapter(new BeatmapListAdapter(getApplicationContext(), beatmaps));
 
-        beatmapList.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(getApplicationContext(), BeatmapPropertiesActivity.class);
-
-            Log.i(LOG_TAG, "A: " + beatmaps.get(position).getSongName().hashCode());
-
-            intent.putExtra("beatmap_hash", beatmaps.get(position).getSongName().hashCode() + "");
-
-            startActivity(intent);
-        });
-
+        /*
         beatmapList.setOnItemLongClickListener((parent, view, position, id) -> {
 
             PopupMenu popupMenu = new PopupMenu(this, view);
@@ -90,6 +89,7 @@ public class MainmenuActivity extends AppCompatActivity {
             return true;
 
         });
+        */
     }
 
     View.OnClickListener newBeatmapListener = view -> {
@@ -143,6 +143,7 @@ public class MainmenuActivity extends AppCompatActivity {
 
                 dialog.cancel();
                 beatmaps.add(result);
+                beatmapList.getAdapter().notifyDataSetChanged();
 
             } else {
                 Snackbar bar = Snackbar.make(view, R.string.beatmap_already_exists, Snackbar.LENGTH_LONG);

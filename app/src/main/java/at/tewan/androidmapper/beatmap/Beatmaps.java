@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -18,8 +17,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import at.tewan.androidmapper.R;
@@ -38,14 +35,14 @@ public class Beatmaps {
 
     private static final String BEATMAP_INFO_FILE = "info.dat";
 
-    private static final File beatmapsRoot = Environment.getExternalStoragePublicDirectory("beatmaps");
+    public static final File BEATMAPS_ROOT = Environment.getExternalStoragePublicDirectory("beatmaps");
 
     private static final Gson gson = new Gson();
     private static final Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
 
     public static void init() {
-        Log.i(LOG_TAG, "Beatmap root dir: " + beatmapsRoot.toString());
-        if(beatmapsRoot.mkdirs()) {
+        Log.i(LOG_TAG, "Beatmap root dir: " + BEATMAPS_ROOT.toString());
+        if(BEATMAPS_ROOT.mkdirs()) {
             Log.i(LOG_TAG, "Beatmap root dir created");
         } else {
             Log.i(LOG_TAG, "Beatmap root exists");
@@ -77,7 +74,7 @@ public class Beatmaps {
     }
 
     public static boolean deleteBeatmap(Info info) {
-        File beatmapDir = new File(beatmapsRoot, info.getSongName().hashCode() + "");
+        File beatmapDir = new File(BEATMAPS_ROOT, info.getSongName().hashCode() + "");
 
         boolean exists = beatmapDir.exists();
 
@@ -97,7 +94,7 @@ public class Beatmaps {
 
     public static boolean saveInfo(Context context, Info info, String containerFolderName) {
 
-        File containerFolder = new File(beatmapsRoot, containerFolderName);
+        File containerFolder = new File(BEATMAPS_ROOT, containerFolderName);
 
         if(containerFolder.mkdir()) {
             Log.i(LOG_TAG, "Created beatmap folder for " + info.getSongName() + " (" + containerFolderName + ")");
@@ -177,7 +174,7 @@ public class Beatmaps {
     }
 
     public static Info readStoredBeatmap(String container) {
-        File beatmapInfo = new File(beatmapsRoot, container + System.getProperty("file.separator") + BEATMAP_INFO_FILE);
+        File beatmapInfo = new File(BEATMAPS_ROOT, container + System.getProperty("file.separator") + BEATMAP_INFO_FILE);
 
         if(beatmapInfo.exists()) {
 
@@ -198,7 +195,7 @@ public class Beatmaps {
     }
 
     public static ArrayList<Info> readStoredBeatmapInfos(Context context) {
-        File[] beatmapContainers = beatmapsRoot.listFiles(File::isDirectory);
+        File[] beatmapContainers = BEATMAPS_ROOT.listFiles(File::isDirectory);
 
         ArrayList<Info> infos = new ArrayList<>();
 
