@@ -70,7 +70,7 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
         bpm.setText(String.valueOf(info.getBeatsPerMinute()));
 
         difficultyList = findViewById(R.id.difficultyList);
-        difficultyList.setAdapter(new DifficultyListAdapter(this, currentDifficulties));
+        difficultyList.setAdapter(new DifficultyListAdapter(this, currentDifficulties, info));
         difficultyList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         difficultyList.setItemAnimator(new DefaultItemAnimator());
 

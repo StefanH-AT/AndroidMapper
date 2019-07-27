@@ -30,6 +30,13 @@
 
         </activity>
 
+        <activity
+            android:name=".EditorActivity"
+            android:label="@string/beatmap"
+            android:theme="@style/AppTheme.Fullscreen">
+
+        </activity>
+
     </application>
 
 </manifest>
