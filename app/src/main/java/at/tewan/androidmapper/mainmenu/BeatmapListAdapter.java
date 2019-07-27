@@ -50,6 +50,8 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
             icon = itemView.findViewById(R.id.index_icon);
             songName = itemView.findViewById(R.id.index_songName);
             bpm = itemView.findViewById(R.id.index_bpm);
+
+            itemView.setOnClickListener(this);
         }
 
         public void setPosition(int position) {
@@ -62,6 +64,7 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
             Intent intent = new Intent(context, BeatmapPropertiesActivity.class);
 
             intent.putExtra("beatmap_hash", items.get(position).getSongName().hashCode() + "");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(intent);
         }
@@ -83,16 +86,12 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
         holder.songName.setText(info.getSongName());
         holder.bpm.setText(String.valueOf(info.getBeatsPerMinute()));
 
+        // TODO: Move cover file loading to Beatmaps class
         File coverFile = new File(Beatmaps.BEATMAPS_ROOT, info.getSongName().hashCode() + System.getProperty("file.separator") + info.getCoverImageFilename());
         Bitmap bitmap = BitmapFactory.decodeFile(coverFile.toString());
         holder.icon.setImageBitmap(bitmap);
 
         holder.setPosition(i);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
     }
 
     @Override

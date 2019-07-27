@@ -7,6 +7,11 @@ public class InfoDifficultySet {
     private String _beatmapCharacteristicName;
     private ArrayList<InfoDifficulty> _difficultyBeatmaps;
 
+    public InfoDifficultySet(String characteristicName) {
+        setBeatmapCharacteristicName(characteristicName);
+        setDifficultyBeatmaps(new ArrayList<>());
+    }
+
     public ArrayList<InfoDifficulty> getDifficultyBeatmaps() {
         return _difficultyBeatmaps;
     }

@@ -16,4 +16,5 @@ public enum Difficulties {
     public int getRank() {
         return rank;
     }
+
 }

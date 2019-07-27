@@ -100,26 +100,22 @@ public class Beatmaps {
             Log.i(LOG_TAG, "Created beatmap folder for " + info.getSongName() + " (" + containerFolderName + ")");
         } else {
             Log.i(LOG_TAG, "Folder " + containerFolderName + " already exists.");
-            return false;
         }
 
         // info.dat
 
         File infoDatFile = new File(containerFolder, BEATMAP_INFO_FILE);
 
-        if(!infoDatFile.exists()) {
+        String infoDatFileContent = gsonPretty.toJson(info);
 
-            String infoDatFileContent = gsonPretty.toJson(info);
+        try (FileWriter writer = new FileWriter(infoDatFile)) {
 
-            try (FileWriter writer = new FileWriter(infoDatFile)) {
+            writer.write(infoDatFileContent);
 
-                writer.write(infoDatFileContent);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
 
         Log.i(LOG_TAG, "Done writing info.dat file!");
 
