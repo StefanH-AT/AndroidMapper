@@ -33,7 +33,8 @@
         <activity
             android:name=".EditorActivity"
             android:label="@string/beatmap"
-            android:theme="@style/AppTheme.Fullscreen">
+            android:theme="@style/AppTheme.Fullscreen"
+            android:screenOrientation="landscape">
 
         </activity>
 

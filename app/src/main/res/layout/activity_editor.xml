@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <ToggleButton
+            android:id="@+id/colorToggle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/note_red"
+            android:checked="false"
+            android:textOff="@string/empty"
+            android:textOn="@string/empty" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/trackFrame"
+        android:layout_width="320dp"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/inspectionFrame"
+            android:layout_width="match_parent"
+            android:layout_height="192dp">
+
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

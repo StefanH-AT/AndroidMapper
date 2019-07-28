@@ -31,5 +31,6 @@
 
     <string name="njs">Note Jump Speed</string>
     <string name="defaultNjs">12</string>
+    <string name="empty"> </string>
 
 </resources>
