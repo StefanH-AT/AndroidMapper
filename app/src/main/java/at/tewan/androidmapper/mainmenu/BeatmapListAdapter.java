@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -38,7 +39,7 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
         this.items = items;
     }
 
-    class BeatmapListAdapterHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class BeatmapListAdapterHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
 
         private ImageView icon;
         private TextView songName, bpm;
@@ -51,7 +52,7 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
             songName = itemView.findViewById(R.id.index_songName);
             bpm = itemView.findViewById(R.id.index_bpm);
 
-            itemView.setOnClickListener(this);
+            itemView.setOnTouchListener(this);
         }
 
         public void setPosition(int position) {
@@ -59,7 +60,7 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
         }
 
         @Override
-        public void onClick(View v) {
+        public boolean onTouch(View v, MotionEvent event) {
 
             Intent intent = new Intent(context, BeatmapPropertiesActivity.class);
 
@@ -67,6 +68,8 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(intent);
+
+            return true;
         }
     }
 

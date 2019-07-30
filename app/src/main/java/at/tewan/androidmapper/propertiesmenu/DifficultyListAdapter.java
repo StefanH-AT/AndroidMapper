@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -31,7 +32,7 @@ public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAd
         this.info = info;
     }
 
-    class DifficultyListAdapterHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class DifficultyListAdapterHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
 
         private TextView difficultyName, noteJumpSpeed;
 
@@ -42,16 +43,16 @@ public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAd
             difficultyName = itemView.findViewById(R.id.difficultyName);
             noteJumpSpeed = itemView.findViewById(R.id.difficultyNJS);
 
-            itemView.setOnClickListener(this);
+            itemView.setOnTouchListener(this);
         }
 
         public void setPosition(int position) {
             this.position = position;
         }
 
-
         @Override
-        public void onClick(View v) {
+        public boolean onTouch(View v, MotionEvent event) {
+
             Intent intent = new Intent(context, EditorActivity.class);
 
             intent.putExtra("beatmap_hash", info.getSongName().hashCode() + "");
@@ -59,6 +60,8 @@ public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAd
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(intent);
+
+            return true;
         }
     }
 
