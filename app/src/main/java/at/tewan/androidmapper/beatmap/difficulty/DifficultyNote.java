@@ -27,4 +27,8 @@ public class DifficultyNote extends DifficultyTrackItem {
         this._lineLayer = lineLayer;
     }
 
+    @Override
+    public String toString() {
+        return "Time: " + getTime() + ", LI: " + getLineIndex() + ", LL: " + getLineLayer() + ", C: " + getCutDirection() + ", T: " + getType();
+    }
 }

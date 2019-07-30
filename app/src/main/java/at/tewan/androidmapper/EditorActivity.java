@@ -16,6 +16,9 @@ import at.tewan.androidmapper.editor.SharedSketchData;
 import at.tewan.androidmapper.editor.TrackSketch;
 import processing.android.PFragment;
 
+import static at.tewan.androidmapper.editor.SharedSketchData.BLUE;
+import static at.tewan.androidmapper.editor.SharedSketchData.RED;
+
 /**
  * The one and only beat map editor
  */
@@ -60,9 +63,12 @@ public class EditorActivity extends AppCompatActivity {
             // true = blue
             if(isChecked) {
                 colorToggle.setBackgroundResource(R.drawable.note_blue);
+                SharedSketchData.selectedColor = BLUE;
             } else {
                 colorToggle.setBackgroundResource(R.drawable.note_red);
+                SharedSketchData.selectedColor = RED;
             }
+
         });
     }
 }

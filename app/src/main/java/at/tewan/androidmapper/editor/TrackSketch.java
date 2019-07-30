@@ -2,6 +2,8 @@ package at.tewan.androidmapper.editor;
 
 import android.util.Log;
 
+import at.tewan.androidmapper.beatmap.difficulty.DifficultyNote;
+import at.tewan.androidmapper.beatmap.enums.CutDirection;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 
@@ -14,7 +16,9 @@ public class TrackSketch extends PApplet {
     private int padding;
     private int laneWidth;
     private int baselineY;
-    private int subBeatAmount = 4;
+
+
+    private int notePlaceDirectionRadius = 240;
 
     private float bpm;
 
@@ -46,15 +50,26 @@ public class TrackSketch extends PApplet {
         background(0);
 
         // Drawn absolute
+
+        textSize(38);
+        fill(255);
+        text("CB: " + currentBeat, 126, height - 100);
+
         drawVerticalLines();
         drawBaseline();
 
+        textAlign(RIGHT);
+        text("fps: " + (int) frameRate, width - padding, 100);
+        textAlign(LEFT);
 
-        translate(0, currentBeat * laneWidth);
+        translate(0, currentBeat * subBeatAmount * laneWidth);
 
         // Stuff that's drawn relative to the current progress
         drawBeats();
         drawNotes();
+
+        if(mousePressed)
+            mouseDown();
 
     }
 
@@ -90,6 +105,20 @@ public class TrackSketch extends PApplet {
 
     private void drawNotes() {
 
+        for(DifficultyNote note : notes) {
+
+            rectMode(RADIUS);
+
+            if(typeAsColor(note.getType()) == RED)
+                fill(200, 0, 0);
+            else
+                fill(0, 120, 200);
+
+            rect(getLaneCoordinate(note.getLineIndex() + 1), getBeatCoordinate(timeAsBeat(note.getTime())), 40, 40);
+            noFill();
+
+        }
+
     }
 
     private void drawBeats() {
@@ -120,15 +149,38 @@ public class TrackSketch extends PApplet {
     }
 
     private MouseEvent dragOrigin;
+    private int originLane;
+    private float originBeat;
 
     @Override
     public void mousePressed(MouseEvent event) {
         dragOrigin = event;
+
+        if(isMouseInTrack(event.getX())) {
+            originLane = (int) Math.floor((float) (event.getX() + padding) / laneWidth);
+            originBeat = (Math.round((float) (baselineY - event.getY()) / laneWidth) + currentBeat);
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        currentBeat = constrain(Math.round(currentBeat), 0, totalBeats);
+        currentBeat = constrain(Math.round(currentBeat * subBeatAmount), 0, totalBeats) / subBeatAmount;
+/*
+        if(isMouseInTrack(event.getX())) {
+
+            // Check for overlapping notes
+            for(DifficultyNote note : notes) {
+                if(note.getLineIndex() == originLane && note.getTime() == beatAsTime(originBeat))
+                    return;
+            }
+
+            // Note placing
+            DifficultyNote note = new DifficultyNote(beatAsTime(originBeat), colorAsType(selectedColor), originLane, 0, CutDirection.ANY.ordinal());
+            notes.add(note);
+
+            Log.i(LOG_TAG, "Placed note: " + note.toString());
+
+        }*/
     }
 
     @Override
@@ -139,16 +191,75 @@ public class TrackSketch extends PApplet {
         int dx = event.getX();
         int dy = event.getY();
 
-        line(ox, oy, dx, dy);
-
         // Scroll
-        if(dx <= padding || dx > width - padding) { // Only scroll if you drag outside the track area
+        if(!(isMouseInTrack(ox) || isMouseInTrack(dx))) { // Only scroll if you drag outside the track area
 
-            float scrollAmount = (float) (dy - pmouseY) / laneWidth;
+            float scrollAmount = (float) (dy - pmouseY) / laneWidth / subBeatAmount;
 
             currentBeat += scrollAmount;
 
+        } else { // Note placing preview
+
+            stroke(255);
+            ellipse(getLaneCoordinate(originLane), getBeatCoordinate(originBeat), notePlaceDirectionRadius, notePlaceDirectionRadius);
+
+            if(dist(ox, oy, dx, dy) > notePlaceDirectionRadius) {
+
+            }
         }
+    }
+
+    private void mouseDown() {
+        if(isMouseInTrack(mouseX)) {
+            /*
+            int ox = dragOrigin.getX();
+            int oy = dragOrigin.getY();
+
+            // XY snapped to grid
+            int sx = originLane * laneWidth;
+            int sy = (int) (originBeat * subBeatAmount) * -laneWidth + baselineY;
+
+            noFill();
+            stroke(255);
+            ellipse(sx, sy, notePlaceDirectionRadius, notePlaceDirectionRadius);
+
+            if(dist(sx, sy, mouseX, mouseY) > notePlaceDirectionRadius) {
+
+                float angle = getDragAngle(sx, sy);
+                // Snapping angle to 45 degrees
+                angle = Math.round(angle / PI / 4) * PI / 4;
+
+                text("fa: " + Math.toDegrees(angle) + ", a: " + Math.toDegrees(getDragAngle(sx, sy)), 300, 200);
+
+
+                fill(0, 140, 140);
+
+            }
+*/
+        }
+    }
+
+    private float getDragAngle(int x, int y) {
+        float angle = atan2(y - dragOrigin.getY(), x - dragOrigin.getX());
+
+        // Fixing the angle
+        if(angle < 0) {
+            angle += TWO_PI;
+        }
+
+        return angle;
+    }
+
+    private boolean isMouseInTrack(int x) {
+        return x > padding && x < width - padding;
+    }
+
+    private float getBeatCoordinate(float beat) {
+        return (beat * subBeatAmount * -laneWidth + baselineY);
+    }
+
+    private float getLaneCoordinate(int lane) {
+        return lane * laneWidth;
     }
 
 }
