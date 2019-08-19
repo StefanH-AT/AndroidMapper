@@ -2,9 +2,14 @@ package at.tewan.androidmapper.editor;
 
 import android.util.Log;
 
+import com.google.common.logging.nano.Vr;
+
 import java.util.ArrayList;
 
+import at.tewan.androidmapper.beatmap.difficulty.Difficulty;
+import at.tewan.androidmapper.beatmap.difficulty.DifficultyEvent;
 import at.tewan.androidmapper.beatmap.difficulty.DifficultyNote;
+import at.tewan.androidmapper.beatmap.difficulty.DifficultyObstacle;
 import at.tewan.androidmapper.beatmap.info.Info;
 
 public class SharedSketchData {
@@ -16,7 +21,9 @@ public class SharedSketchData {
 
     static int lanes = 4;
     static int rows = 3;
-    static ArrayList<DifficultyNote> notes = new ArrayList<>();
+    static ArrayList<DifficultyNote> notes;
+    static ArrayList<DifficultyEvent> events;
+    static ArrayList<DifficultyObstacle> obstacles;
     static Info info;
 
     static float currentBeat = 0;
@@ -24,14 +31,22 @@ public class SharedSketchData {
     static float songDuration = 60; // Song duration in seconds
     static int subBeatAmount = 4;
 
+    static ToolMode toolMode;
+
     public static boolean selectedColor = RED;
 
-    public static void setInfo(Info info) {
+    public static void init(Info info, Difficulty difficulty) {
+
         SharedSketchData.info = info;
 
-        totalBeats = timeAsBeat(songDuration); // Need to divide by 60 because I need the time in minutes
-
+        totalBeats = timeAsBeat(songDuration);
         Log.i(LOG_TAG, "Total beats: " + totalBeats);
+
+        SharedSketchData.notes = difficulty.getNotes();
+    }
+
+    public static void setToolMode(ToolMode toolMode) {
+        SharedSketchData.toolMode = toolMode;
     }
 
     static float beatAsTime(float beat) {

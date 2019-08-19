@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import at.tewan.androidmapper.BeatmapPropertiesActivity;
 import at.tewan.androidmapper.EditorActivity;
 import at.tewan.androidmapper.R;
 import at.tewan.androidmapper.beatmap.info.Info;
@@ -25,6 +23,7 @@ public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAd
     private Context context;
     private ArrayList<InfoDifficulty> items;
     private Info info;
+    private String filename;
 
     public DifficultyListAdapter(Context context, ArrayList<InfoDifficulty> items, Info info) {
         this.context = context;
@@ -36,9 +35,9 @@ public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAd
 
         private TextView difficultyName, noteJumpSpeed;
 
-        private int position;
+        private String filename;
 
-        public DifficultyListAdapterHolder(@NonNull View itemView) {
+        DifficultyListAdapterHolder(@NonNull View itemView) {
             super(itemView);
             difficultyName = itemView.findViewById(R.id.difficultyName);
             noteJumpSpeed = itemView.findViewById(R.id.difficultyNJS);
@@ -46,20 +45,26 @@ public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAd
             itemView.setOnTouchListener(this);
         }
 
-        public void setPosition(int position) {
-            this.position = position;
+        void setFilename(String filename) {
+            this.filename = filename;
         }
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
-            Intent intent = new Intent(context, EditorActivity.class);
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
 
-            intent.putExtra("beatmap_hash", info.getSongName().hashCode() + "");
-            intent.putExtra("beatmap_difficulty_hash", getItem(position).hashCode() + "");
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                v.performClick();
 
-            context.startActivity(intent);
+                Intent intent = new Intent(context, EditorActivity.class);
+
+                intent.putExtra("beatmap_hash", info.getSongName().hashCode() + "");
+                intent.putExtra("beatmap_difficulty", filename);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                context.startActivity(intent);
+
+            }
 
             return true;
         }
@@ -80,7 +85,7 @@ public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAd
         holder.noteJumpSpeed.setText(String.valueOf(infoDifficulty.getNoteJumpMovementSpeed()));
         holder.difficultyName.setText(infoDifficulty.getDifficulty());
 
-        holder.setPosition(i);
+        holder.setFilename(infoDifficulty.getBeatmapFilename());
     }
 
     @Override

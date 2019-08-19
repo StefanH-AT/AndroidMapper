@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import at.tewan.androidmapper.R;
+import at.tewan.androidmapper.beatmap.difficulty.Difficulty;
 import at.tewan.androidmapper.beatmap.info.InfoDifficulty;
 import at.tewan.androidmapper.beatmap.info.InfoDifficultySet;
 import at.tewan.androidmapper.beatmap.info.Info;
@@ -34,6 +36,7 @@ public class Beatmaps {
     private static final String LOG_TAG = "Beatmaps";
 
     private static final String BEATMAP_INFO_FILE = "info.dat";
+    private static final String COVER_FILE = "cover.jpg";
 
     public static final File BEATMAPS_ROOT = Environment.getExternalStoragePublicDirectory("beatmaps");
 
@@ -92,6 +95,10 @@ public class Beatmaps {
         return exists;
     }
 
+    public static File getCover(String container, String cover) {
+        return new File(Beatmaps.BEATMAPS_ROOT, container + System.getProperty("file.separator") + cover);
+    }
+
     public static boolean saveInfo(Context context, Info info, String containerFolderName) {
 
         File containerFolder = new File(BEATMAPS_ROOT, containerFolderName);
@@ -121,7 +128,7 @@ public class Beatmaps {
 
         // cover.jpg
 
-        File coverImageFile = new File(containerFolder, "cover.jpg");
+        File coverImageFile = new File(containerFolder, COVER_FILE);
         if(coverImageFile.exists()) {
             Log.i(LOG_TAG, "cover.jpg already exists.");
         } else {
@@ -212,6 +219,37 @@ public class Beatmaps {
         }
 
         return infos;
+    }
+
+    public static Difficulty readDifficulty(String container, String filename) {
+        File difficultyFile = new File(BEATMAPS_ROOT, container + System.getProperty("file.separator") + filename);
+
+        Log.i(LOG_TAG, "Loading difficulty '" + difficultyFile.toString() + "'...");
+
+        if(!difficultyFile.exists()) {
+
+            Log.i(LOG_TAG, "Difficulty file could not be found. Creating empty difficulty!");
+
+            // Return empty difficulty when file could not be found
+            return new Difficulty();
+        }
+
+        Log.i(LOG_TAG, "Loading difficulty from file...");
+
+        try(FileReader reader = new FileReader(difficultyFile)) {
+
+            Difficulty difficulty = gson.fromJson(reader, Difficulty.class);
+
+            Log.i(LOG_TAG, "Done loading difficulty file");
+
+            return difficulty;
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+
+            return null;
+        }
+
     }
 
     private static boolean isStorageWriteable() {

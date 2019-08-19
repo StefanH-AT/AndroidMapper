@@ -6,26 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainmenuActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/beatmapList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/beatmapList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/background_light"
-            android:scrollbars="vertical" />
-
-    </android.support.design.widget.AppBarLayout>
+        android:background="@android:color/background_light"
+        android:scrollbars="vertical" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

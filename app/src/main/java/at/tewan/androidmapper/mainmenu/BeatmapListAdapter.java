@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import at.tewan.androidmapper.BeatmapPropertiesActivity;
 import at.tewan.androidmapper.R;
+import at.tewan.androidmapper.beatmap.Beatmap;
 import at.tewan.androidmapper.beatmap.Beatmaps;
 import at.tewan.androidmapper.beatmap.info.Info;
 
@@ -55,19 +56,24 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
             itemView.setOnTouchListener(this);
         }
 
-        public void setPosition(int position) {
+        void setPosition(int position) {
             this.position = position;
         }
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
-            Intent intent = new Intent(context, BeatmapPropertiesActivity.class);
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
 
-            intent.putExtra("beatmap_hash", items.get(position).getSongName().hashCode() + "");
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                v.performClick();
 
-            context.startActivity(intent);
+                Intent intent = new Intent(context, BeatmapPropertiesActivity.class);
+
+                intent.putExtra("beatmap_hash", items.get(position).getSongName().hashCode() + "");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                context.startActivity(intent);
+            }
 
             return true;
         }
@@ -89,8 +95,8 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
         holder.songName.setText(info.getSongName());
         holder.bpm.setText(String.valueOf(info.getBeatsPerMinute()));
 
-        // TODO: Move cover file loading to Beatmaps class
-        File coverFile = new File(Beatmaps.BEATMAPS_ROOT, info.getSongName().hashCode() + System.getProperty("file.separator") + info.getCoverImageFilename());
+        File coverFile = Beatmaps.getCover(info.getSongName().hashCode() + "", info.getCoverImageFilename());
+
         Bitmap bitmap = BitmapFactory.decodeFile(coverFile.toString());
         holder.icon.setImageBitmap(bitmap);
 

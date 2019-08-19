@@ -9,10 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ToggleButton;
 
+import java.io.File;
+
+import at.tewan.androidmapper.beatmap.Beatmap;
 import at.tewan.androidmapper.beatmap.Beatmaps;
+import at.tewan.androidmapper.beatmap.difficulty.Difficulty;
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.editor.InspectionSketch;
 import at.tewan.androidmapper.editor.SharedSketchData;
+import at.tewan.androidmapper.editor.ToolMode;
 import at.tewan.androidmapper.editor.TrackSketch;
 import processing.android.PFragment;
 
@@ -26,6 +31,8 @@ public class EditorActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "Editor";
 
+    private Difficulty difficulty;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,20 +40,22 @@ public class EditorActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         String beatmapHash = intent.getStringExtra("beatmap_hash");
-        String beatmapDifficultyHash = intent.getStringExtra("beatmap_difficulty_hash");
+        String beatmapDifficulty = intent.getStringExtra("beatmap_difficulty");
+
 
         setContentView(R.layout.activity_editor);
 
         Log.i(LOG_TAG, "Loading beatmap hash: " + beatmapHash);
-        Log.i(LOG_TAG, "Beatmap difficulty hash: " + beatmapDifficultyHash);
+        Log.i(LOG_TAG, "Beatmap difficulty file: " + beatmapDifficulty);
 
 
 
         Info info = Beatmaps.readStoredBeatmap(beatmapHash);
+        difficulty = Beatmaps.readDifficulty(beatmapHash, beatmapDifficulty);
+        SharedSketchData.init(info, difficulty);
+
 
         // Canvases
-
-        SharedSketchData.setInfo(info);
         PFragment trackFragment = new PFragment(new TrackSketch());
         PFragment inspectionFragment = new PFragment(new InspectionSketch());
 
@@ -59,6 +68,8 @@ public class EditorActivity extends AppCompatActivity {
 
         colorToggle.setOnCheckedChangeListener((view, isChecked) -> {
 
+            SharedSketchData.setToolMode(ToolMode.NOTE);
+
             // false = red
             // true = blue
             if(isChecked) {
@@ -70,5 +81,21 @@ public class EditorActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    public void delete(View view) {
+        SharedSketchData.setToolMode(ToolMode.REMOVE);
+    }
+
+    public void save(View view) {
+
+    }
+
+    public void preview(View view) {
+
+    }
+
+    public void exit(View view) {
+
     }
 }

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Difficulty {
 
-    private String _version;
-    private ArrayList<DifficultyEvent> _events;
-    private ArrayList<DifficultyObstacle> _obstacles;
-    private ArrayList<DifficultyNote> _notes;
+    private String _version = "2.0.0"; // Default version number
+    private ArrayList<DifficultyEvent> _events = new ArrayList<>();
+    private ArrayList<DifficultyObstacle> _obstacles = new ArrayList<>();
+    private ArrayList<DifficultyNote> _notes = new ArrayList<>();
 
     public String getVersion() {
         return _version;

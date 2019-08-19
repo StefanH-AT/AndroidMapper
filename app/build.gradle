@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "at.tewan.androidmapper"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "Prototype"
@@ -32,10 +32,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    compileOnly files('libs/processing-core.jar')
-    compileOnly files('libs/vr.jar')
-    compileOnly files('libs/sdk-common-1.170.0.jar')
-    compileOnly files('libs/sdk-base-1.170.0.jar')
-    compileOnly files('libs/sdk-audio-1.170.0.jar')
-    compileOnly files('libs/commons-io-2.6.jar')
 }

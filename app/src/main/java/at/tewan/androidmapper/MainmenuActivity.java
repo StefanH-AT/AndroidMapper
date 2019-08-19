@@ -43,9 +43,6 @@ public class MainmenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(newBeatmapListener);
 

@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="match_parent"
         android:gravity="bottom"
         android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:onClick="delete"
+            app:srcCompat="@drawable/ic_delete" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="Bomb"
+            app:srcCompat="@drawable/bomb" />
 
         <ToggleButton
             android:id="@+id/colorToggle"
@@ -18,6 +40,7 @@
             android:checked="false"
             android:textOff="@string/empty"
             android:textOn="@string/empty" />
+
     </LinearLayout>
 
     <FrameLayout
@@ -33,12 +56,57 @@
         android:gravity="bottom"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/songProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
         <FrameLayout
             android:id="@+id/inspectionFrame"
             android:layout_width="match_parent"
             android:layout_height="192dp">
 
         </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="?android:attr/buttonBarStyle">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="save"
+                android:text="@string/save"
+                style="?android:attr/buttonBarButtonStyle"/>
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="preview"
+                android:text="@string/preview"
+                style="?android:attr/buttonBarButtonStyle"/>
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="exit"
+                android:text="@string/exit"
+                style="?android:attr/buttonBarButtonStyle"/>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

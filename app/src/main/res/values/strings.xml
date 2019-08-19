@@ -6,6 +6,7 @@
     <string name="new_difficulty_title">Create new Difficulty</string>
     <string name="create">Create</string>
     <string name="beatmap_already_exists">Beatmap already exists. Choose another name!</string>
+    <string name="browseSong">Browse Song</string>
 
     <string name="delete">Delete</string>
 
@@ -32,5 +33,17 @@
     <string name="njs">Note Jump Speed</string>
     <string name="defaultNjs">12</string>
     <string name="empty"> </string>
+
+    <string name="save">Save</string>
+    <string name="preview">Preview</string>
+    <string name="exit">Exit</string>
+
+    <string name="edit">Edit</string>
+
+    <string name="note">Note</string>
+    <string name="noteBlue">Blue Note</string>
+    <string name="noteRed">Red Note</string>
+    <string name="bomb">Bomb</string>
+    <string name="eraser">Eraser</string>
 
 </resources>

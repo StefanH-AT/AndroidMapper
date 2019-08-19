@@ -106,47 +106,53 @@ public class InspectionSketch extends PApplet {
     private void mouseDown() {
         rectMode(RADIUS);
 
-        if(selectedColor == RED)
-            fill(200, 0, 0);
-        else
-            fill(0, 120, 200);
+        if(toolMode == ToolMode.NOTE) {
 
-        rectMode(RADIUS);
+            if (selectedColor == RED)
+                fill(200, 0, 0);
+            else
+                fill(0, 120, 200);
+
+            rectMode(RADIUS);
 
 
-        pushMatrix();
+            pushMatrix();
 
-        translate(getLaneCoordinate(originLane), getRowCoordinate(originRow));
-        rotate(getDragAngle(mouseX, mouseY));
+            translate(getLaneCoordinate(originLane), getRowCoordinate(originRow));
+            rotate(getDragAngle(mouseX, mouseY));
 
-        rect(0, 0, 50, 50);
+            rect(0, 0, 50, 50);
 
-        int s = 10;
-        triangle(0, 0, -s, s, -s, -s);
+            int s = 10;
+            triangle(0, 0, -s, s, -s, -s);
 
-        popMatrix();
+            popMatrix();
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent event) {
 
-        if(event.getX() < 0) return; // Fix cross canvas events
+        if(toolMode == ToolMode.NOTE) {
 
-        CutDirection direction;
+            if (event.getX() < 0) return; // Fix cross canvas events
 
-        if(dist(event.getX(), event.getY(), getLaneCoordinate(originLane), getRowCoordinate(originRow)) > dotNoteRadius){
-            float angle = (float) Math.toDegrees(getDragAngle(event.getX(), event.getY()));
+            CutDirection direction;
 
-            angle = Math.round(map(angle, 0, 360, 0, 8)) * 45;
+            if (dist(event.getX(), event.getY(), getLaneCoordinate(originLane), getRowCoordinate(originRow)) > dotNoteRadius) {
+                float angle = (float) Math.toDegrees(getDragAngle(event.getX(), event.getY()));
 
-            direction = CutDirection.getDirection(angle);
-        } else {
-            direction = CutDirection.ANY;
+                angle = Math.round(map(angle, 0, 360, 0, 8)) * 45;
+
+                direction = CutDirection.getDirection(angle);
+            } else {
+                direction = CutDirection.ANY;
+            }
+
+            DifficultyNote note = new DifficultyNote(beatAsTime(currentBeat), colorAsType(selectedColor), originLane, originRow, direction.ordinal());
+
+            notes.add(note);
         }
-
-        DifficultyNote note = new DifficultyNote(beatAsTime(currentBeat), colorAsType(selectedColor), originLane, originRow, direction.ordinal());
-
-        notes.add(note);
     }
 
     @Override
@@ -156,6 +162,16 @@ public class InspectionSketch extends PApplet {
 
         originLane = e.getX() / laneWidth;
         originRow = e.getY() / rowHeight;
+
+        if(toolMode == ToolMode.REMOVE) {
+
+            for(DifficultyNote note : notes) {
+                if(note.getTime() == beatAsTime(currentBeat) && note.getLineLayer() == originRow && note.getLineIndex() == originLane) {
+                    notes.remove(note);
+                }
+            }
+
+        }
 
     }
 
