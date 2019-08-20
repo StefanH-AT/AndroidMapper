@@ -70,7 +70,7 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
             if(event.getAction() == MotionEvent.ACTION_UP) {
 
                 v.performClick();
-                
+
                 Intent intent = new Intent(context, BeatmapPropertiesActivity.class);
 
                 intent.putExtra(BEATMAP_CONTAINER, getContainer(position));
