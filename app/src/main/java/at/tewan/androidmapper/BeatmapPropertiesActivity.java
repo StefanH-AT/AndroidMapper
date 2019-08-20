@@ -35,6 +35,10 @@ import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.beatmap.info.InfoDifficulty;
 import at.tewan.androidmapper.beatmap.info.InfoDifficultySet;
 import at.tewan.androidmapper.propertiesmenu.DifficultyListAdapter;
+import at.tewan.androidmapper.util.ActivityArguments;
+import at.tewan.androidmapper.util.ErrorPrinter;
+
+import static at.tewan.androidmapper.util.ActivityArguments.BEATMAP_CONTAINER;
 
 public class BeatmapPropertiesActivity extends AppCompatActivity {
 
@@ -57,12 +61,16 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String beatmapHash = intent.getStringExtra("beatmap_hash");
-        Log.i(LOG_TAG, "Beatmap hash: " + beatmapHash);
+        String beatmapContainer = intent.getStringExtra(BEATMAP_CONTAINER);
+        Log.i(LOG_TAG, "Beatmap container: " + beatmapContainer);
 
         setContentView(R.layout.activity_beatmap_properties);
 
-        info = Beatmaps.readStoredBeatmapInfo(beatmapHash);
+        info = Beatmaps.readStoredBeatmapInfo(beatmapContainer);
+
+        if(info == null) {
+            ErrorPrinter.msg(this, "Beatmap info in container '" + beatmapContainer + "' could not be found!");
+        }
 
         TextView songName = findViewById(R.id.songName);
         TextView songSubName = findViewById(R.id.songSubName);
@@ -83,7 +91,7 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
         coverView.setImageBitmap(bitmap);
 
         difficultyList = findViewById(R.id.difficultyList);
-        difficultyList.setAdapter(new DifficultyListAdapter(this, currentDifficulties, info));
+        difficultyList.setAdapter(new DifficultyListAdapter(this, currentDifficulties, info, beatmapContainer));
         difficultyList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         difficultyList.setItemAnimator(new DefaultItemAnimator());
 

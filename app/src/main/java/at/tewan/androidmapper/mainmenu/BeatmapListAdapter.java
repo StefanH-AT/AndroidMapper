@@ -18,6 +18,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import at.tewan.androidmapper.BeatmapPropertiesActivity;
@@ -25,6 +26,9 @@ import at.tewan.androidmapper.R;
 import at.tewan.androidmapper.beatmap.Beatmap;
 import at.tewan.androidmapper.beatmap.Beatmaps;
 import at.tewan.androidmapper.beatmap.info.Info;
+import at.tewan.androidmapper.util.ErrorPrinter;
+
+import static at.tewan.androidmapper.util.ActivityArguments.BEATMAP_CONTAINER;
 
 /**
  * The ListView adapter seen in the main menu
@@ -66,13 +70,14 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
             if(event.getAction() == MotionEvent.ACTION_UP) {
 
                 v.performClick();
-
+                
                 Intent intent = new Intent(context, BeatmapPropertiesActivity.class);
 
-                intent.putExtra("beatmap_hash", items.get(position).getSongName().hashCode() + "");
+                intent.putExtra(BEATMAP_CONTAINER, getContainer(position));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(intent);
+
             }
 
             return true;
@@ -95,7 +100,7 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
         holder.songName.setText(info.getSongName());
         holder.bpm.setText(String.valueOf(info.getBeatsPerMinute()));
 
-        File coverFile = Beatmaps.getCover(info.getSongName().hashCode() + "", info.getCoverImageFilename());
+        File coverFile = Beatmaps.getCover(getContainer(i), info.getCoverImageFilename());
 
         Bitmap bitmap = BitmapFactory.decodeFile(coverFile.toString());
         holder.icon.setImageBitmap(bitmap);
@@ -106,5 +111,9 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    private String getContainer(int position) {
+        return Beatmaps.getContainers()[position].getName();
     }
 }

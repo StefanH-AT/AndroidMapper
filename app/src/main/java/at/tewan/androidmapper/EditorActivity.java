@@ -21,8 +21,8 @@ import at.tewan.androidmapper.editor.ToolMode;
 import at.tewan.androidmapper.editor.TrackSketch;
 import processing.android.PFragment;
 
-import static at.tewan.androidmapper.editor.SharedSketchData.BLUE;
-import static at.tewan.androidmapper.editor.SharedSketchData.RED;
+import static at.tewan.androidmapper.editor.SharedSketchData.*;
+import static at.tewan.androidmapper.util.ActivityArguments.*;
 
 /**
  * The one and only beat map editor
@@ -33,7 +33,7 @@ public class EditorActivity extends AppCompatActivity {
 
     private Difficulty difficulty;
 
-    private String beatmapHash, beatmapDifficulty;
+    private String beatmapContainer, beatmapDifficulty;
 
 
     @Override
@@ -42,21 +42,21 @@ public class EditorActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        beatmapHash = intent.getStringExtra("beatmap_hash");
-        beatmapDifficulty = intent.getStringExtra("beatmap_difficulty");
+        beatmapContainer = intent.getStringExtra(BEATMAP_CONTAINER);
+        beatmapDifficulty = intent.getStringExtra(BEATMAP_DIFFICULTY);
 
 
         setContentView(R.layout.activity_editor);
 
-        Log.i(LOG_TAG, "Loading beatmap hash: " + beatmapHash);
+        Log.i(LOG_TAG, "Loading beatmap hash: " + beatmapContainer);
         Log.i(LOG_TAG, "Beatmap difficulty file: " + beatmapDifficulty);
 
 
 
-        Info info = Beatmaps.readStoredBeatmapInfo(beatmapHash);
+        Info info = Beatmaps.readStoredBeatmapInfo(beatmapContainer);
 
         try {
-            difficulty = Beatmaps.readDifficulty(beatmapHash, beatmapDifficulty);
+            difficulty = Beatmaps.readDifficulty(beatmapContainer, beatmapDifficulty);
         } catch (IOException ex) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Error loading beatmap");
@@ -103,7 +103,7 @@ public class EditorActivity extends AppCompatActivity {
     public void save(View view) {
         difficulty = SharedSketchData.getDifficulty();
 
-        boolean success = Beatmaps.saveDifficulty(difficulty, beatmapHash, beatmapDifficulty);
+        boolean success = Beatmaps.saveDifficulty(difficulty, beatmapContainer, beatmapDifficulty);
 
         Toast statusToast;
 

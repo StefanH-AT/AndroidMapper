@@ -36,7 +36,7 @@ public class Beatmaps {
 
     private static final String SEPARATOR = System.getProperty("file.separator");
 
-    public static final File BEATMAPS_ROOT = Environment.getExternalStoragePublicDirectory("beatmaps");
+    private static final File BEATMAPS_ROOT = Environment.getExternalStoragePublicDirectory("beatmaps");
 
     private static final Gson gson = new Gson();
     private static final Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
@@ -111,10 +111,11 @@ public class Beatmaps {
         return new File(Beatmaps.BEATMAPS_ROOT, container + SEPARATOR + cover);
     }
 
+    public static File[] getContainers() {
+        return BEATMAPS_ROOT.listFiles(File::isDirectory);
+    }
+
     /**
-     * @param context
-     * @param info
-     * @param containerFolderName
      * @return Returns whether or not all files have been saved successfully
      */
     public static boolean saveInfo(Context context, Info info, String containerFolderName) {
@@ -221,7 +222,7 @@ public class Beatmaps {
      * @return {@link java.util.ArrayList<Info> ArrayList<Info>} of all beatmap info files that could be found
      */
     public static ArrayList<Info> readAllStoredBeatmapInfos() throws IOException {
-        File[] beatmapContainers = BEATMAPS_ROOT.listFiles(File::isDirectory);
+        File[] beatmapContainers = getContainers();
 
         ArrayList<Info> infos = new ArrayList<>();
 
@@ -240,7 +241,6 @@ public class Beatmaps {
      * @param container The beatmap container name
      * @param filename The difficulty file name (Must be grabbed from info.dat to avoid complications)
      * @return Parses json and returns it as {@link at.tewan.androidmapper.beatmap.difficulty.Difficulty Difficulty}
-     * @throws IOException
      */
     public static Difficulty readDifficulty(String container, String filename) throws IOException {
         File difficultyFile = new File(BEATMAPS_ROOT, container + System.getProperty("file.separator") + filename);

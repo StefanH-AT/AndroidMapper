@@ -155,4 +155,5 @@ public class Info {
     public void setVersion(String version) {
         this._version = version;
     }
+
 }

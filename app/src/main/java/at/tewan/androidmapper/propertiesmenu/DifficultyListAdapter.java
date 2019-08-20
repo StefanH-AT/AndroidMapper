@@ -19,18 +19,22 @@ import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.beatmap.info.InfoDifficulty;
 import processing.event.MouseEvent;
 
+import static at.tewan.androidmapper.util.ActivityArguments.BEATMAP_CONTAINER;
+import static at.tewan.androidmapper.util.ActivityArguments.BEATMAP_DIFFICULTY;
+
 
 public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAdapter.DifficultyListAdapterHolder>  {
 
     private Context context;
     private ArrayList<InfoDifficulty> items;
     private Info info;
-    private String filename;
+    private String container;
 
-    public DifficultyListAdapter(Context context, ArrayList<InfoDifficulty> items, Info info) {
+    public DifficultyListAdapter(Context context, ArrayList<InfoDifficulty> items, Info info, String container) {
         this.context = context;
         this.items = items;
         this.info = info;
+        this.container = container;
     }
 
     class DifficultyListAdapterHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
@@ -62,8 +66,8 @@ public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAd
 
                 Intent intent = new Intent(context, EditorActivity.class);
 
-                intent.putExtra("beatmap_hash", info.getSongName().hashCode() + "");
-                intent.putExtra("beatmap_difficulty", filename);
+                intent.putExtra(BEATMAP_CONTAINER, container);
+                intent.putExtra(BEATMAP_DIFFICULTY, filename);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(intent);
