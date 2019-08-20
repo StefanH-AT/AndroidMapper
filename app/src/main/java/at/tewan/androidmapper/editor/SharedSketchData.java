@@ -25,10 +25,11 @@ public class SharedSketchData {
     static ArrayList<DifficultyEvent> events;
     static ArrayList<DifficultyObstacle> obstacles;
     static Info info;
+    static Difficulty difficulty;
 
     static float currentBeat = 0;
     static float totalBeats;
-    static float songDuration = 60; // Song duration in seconds
+    static float songDuration = 60; // Song duration in seconds // TODO: Use the actual song duration
     static int subBeatAmount = 4;
 
     static ToolMode toolMode;
@@ -38,6 +39,7 @@ public class SharedSketchData {
     public static void init(Info info, Difficulty difficulty) {
 
         SharedSketchData.info = info;
+        SharedSketchData.difficulty = difficulty;
 
         totalBeats = timeAsBeat(songDuration);
         Log.i(LOG_TAG, "Total beats: " + totalBeats);
@@ -74,5 +76,13 @@ public class SharedSketchData {
 
     static int snapInt(int value, int steps) {
         return Math.round((float) value / steps) * steps;
+    }
+
+    public static Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public static Info getInfo() {
+        return info;
     }
 }

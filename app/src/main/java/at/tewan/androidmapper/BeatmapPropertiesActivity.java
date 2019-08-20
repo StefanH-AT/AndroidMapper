@@ -4,18 +4,13 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.AudioTrack;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,7 +62,7 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_beatmap_properties);
 
-        info = Beatmaps.readStoredBeatmap(beatmapHash);
+        info = Beatmaps.readStoredBeatmapInfo(beatmapHash);
 
         TextView songName = findViewById(R.id.songName);
         TextView songSubName = findViewById(R.id.songSubName);
@@ -224,7 +220,7 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
             File file = new File(uri.toString());
             Log.i(LOG_TAG, "Converting audio file '" + file.toString() + "' to ogg format");
 
-
+            Toast.makeText(this, R.string.feature_missing, Toast.LENGTH_LONG).show();
 
 
         }
@@ -233,6 +229,6 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
     }
 
     public void editProperties() {
-
+        Toast.makeText(this, R.string.feature_missing, Toast.LENGTH_LONG).show();
     }
 }

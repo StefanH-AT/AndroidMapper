@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,7 +12,6 @@ import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -22,8 +20,6 @@ import java.util.ArrayList;
 
 import at.tewan.androidmapper.R;
 import at.tewan.androidmapper.beatmap.difficulty.Difficulty;
-import at.tewan.androidmapper.beatmap.info.InfoDifficulty;
-import at.tewan.androidmapper.beatmap.info.InfoDifficultySet;
 import at.tewan.androidmapper.beatmap.info.Info;
 
 
@@ -33,22 +29,33 @@ import at.tewan.androidmapper.beatmap.info.Info;
  */
 public class Beatmaps {
 
-    private static final String LOG_TAG = "Beatmaps";
+    private static final String LOG_TAG = "Beatmap IO";
 
     private static final String BEATMAP_INFO_FILE = "info.dat";
-    private static final String COVER_FILE = "cover.jpg";
+    private static final int COVER_QUALITY = 80;
+
+    private static final String SEPARATOR = System.getProperty("file.separator");
 
     public static final File BEATMAPS_ROOT = Environment.getExternalStoragePublicDirectory("beatmaps");
 
     private static final Gson gson = new Gson();
     private static final Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
 
-    public static void init() {
-        Log.i(LOG_TAG, "Beatmap root dir: " + BEATMAPS_ROOT.toString());
-        if(BEATMAPS_ROOT.mkdirs()) {
-            Log.i(LOG_TAG, "Beatmap root dir created");
+    public static void init() throws IOException{
+        log("Initializing beatmap IO");
+
+        if(isStorageWritable()) {
+            log("Storage writable");
         } else {
-            Log.i(LOG_TAG, "Beatmap root exists");
+            log("Storage not writable!! Aborting");
+            throw new IOException();
+        }
+
+        log("Beatmap root dir: " + BEATMAPS_ROOT.toString());
+        if(BEATMAPS_ROOT.mkdirs()) {
+            log("Beatmap root dir created");
+        } else {
+            log("Beatmap root exists");
         }
     }
 
@@ -95,10 +102,21 @@ public class Beatmaps {
         return exists;
     }
 
+    /**
+     * @param container Beatmap container name
+     * @param cover Name of the cover image. ONLY pass over the '_coverImageFilename' from info.dat!!!!
+     * @return {@link java.io.File File} object pointing to the cover image
+     */
     public static File getCover(String container, String cover) {
-        return new File(Beatmaps.BEATMAPS_ROOT, container + System.getProperty("file.separator") + cover);
+        return new File(Beatmaps.BEATMAPS_ROOT, container + SEPARATOR + cover);
     }
 
+    /**
+     * @param context
+     * @param info
+     * @param containerFolderName
+     * @return Returns whether or not all files have been saved successfully
+     */
     public static boolean saveInfo(Context context, Info info, String containerFolderName) {
 
         File containerFolder = new File(BEATMAPS_ROOT, containerFolderName);
@@ -121,6 +139,7 @@ public class Beatmaps {
 
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
 
@@ -128,25 +147,26 @@ public class Beatmaps {
 
         // cover.jpg
 
-        File coverImageFile = new File(containerFolder, COVER_FILE);
+        File coverImageFile = new File(containerFolder, info.getCoverImageFilename());
         if(coverImageFile.exists()) {
-            Log.i(LOG_TAG, "cover.jpg already exists.");
+            log("cover.jpg already exists.");
         } else {
 
             Bitmap coverImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.android_cat);
 
             try (FileOutputStream writer = new FileOutputStream(coverImageFile)) {
 
-                coverImage.compress(Bitmap.CompressFormat.JPEG, 80, writer);
+                coverImage.compress(Bitmap.CompressFormat.JPEG, COVER_QUALITY, writer);
 
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
             }
 
         }
 
         // Difficulties
-
+        /*          // This code has been moved to Beatmaps.saveDifficulty(). Difficulties will now be saved each on their own and not in bulk
         ArrayList<InfoDifficultySet> sets = info.getDifficultyBeatmapSets();
 
         for(InfoDifficultySet set : sets) {
@@ -170,14 +190,14 @@ public class Beatmaps {
 
             }
 
-        }
+        }*/
 
 
         return true;
     }
 
-    public static Info readStoredBeatmap(String container) {
-        File beatmapInfo = new File(BEATMAPS_ROOT, container + System.getProperty("file.separator") + BEATMAP_INFO_FILE);
+    public static Info readStoredBeatmapInfo(String container) {
+        File beatmapInfo = new File(BEATMAPS_ROOT, container + SEPARATOR + BEATMAP_INFO_FILE);
 
         if(beatmapInfo.exists()) {
 
@@ -197,7 +217,10 @@ public class Beatmaps {
         }
     }
 
-    public static ArrayList<Info> readStoredBeatmapInfos(Context context) {
+    /**
+     * @return {@link java.util.ArrayList<Info> ArrayList<Info>} of all beatmap info files that could be found
+     */
+    public static ArrayList<Info> readAllStoredBeatmapInfos() throws IOException {
         File[] beatmapContainers = BEATMAPS_ROOT.listFiles(File::isDirectory);
 
         ArrayList<Info> infos = new ArrayList<>();
@@ -205,26 +228,24 @@ public class Beatmaps {
         for(File container : beatmapContainers) {
             File infoFile = new File(container, BEATMAP_INFO_FILE);
 
-            try {
+            FileReader reader = new FileReader(infoFile);
+            infos.add(gson.fromJson(reader, Info.class));
 
-                FileReader reader = new FileReader(infoFile);
-                infos.add(gson.fromJson(reader, Info.class));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-
-                Toast toast = Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG);
-                toast.show();
-            }
         }
 
         return infos;
     }
 
-    public static Difficulty readDifficulty(String container, String filename) {
+    /**
+     * @param container The beatmap container name
+     * @param filename The difficulty file name (Must be grabbed from info.dat to avoid complications)
+     * @return Parses json and returns it as {@link at.tewan.androidmapper.beatmap.difficulty.Difficulty Difficulty}
+     * @throws IOException
+     */
+    public static Difficulty readDifficulty(String container, String filename) throws IOException {
         File difficultyFile = new File(BEATMAPS_ROOT, container + System.getProperty("file.separator") + filename);
 
-        Log.i(LOG_TAG, "Loading difficulty '" + difficultyFile.toString() + "'...");
+        log("Loading difficulty '" + difficultyFile.toString() + "'...");
 
         if(!difficultyFile.exists()) {
 
@@ -234,25 +255,46 @@ public class Beatmaps {
             return new Difficulty();
         }
 
-        Log.i(LOG_TAG, "Loading difficulty from file...");
+        log("Loading difficulty from file...");
 
-        try(FileReader reader = new FileReader(difficultyFile)) {
+        FileReader reader = new FileReader(difficultyFile);
 
-            Difficulty difficulty = gson.fromJson(reader, Difficulty.class);
+        Difficulty difficulty = gson.fromJson(reader, Difficulty.class);
+        reader.close();
 
-            Log.i(LOG_TAG, "Done loading difficulty file");
+        log("Done loading difficulty file");
 
-            return difficulty;
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-
-            return null;
-        }
+        return difficulty;
 
     }
 
-    private static boolean isStorageWriteable() {
+    public static boolean saveDifficulty(Difficulty difficulty, String container, String filename) {
+        File difficultyFile = new File(BEATMAPS_ROOT, container + System.getProperty("file.separator") + filename);
+
+        if(difficultyFile.exists()) {
+            log("Difficulty file '" + difficultyFile.toString() + "' exists. Overriding.");
+        } else {
+            log("Difficulty file '" + difficultyFile.toString() + "' does not exist. Creating.");
+        }
+
+        try (FileWriter writer = new FileWriter(difficultyFile)) {
+            writer.write(gson.toJson(difficulty));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+
+            return false;
+        }
+
+        log("Done writing file");
+        return true;
+
+    }
+
+    private static void log(String message) {
+        Log.i(LOG_TAG, message);
+    }
+
+    private static boolean isStorageWritable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
     }

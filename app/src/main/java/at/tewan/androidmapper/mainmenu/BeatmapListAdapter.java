@@ -63,7 +63,7 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
-            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            if(event.getAction() == MotionEvent.ACTION_UP) {
 
                 v.performClick();
 

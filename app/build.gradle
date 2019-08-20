@@ -6,7 +6,7 @@ android {
         applicationId "at.tewan.androidmapper"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 1
+        versionCode 2
         versionName "Prototype"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

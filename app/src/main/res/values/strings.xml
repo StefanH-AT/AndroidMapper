@@ -46,4 +46,6 @@
     <string name="bomb">Bomb</string>
     <string name="eraser">Eraser</string>
 
+    <string name="feature_missing">Feature not yet implemented</string>
+
 </resources>

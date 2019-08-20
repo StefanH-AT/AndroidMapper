@@ -1,39 +1,41 @@
 package at.tewan.androidmapper;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.PopupMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.beatmap.Beatmaps;
 import at.tewan.androidmapper.mainmenu.BeatmapListAdapter;
+import at.tewan.androidmapper.util.ErrorPrinter;
 
 public class MainmenuActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "Mainmenu";
+
+    private static final int PERMISSION_REQUEST_EXTERNAL_STORAGE = 200;
 
     private RecyclerView beatmapList;
     private ArrayList<Info> beatmaps;
@@ -46,16 +48,29 @@ public class MainmenuActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(newBeatmapListener);
 
+        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.i(LOG_TAG, "External Storage permissions not granted. Requesting...");
 
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_EXTERNAL_STORAGE);
+        } else {
+            try {
+                Beatmaps.init();
+            } catch (IOException ex) {
+                ErrorPrinter.msg(this, "Storage is not writable!!", ex);
+            }
+        }
 
-        Beatmaps.init();
 
 
         beatmapList = findViewById(R.id.beatmapList);
         beatmapList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         beatmapList.setItemAnimator(new DefaultItemAnimator());
 
-        beatmaps = Beatmaps.readStoredBeatmapInfos(this);
+        try {
+            beatmaps = Beatmaps.readAllStoredBeatmapInfos();
+        } catch (IOException ex) {
+            ErrorPrinter.msg(this, "Failed to load beatmap infos", ex);
+        }
 
 
         beatmapList.setAdapter(new BeatmapListAdapter(getApplicationContext(), beatmaps));
@@ -171,5 +186,22 @@ public class MainmenuActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(requestCode == PERMISSION_REQUEST_EXTERNAL_STORAGE) {
+
+            // We only request one permission, so we can be sure to only get one response
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                recreate(); // Restart activity
+            } else {
+                ErrorPrinter.msg(this, "You didn't grant external storage writing permissions, which AndroidMapper relies on. Closing app");
+                finish();
+            }
+
+        }
+
     }
 }

@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ import at.tewan.androidmapper.EditorActivity;
 import at.tewan.androidmapper.R;
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.beatmap.info.InfoDifficulty;
+import processing.event.MouseEvent;
 
 
 public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAdapter.DifficultyListAdapterHolder>  {
@@ -49,10 +51,12 @@ public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAd
             this.filename = filename;
         }
 
+
+
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
-            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            if(event.getAction() == MotionEvent.ACTION_UP) {
 
                 v.performClick();
 
