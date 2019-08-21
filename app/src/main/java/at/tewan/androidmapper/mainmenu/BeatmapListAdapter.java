@@ -26,6 +26,7 @@ import at.tewan.androidmapper.R;
 import at.tewan.androidmapper.beatmap.Beatmap;
 import at.tewan.androidmapper.beatmap.Beatmaps;
 import at.tewan.androidmapper.beatmap.info.Info;
+import at.tewan.androidmapper.preferences.Preferences;
 import at.tewan.androidmapper.util.ErrorPrinter;
 
 import static at.tewan.androidmapper.util.ActivityArguments.BEATMAP_CONTAINER;
@@ -42,6 +43,11 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
     public BeatmapListAdapter(Context context, ArrayList<Info> items) {
         this.context = context;
         this.items = items;
+
+        // Set dark theme
+        if(Preferences.isDarkTheme()) {
+            context.setTheme(R.style.AppTheme_Dark);
+        }
     }
 
     class BeatmapListAdapterHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {

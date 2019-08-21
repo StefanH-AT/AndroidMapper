@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="50dp"
@@ -14,6 +13,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:contentDescription="@string/eraser"
             android:onClick="delete"
             app:srcCompat="@drawable/ic_delete" />
 
@@ -29,7 +29,7 @@
             android:id="@+id/imageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:contentDescription="Bomb"
+            android:contentDescription="@string/bomb"
             app:srcCompat="@drawable/bomb" />
 
         <ToggleButton
@@ -63,7 +63,7 @@
 
             <SeekBar
                 android:id="@+id/songProgress"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -76,36 +76,36 @@
         </FrameLayout>
 
         <LinearLayout
+            style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            style="?android:attr/buttonBarStyle">
+            android:orientation="horizontal">
 
             <Button
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="save"
-                android:text="@string/save"
-                style="?android:attr/buttonBarButtonStyle"/>
+                android:text="@string/save" />
 
             <Button
                 android:id="@+id/button2"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="preview"
-                android:text="@string/preview"
-                style="?android:attr/buttonBarButtonStyle"/>
+                android:text="@string/preview" />
 
             <Button
                 android:id="@+id/button3"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="exit"
-                android:text="@string/exit"
-                style="?android:attr/buttonBarButtonStyle"/>
+                android:text="@string/exit" />
         </LinearLayout>
     </LinearLayout>
 

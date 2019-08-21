@@ -47,5 +47,17 @@
     <string name="eraser">Eraser</string>
 
     <string name="feature_missing">Feature not yet implemented</string>
+    <string name="placeholder">&lt;placeholder&gt;</string>
+
+    <string name="theme_dark">Dark Theme</string>
+    <string name="theme_light">Light Theme</string>
+
+    <string name="section_visual">Visual</string>
+    <string name="section_functional">Functional</string>
+    <string name="section_convenience">Convenience</string>
+
+    <string name="setting_theme">Use dark theme</string>
+    <string name="setting_use_custom_color">Use custom color in editor</string>
+    <string name="setting_default_level_author">Default level author</string>
 
 </resources>

@@ -38,6 +38,13 @@
 
         </activity>
 
+        <activity
+            android:name=".PreferencesActivity"
+            android:label="@string/action_settings"
+            android:theme="@style/AppTheme">
+
+        </activity>
+
     </application>
 
 </manifest>

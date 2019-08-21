@@ -1,15 +1,14 @@
 package at.tewan.androidmapper;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,11 +28,12 @@ import java.util.ArrayList;
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.beatmap.Beatmaps;
 import at.tewan.androidmapper.mainmenu.BeatmapListAdapter;
+import at.tewan.androidmapper.preferences.Preferences;
 import at.tewan.androidmapper.util.ErrorPrinter;
 
 public class MainmenuActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = "Mainmenu";
+    private static final String LOG_TAG = "Main Menu Activity";
 
     private static final int PERMISSION_REQUEST_EXTERNAL_STORAGE = 200;
 
@@ -43,6 +43,21 @@ public class MainmenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        Preferences.loadPreferences(this);
+
+        // Set dark theme
+        if(Preferences.isDarkTheme()) {
+
+            Log.i(LOG_TAG, "Using dark theme");
+            setTheme(R.style.AppTheme_Dark);
+
+        } else {
+            Log.i(LOG_TAG, "Using light theme");
+        }
+
+
         setContentView(R.layout.activity_mainmenu);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -118,6 +133,8 @@ public class MainmenuActivity extends AppCompatActivity {
         EditText bpm = dialog.findViewById(R.id.inputbpm);
         Button createButton = dialog.findViewById(R.id.create);
 
+        levelAuthor.setText(Preferences.getDefaultAuthor());
+
 
         TextWatcher watcher = new TextWatcher() {
             @Override
@@ -175,13 +192,15 @@ public class MainmenuActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            Intent intent = new Intent(this, PreferencesActivity.class);
+            startActivity(intent);
+
+
             return true;
         }
 

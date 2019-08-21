@@ -34,6 +34,7 @@ import at.tewan.androidmapper.beatmap.enums.Difficulties;
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.beatmap.info.InfoDifficulty;
 import at.tewan.androidmapper.beatmap.info.InfoDifficultySet;
+import at.tewan.androidmapper.preferences.Preferences;
 import at.tewan.androidmapper.propertiesmenu.DifficultyListAdapter;
 import at.tewan.androidmapper.util.ActivityArguments;
 import at.tewan.androidmapper.util.ErrorPrinter;
@@ -63,6 +64,11 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
 
         String beatmapContainer = intent.getStringExtra(BEATMAP_CONTAINER);
         Log.i(LOG_TAG, "Beatmap container: " + beatmapContainer);
+
+        // Set dark theme
+        if(Preferences.isDarkTheme()) {
+            setTheme(R.style.AppTheme_Dark);
+        }
 
         setContentView(R.layout.activity_beatmap_properties);
 
