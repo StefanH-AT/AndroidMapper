@@ -91,7 +91,7 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
         levelAuthor.setText(info.getLevelAuthorName());
         bpm.setText(String.valueOf(info.getBeatsPerMinute()));
 
-        File coverFile = Beatmaps.getCover(info.getSongName().hashCode() + "", info.getCoverImageFilename());
+        File coverFile = Beatmaps.getCover(beatmapContainer, info.getCoverImageFilename());
 
         Bitmap bitmap = BitmapFactory.decodeFile(coverFile.toString());
         coverView.setImageBitmap(bitmap);

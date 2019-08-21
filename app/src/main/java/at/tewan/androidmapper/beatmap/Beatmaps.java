@@ -71,8 +71,8 @@ public class Beatmaps {
         beatmap.setInfo(info);
 
 
-        // Using the hash code as the beatmap folder name
-        String containerFolderName = songName.hashCode() + "";
+        // Folder name used for beatmap
+        String containerFolderName = levelAuthor + "_" + songName + "_" + songAuthor + "_" + (int)bpm;
 
         boolean saveSuccessful = saveInfo(context, info, containerFolderName);
 

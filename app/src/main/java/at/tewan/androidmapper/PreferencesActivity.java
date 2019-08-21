@@ -40,6 +40,8 @@ public class PreferencesActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_preferences);
 
+        getSupportActionBar().setHomeButtonEnabled(true); // <== Top Left back button
+
         settingTheme            =   findViewById(R.id.settingTheme);
         settingCustomColors     =   findViewById(R.id.settingCustomColor);
         settingDefaultAuthor    =   findViewById(R.id.settingDefaultAuthor);
