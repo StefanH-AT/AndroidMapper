@@ -151,13 +151,14 @@ public class MainmenuActivity extends AppCompatActivity {
                 boolean levelAuthorEmpty = levelAuthor.getText().toString().trim().isEmpty();
                 boolean bpmEmpty = bpm.getText().toString().trim().isEmpty();
 
-                createButton.setEnabled( !(songNameEmpty && songAuthorEmpty && levelAuthorEmpty && bpmEmpty) );
+                createButton.setEnabled( !(songNameEmpty || songAuthorEmpty || levelAuthorEmpty || bpmEmpty) );
             }
         };
 
         songName.addTextChangedListener(watcher);
         songAuthor.addTextChangedListener(watcher);
         levelAuthor.addTextChangedListener(watcher);
+        bpm.addTextChangedListener(watcher);
 
         createButton.setOnClickListener(v -> {
             Log.i(LOG_TAG, "Creating new Beatmap");

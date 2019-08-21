@@ -104,7 +104,10 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
     public void onBindViewHolder(@NonNull BeatmapListAdapterHolder holder, int i) {
         Info info = items.get(i);
         holder.songName.setText(info.getSongName());
-        holder.bpm.setText(String.valueOf(info.getBeatsPerMinute()));
+
+        // Resulting string example: 140.0 BPM
+        String bpm = info.getBeatsPerMinute() + " " + context.getResources().getString(R.string.bpm);
+        holder.bpm.setText(bpm);
 
         File coverFile = Beatmaps.getCover(getContainer(i), info.getCoverImageFilename());
 
