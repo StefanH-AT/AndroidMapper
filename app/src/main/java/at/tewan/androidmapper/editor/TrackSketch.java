@@ -3,7 +3,6 @@ package at.tewan.androidmapper.editor;
 import android.util.Log;
 
 import at.tewan.androidmapper.beatmap.difficulty.DifficultyNote;
-import at.tewan.androidmapper.beatmap.enums.CutDirection;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 
@@ -47,7 +46,7 @@ public class TrackSketch extends PApplet {
     @Override
     public void draw() {
 
-        background(0);
+        background(backgroundColor);
 
         // Drawn absolute
 
@@ -82,7 +81,7 @@ public class TrackSketch extends PApplet {
             int x = padding + laneWidth * i;
 
             strokeWeight(1);
-            stroke(255);
+            stroke(strokeColor);
             line(x, 0, x, height);
         }
 

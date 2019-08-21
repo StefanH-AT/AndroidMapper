@@ -11,13 +11,21 @@ import at.tewan.androidmapper.beatmap.difficulty.DifficultyEvent;
 import at.tewan.androidmapper.beatmap.difficulty.DifficultyNote;
 import at.tewan.androidmapper.beatmap.difficulty.DifficultyObstacle;
 import at.tewan.androidmapper.beatmap.info.Info;
+import at.tewan.androidmapper.preferences.Preferences;
 
 public class SharedSketchData {
 
     public static final boolean RED = false;
     public static final boolean BLUE = true;
 
+
+
     private static final String LOG_TAG = "EditorData";
+
+    static boolean theme;
+
+    static int backgroundColor;
+    static int strokeColor;
 
     static int lanes = 4;
     static int rows = 3;
@@ -36,7 +44,7 @@ public class SharedSketchData {
 
     public static boolean selectedColor = RED;
 
-    public static void init(Info info, Difficulty difficulty) {
+    public static void init(Info info, Difficulty difficulty, boolean theme) {
 
         SharedSketchData.info = info;
         SharedSketchData.difficulty = difficulty;
@@ -45,6 +53,17 @@ public class SharedSketchData {
         Log.i(LOG_TAG, "Total beats: " + totalBeats);
 
         SharedSketchData.notes = difficulty.getNotes();
+
+
+        // Theme colors
+        if(theme == Preferences.THEME_LIGHT) {
+            backgroundColor = 255;
+            strokeColor = 20;
+        } else {
+            backgroundColor = 40;
+            strokeColor = 230;
+        }
+
     }
 
     public static void setToolMode(ToolMode toolMode) {

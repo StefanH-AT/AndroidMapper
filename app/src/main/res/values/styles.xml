@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Light base application theme -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/lightPrimary</item>
         <item name="colorPrimaryDark">@color/lightPrimaryDark</item>
@@ -17,7 +17,13 @@
         <item name="colorAccent">@color/darkAccent</item>
     </style>
 
-    <style name="AppTheme.Fullscreen">
+    <style name="AppTheme.Light.Fullscreen" parent="AppTheme.Light">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="AppTheme.Dark.Fullscreen" parent="AppTheme.Dark">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>

@@ -34,11 +34,11 @@ public class InspectionSketch extends PApplet {
 
     @Override
     public void draw() {
-        background(0);
+        background(backgroundColor);
 
 
         // Grid
-        stroke(255);
+        stroke(strokeColor);
         strokeWeight(2);
 
         noFill();

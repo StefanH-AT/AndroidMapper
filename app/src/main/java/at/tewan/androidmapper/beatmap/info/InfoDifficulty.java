@@ -2,7 +2,7 @@ package at.tewan.androidmapper.beatmap.info;
 
 public class InfoDifficulty {
 
-    private String difficulty;
+    private String _difficulty;
     private int _difficultyRank;
     private String _beatmapFilename;
     private float _noteJumpMovementSpeed;
@@ -30,7 +30,7 @@ public class InfoDifficulty {
     }
 
     public String getDifficulty() {
-        return difficulty;
+        return _difficulty;
     }
 
     public void setBeatmapFilename(String beatmapFilename) {
@@ -54,7 +54,7 @@ public class InfoDifficulty {
     }
 
     public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
+        this._difficulty = difficulty;
     }
 
 }

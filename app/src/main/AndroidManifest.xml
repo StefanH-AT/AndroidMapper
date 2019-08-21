@@ -11,11 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.Light">
         <activity
             android:name=".MainmenuActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -26,14 +26,14 @@
         <activity
             android:name=".BeatmapPropertiesActivity"
             android:label="@string/beatmap"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.Light">
 
         </activity>
 
         <activity
             android:name=".EditorActivity"
             android:label="@string/beatmap"
-            android:theme="@style/AppTheme.Fullscreen"
+            android:theme="@style/AppTheme.Light.Fullscreen"
             android:screenOrientation="landscape">
 
         </activity>
@@ -41,7 +41,7 @@
         <activity
             android:name=".PreferencesActivity"
             android:label="@string/action_settings"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.Light">
 
         </activity>
 

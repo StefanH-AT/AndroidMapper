@@ -19,6 +19,7 @@ import at.tewan.androidmapper.editor.InspectionSketch;
 import at.tewan.androidmapper.editor.SharedSketchData;
 import at.tewan.androidmapper.editor.ToolMode;
 import at.tewan.androidmapper.editor.TrackSketch;
+import at.tewan.androidmapper.preferences.Preferences;
 import processing.android.PFragment;
 
 import static at.tewan.androidmapper.editor.SharedSketchData.*;
@@ -39,6 +40,11 @@ public class EditorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set dark theme
+        if(Preferences.isDarkTheme()) {
+            setTheme(R.style.AppTheme_Dark_Fullscreen);
+        }
 
         Intent intent = getIntent();
 
@@ -65,7 +71,7 @@ public class EditorActivity extends AppCompatActivity {
 
             finish(); // Stop activity
         }
-        SharedSketchData.init(info, difficulty);
+        SharedSketchData.init(info, difficulty, Preferences.isDarkTheme());
 
 
         // Canvases
