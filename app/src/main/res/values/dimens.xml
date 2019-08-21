@@ -4,4 +4,6 @@
 
     <dimen name="section_headline_spacing">5dp</dimen>
     <dimen name="section_vertical_padding">16dp</dimen>
+
+    <dimen name="text_icon_padding">6dp</dimen>
 </resources>

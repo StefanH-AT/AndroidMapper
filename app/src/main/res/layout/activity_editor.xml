@@ -15,7 +15,7 @@
             android:layout_height="50dp"
             android:contentDescription="@string/eraser"
             android:onClick="delete"
-            app:srcCompat="@drawable/ic_delete" />
+            app:srcCompat="@drawable/ic_delete_black_24dp" />
 
         <View
             android:id="@+id/divider"

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/editProperties"
-        android:icon="@drawable/ic_mode_edit_black_64dp"
+        android:icon="@drawable/ic_mode_edit_white_64dp"
         android:title="@string/edit"
         app:showAsAction="always" />
 </menu>

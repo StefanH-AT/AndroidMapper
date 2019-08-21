@@ -31,7 +31,8 @@
                     android:id="@+id/cover"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/beatmap" />
+                    android:contentDescription="@string/beatmap"
+                    app:srcCompat="@drawable/android_cat" />
             </LinearLayout>
 
             <LinearLayout
@@ -46,28 +47,48 @@
                     android:id="@+id/songName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_music_note_white_24dp"
+                    android:drawablePadding="@dimen/text_icon_padding"
+                    android:drawableTint="?attr/colorControlNormal"
+                    android:text="@string/songName"
                     android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/songSubName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_description_white_24dp"
+                    android:drawablePadding="@dimen/text_icon_padding"
+                    android:drawableTint="?attr/colorControlNormal"
+                    android:text="@string/songSubName" />
 
                 <TextView
                     android:id="@+id/songAuthor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_mic_white_24dp"
+                    android:drawablePadding="@dimen/text_icon_padding"
+                    android:drawableTint="?attr/colorControlNormal"
+                    android:text="@string/songAuthor" />
 
                 <TextView
                     android:id="@+id/levelAuthor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_map_white_24dp"
+                    android:drawablePadding="@dimen/text_icon_padding"
+                    android:drawableTint="?attr/colorControlNormal"
+                    android:text="@string/levelAuthor" />
 
                 <TextView
                     android:id="@+id/bpm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginTop="2dp"
+                    android:drawableStart="@drawable/ic_av_timer_black_24dp"
+                    android:drawablePadding="@dimen/text_icon_padding"
+                    android:drawableTint="?attr/colorControlNormal"
+                    android:text="@string/bpm" />
             </LinearLayout>
 
         </LinearLayout>

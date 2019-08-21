@@ -108,7 +108,11 @@ public class Beatmaps {
      * @return {@link java.io.File File} object pointing to the cover image
      */
     public static File getCover(String container, String cover) {
-        return new File(Beatmaps.BEATMAPS_ROOT, container + SEPARATOR + cover);
+        return new File(BEATMAPS_ROOT, container + SEPARATOR + cover);
+    }
+
+    public static File getSong(String container, String songFile) {
+        return new File(BEATMAPS_ROOT, container + SEPARATOR + songFile);
     }
 
     public static File[] getContainers() {
