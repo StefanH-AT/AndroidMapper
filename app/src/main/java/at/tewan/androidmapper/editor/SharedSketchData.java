@@ -15,12 +15,15 @@ import at.tewan.androidmapper.preferences.Preferences;
 
 public class SharedSketchData {
 
+    private static final String LOG_TAG = "EditorData";
+
     public static final boolean RED = false;
     public static final boolean BLUE = true;
 
+    public static int colorLeftR, colorLeftG, colorLeftB;
+    public static int colorRightR, colorRightG, colorRightB;
 
-
-    private static final String LOG_TAG = "EditorData";
+    private static ArrayList<DifficultyNote> notesToRemove = new ArrayList<>();
 
     static boolean theme;
 
@@ -29,9 +32,9 @@ public class SharedSketchData {
 
     static int lanes = 4;
     static int rows = 3;
-    static ArrayList<DifficultyNote> notes;
-    static ArrayList<DifficultyEvent> events;
-    static ArrayList<DifficultyObstacle> obstacles;
+    private static ArrayList<DifficultyNote> notes;
+    private static ArrayList<DifficultyEvent> events;
+    private static ArrayList<DifficultyObstacle> obstacles;
     static Info info;
     static Difficulty difficulty;
 
@@ -64,10 +67,30 @@ public class SharedSketchData {
             strokeColor = 230;
         }
 
+        // Draw Custom colors or default colors?
+
+        // TODO: Implement custom color drawing
+
+    //    if(!Preferences.doesDrawCustomColors()) { // <=== Uncomment this line when implementing custom colors
+
+            // Default colors
+            colorLeftR = 244;
+            colorLeftG = 43;
+            colorLeftB = 32;
+
+            colorRightR = 25;
+            colorRightG = 134;
+            colorRightB = 242;
+    //    }
+
     }
 
     public static void setToolMode(ToolMode toolMode) {
         SharedSketchData.toolMode = toolMode;
+    }
+
+    public static ToolMode getToolMode() {
+        return toolMode;
     }
 
     static float beatAsTime(float beat) {
@@ -97,11 +120,29 @@ public class SharedSketchData {
         return Math.round((float) value / steps) * steps;
     }
 
+    /**
+     * Adds note to an array of disposable notes,
+     * which will be removed on the next call of {@link SharedSketchData#getNotes() getNotes()} to avoid {@link java.util.ConcurrentModificationException ConcurrentModificationException}
+     *
+     * @param note to remove
+     */
+    static void requestNoteRemoval(DifficultyNote note) {
+        notesToRemove.add(note);
+    }
+
     public static Difficulty getDifficulty() {
         return difficulty;
     }
 
     public static Info getInfo() {
         return info;
+    }
+
+    public static ArrayList<DifficultyNote> getNotes() {
+
+        notes.removeAll(notesToRemove);
+        notesToRemove.clear();
+
+        return notes;
     }
 }

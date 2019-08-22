@@ -10,4 +10,6 @@
     <color name="darkPrimaryDark">#E28800</color>
     <color name="darkAccent">#FF5100</color>
 
+    <color name="invisible">#00000000</color>
+
 </resources>

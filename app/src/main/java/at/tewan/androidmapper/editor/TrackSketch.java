@@ -17,8 +17,6 @@ public class TrackSketch extends PApplet {
     private int baselineY;
 
 
-    private int notePlaceDirectionRadius = 240;
-
     private float bpm;
 
     public TrackSketch() {
@@ -104,7 +102,7 @@ public class TrackSketch extends PApplet {
 
     private void drawNotes() {
 
-        for(DifficultyNote note : notes) {
+        for(DifficultyNote note : getNotes()) {
 
             rectMode(RADIUS);
 
@@ -200,6 +198,7 @@ public class TrackSketch extends PApplet {
         } else { // Note placing preview
 
             stroke(255);
+            int notePlaceDirectionRadius = 240;
             ellipse(getLaneCoordinate(originLane), getBeatCoordinate(originBeat), notePlaceDirectionRadius, notePlaceDirectionRadius);
 
             if(dist(ox, oy, dx, dy) > notePlaceDirectionRadius) {

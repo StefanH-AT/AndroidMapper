@@ -18,8 +18,6 @@ public class InspectionSketch extends PApplet {
     private int rowHeight;
     private int halfRowHeight;
 
-    private int dotNoteRadius = 50;
-
     @Override
     public void setup() {
         Log.i(LOG_TAG, "Canvas Size: " + width + "x" + height);
@@ -62,7 +60,7 @@ public class InspectionSketch extends PApplet {
 
     private void drawNotes() {
 
-        for(DifficultyNote note : notes) {
+        for(DifficultyNote note : getNotes()) {
 
             if(timeAsBeat(note.getTime()) == currentBeat) {
 
@@ -139,6 +137,7 @@ public class InspectionSketch extends PApplet {
 
             CutDirection direction;
 
+            int dotNoteRadius = 50;
             if (dist(event.getX(), event.getY(), getLaneCoordinate(originLane), getRowCoordinate(originRow)) > dotNoteRadius) {
                 float angle = (float) Math.toDegrees(getDragAngle(event.getX(), event.getY()));
 
@@ -151,7 +150,7 @@ public class InspectionSketch extends PApplet {
 
             DifficultyNote note = new DifficultyNote(beatAsTime(currentBeat), colorAsType(selectedColor), originLane, originRow, direction.ordinal());
 
-            notes.add(note);
+            getNotes().add(note);
         }
     }
 
@@ -165,9 +164,10 @@ public class InspectionSketch extends PApplet {
 
         if(toolMode == ToolMode.REMOVE) {
 
-            for(DifficultyNote note : notes) {
+            // Loop runs backwards because items are being removed
+            for(DifficultyNote note : getNotes()) {
                 if(note.getTime() == beatAsTime(currentBeat) && note.getLineLayer() == originRow && note.getLineIndex() == originLane) {
-                    notes.remove(note);
+                    requestNoteRemoval(note);
                 }
             }
 

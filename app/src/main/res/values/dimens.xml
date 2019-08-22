@@ -6,4 +6,6 @@
     <dimen name="section_vertical_padding">16dp</dimen>
 
     <dimen name="text_icon_padding">6dp</dimen>
+
+    <dimen name="canvas_elevation">4dp</dimen>
 </resources>
