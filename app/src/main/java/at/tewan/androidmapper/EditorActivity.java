@@ -27,6 +27,17 @@ import static at.tewan.androidmapper.util.ActivityArguments.*;
 
 /**
  * The one and only beat map editor
+ *
+ *
+ * Tasks:
+ * TODO: Implement Bombs
+ * TODO: Implement Walls
+ * TODO: Cut/Copy Paste
+ * TODO: Light Event Editor
+ *
+ *
+ *
+ *
  */
 public class EditorActivity extends AppCompatActivity {
 
@@ -46,20 +57,21 @@ public class EditorActivity extends AppCompatActivity {
             setTheme(R.style.AppTheme_Dark_Fullscreen);
         }
 
+        // Load layout
+        setContentView(R.layout.activity_editor);
+
+        // Read beatmap difficulty
         Intent intent = getIntent();
 
         beatmapContainer = intent.getStringExtra(BEATMAP_CONTAINER);
         beatmapDifficulty = intent.getStringExtra(BEATMAP_DIFFICULTY);
-
-
-        setContentView(R.layout.activity_editor);
 
         Log.i(LOG_TAG, "Loading beatmap hash: " + beatmapContainer);
         Log.i(LOG_TAG, "Beatmap difficulty file: " + beatmapDifficulty);
 
 
 
-        Info info = Beatmaps.readStoredBeatmapInfo(beatmapContainer);
+        Info info = Beatmaps.readBeatmapInfo(beatmapContainer);
 
         try {
             difficulty = Beatmaps.readDifficulty(beatmapContainer, beatmapDifficulty);
@@ -132,6 +144,20 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     public void exit(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.title_editor_exit);
+        builder.setMessage(R.string.message_editor_exit);
 
+        builder.setPositiveButton(R.string.yes, (dialog, which) -> finish());
+        builder.setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss());
+
+
+        builder.create().show();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        exit(null);
     }
 }

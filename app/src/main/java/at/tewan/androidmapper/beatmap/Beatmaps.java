@@ -88,9 +88,10 @@ public class Beatmaps {
 
         boolean exists = beatmapDir.exists();
 
-        Log.i(LOG_TAG, "Deleting '" + beatmapDir.toString() + "' (" + beatmapDir.exists() + " " + beatmapDir.isDirectory() + ")");
+        Log.i(LOG_TAG, "Deleting '" + beatmapDir.toString() + "' | Exists: (" + exists + ")");
 
         if(exists) {
+
             try {
                 FileUtils.deleteDirectory(beatmapDir);
             } catch (IOException e) {
@@ -111,10 +112,18 @@ public class Beatmaps {
         return new File(BEATMAPS_ROOT, container + SEPARATOR + cover);
     }
 
+    /**
+     * @param container Beatmap container folder name
+     * @param songFile File name of the song file (Example: "song.egg")
+     * @return {@link java.io.File File} that points to the song file
+     */
     public static File getSong(String container, String songFile) {
         return new File(BEATMAPS_ROOT, container + SEPARATOR + songFile);
     }
 
+    /**
+     * @return {@link java.io.File File} array of all folders found in the beatmaps root directory
+     */
     public static File[] getContainers() {
         return BEATMAPS_ROOT.listFiles(File::isDirectory);
     }
@@ -129,7 +138,7 @@ public class Beatmaps {
         if(containerFolder.mkdir()) {
             Log.i(LOG_TAG, "Created beatmap folder for " + info.getSongName() + " (" + containerFolderName + ")");
         } else {
-            Log.i(LOG_TAG, "Folder " + containerFolderName + " already exists.");
+            Log.i(LOG_TAG, "Folder '" + containerFolderName + "' already exists.");
         }
 
         // info.dat
@@ -154,8 +163,9 @@ public class Beatmaps {
 
         File coverImageFile = new File(containerFolder, info.getCoverImageFilename());
         if(coverImageFile.exists()) {
-            log("cover.jpg already exists.");
+            log("Cover already exists.");
         } else {
+            log("Cover does not exist. Creating default cover");
 
             Bitmap coverImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.android_cat);
 
@@ -201,7 +211,11 @@ public class Beatmaps {
         return true;
     }
 
-    public static Info readStoredBeatmapInfo(String container) {
+    /**
+     * @param container Beatmap container folder name
+     * @return Reads info.dat file present in the beatmap container file, parses the json data and returns it as {@link at.tewan.androidmapper.beatmap.info.Info Info}. Null if not found
+     */
+    public static Info readBeatmapInfo(String container) {
         File beatmapInfo = new File(BEATMAPS_ROOT, container + SEPARATOR + BEATMAP_INFO_FILE);
 
         if(beatmapInfo.exists()) {
@@ -225,7 +239,7 @@ public class Beatmaps {
     /**
      * @return {@link java.util.ArrayList<Info> ArrayList<Info>} of all beatmap info files that could be found
      */
-    public static ArrayList<Info> readAllStoredBeatmapInfos() throws IOException {
+    public static ArrayList<Info> readAllBeatmapInfos() throws IOException {
         File[] beatmapContainers = getContainers();
 
         ArrayList<Info> infos = new ArrayList<>();
@@ -272,6 +286,12 @@ public class Beatmaps {
 
     }
 
+    /**
+     * @param difficulty The {@link at.tewan.androidmapper.beatmap.difficulty.Difficulty Difficulty} object to save
+     * @param container Container folder name
+     * @param filename Name under which the file should be saved. (Must be read from info.dat to link up)
+     * @return true if saved successfully, false if not
+     */
     public static boolean saveDifficulty(Difficulty difficulty, String container, String filename) {
         File difficultyFile = new File(BEATMAPS_ROOT, container + System.getProperty("file.separator") + filename);
 

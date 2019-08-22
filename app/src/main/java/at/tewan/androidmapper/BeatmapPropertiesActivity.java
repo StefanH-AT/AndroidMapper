@@ -36,7 +36,6 @@ import at.tewan.androidmapper.beatmap.info.InfoDifficulty;
 import at.tewan.androidmapper.beatmap.info.InfoDifficultySet;
 import at.tewan.androidmapper.preferences.Preferences;
 import at.tewan.androidmapper.propertiesmenu.DifficultyListAdapter;
-import at.tewan.androidmapper.util.ActivityArguments;
 import at.tewan.androidmapper.util.ErrorPrinter;
 
 import static at.tewan.androidmapper.util.ActivityArguments.BEATMAP_CONTAINER;
@@ -72,7 +71,7 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_beatmap_properties);
 
-        info = Beatmaps.readStoredBeatmapInfo(beatmapContainer);
+        info = Beatmaps.readBeatmapInfo(beatmapContainer);
 
         if(info == null) {
             ErrorPrinter.msg(this, "Beatmap info in container '" + beatmapContainer + "' could not be found!");

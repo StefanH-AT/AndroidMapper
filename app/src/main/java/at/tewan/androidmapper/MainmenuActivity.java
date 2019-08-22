@@ -82,7 +82,7 @@ public class MainmenuActivity extends AppCompatActivity {
         beatmapList.setItemAnimator(new DefaultItemAnimator());
 
         try {
-            beatmaps = Beatmaps.readAllStoredBeatmapInfos();
+            beatmaps = Beatmaps.readAllBeatmapInfos();
         } catch (IOException ex) {
             ErrorPrinter.msg(this, "Failed to load beatmap infos", ex);
         }

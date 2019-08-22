@@ -68,4 +68,7 @@
     <string name="message_unsaved_changes">Do you want to discard your unsaved changes?</string>
     <string name="title_unsaved_changes">Unsaved Changes</string>
 
+    <string name="message_editor_exit">Unsaved progress will be lost!!</string>
+    <string name="title_editor_exit">Are you sure about that?</string>
+
 </resources>
