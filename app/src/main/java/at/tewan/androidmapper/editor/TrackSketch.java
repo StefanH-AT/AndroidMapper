@@ -65,8 +65,9 @@ public class TrackSketch extends PApplet {
         translate(0, currentBeat * beatHeight);
 
         // Stuff that's drawn relative to the current progress
-        drawBeats();
         drawNotes();
+        drawBeats();
+
 
         if(mousePressed)
             mouseDown();
@@ -164,7 +165,7 @@ public class TrackSketch extends PApplet {
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        currentBeat = constrain(Math.round(currentBeat * subBeatAmount), 0, totalBeats) / subBeatAmount;
+        currentBeat = constrain(Math.round(currentBeat * subBeatAmount), 0, totalBeats * subBeatAmount) / subBeatAmount;
 /*
         if(isMouseInTrack(event.getX())) {
 
