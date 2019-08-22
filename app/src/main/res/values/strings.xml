@@ -64,6 +64,8 @@
     <string name="setting_theme">Use dark theme</string>
     <string name="setting_use_custom_color">Use custom color in editor</string>
     <string name="setting_default_level_author">Default level author</string>
+    <string name="setting_sub_beat_count">Sub Beat count</string>
+    <string name="setting_sub_beat_count_hint">Default: 4</string>
 
     <string name="preferences_saved">Preferences Saved</string>
     <string name="preferences_disclaimer">Requires restart to take effect</string>

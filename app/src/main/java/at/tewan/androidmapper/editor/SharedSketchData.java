@@ -2,8 +2,6 @@ package at.tewan.androidmapper.editor;
 
 import android.util.Log;
 
-import com.google.common.logging.nano.Vr;
-
 import java.util.ArrayList;
 
 import at.tewan.androidmapper.beatmap.difficulty.Difficulty;
@@ -23,9 +21,7 @@ public class SharedSketchData {
     public static int colorLeftR, colorLeftG, colorLeftB;
     public static int colorRightR, colorRightG, colorRightB;
 
-    private static ArrayList<DifficultyNote> notesToRemove = new ArrayList<>();
-
-    static boolean theme;
+    private static ArrayList<DifficultyNote> disposableNotes = new ArrayList<>();
 
     static int backgroundColor;
     static int strokeColor;
@@ -41,7 +37,7 @@ public class SharedSketchData {
     static float currentBeat = 0;
     static float totalBeats;
     static float songDuration = 60; // Song duration in seconds // TODO: Use the actual song duration
-    static int subBeatAmount = 4;
+    static int subBeatAmount;
 
     static ToolMode toolMode;
 
@@ -52,7 +48,12 @@ public class SharedSketchData {
         SharedSketchData.info = info;
         SharedSketchData.difficulty = difficulty;
 
-        totalBeats = timeAsBeat(songDuration);
+        // Sub beat count
+        subBeatAmount = Preferences.getSubBeatCount();
+        Log.i(LOG_TAG, "Sub Beat Amount: " + subBeatAmount);
+
+        // Total beat count
+        totalBeats = timeAsBeat(songDuration);                  // NOTICE: This code must be executed AFTER subBeatAmount is initialized!!
         Log.i(LOG_TAG, "Total beats: " + totalBeats);
 
         SharedSketchData.notes = difficulty.getNotes();
@@ -71,7 +72,7 @@ public class SharedSketchData {
 
         // TODO: Implement custom color drawing
 
-    //    if(!Preferences.doesDrawCustomColors()) { // <=== Uncomment this line when implementing custom colors
+    //    if(!Preferences.doesDrawCustomColors()) { // <=== Uncomment this if statement when implementing custom colors
 
             // Default colors
             colorLeftR = 244;
@@ -126,8 +127,10 @@ public class SharedSketchData {
      *
      * @param note to remove
      */
-    static void requestNoteRemoval(DifficultyNote note) {
-        notesToRemove.add(note);
+    static void disposeNote(DifficultyNote note) {
+        disposableNotes.add(note);
+
+        Log.i(LOG_TAG, "Added note '" + note.toString() + "' as disposable note");
     }
 
     public static Difficulty getDifficulty() {
@@ -140,8 +143,16 @@ public class SharedSketchData {
 
     public static ArrayList<DifficultyNote> getNotes() {
 
-        notes.removeAll(notesToRemove);
-        notesToRemove.clear();
+        if(disposableNotes.size() > 0) {
+            Log.i(LOG_TAG, "Deleting " + disposableNotes.size() + " disposable notes");
+
+            notes.removeAll(disposableNotes);
+            disposableNotes.clear();
+
+            Log.i(LOG_TAG, "Done.");
+        }
+
+
 
         return notes;
     }

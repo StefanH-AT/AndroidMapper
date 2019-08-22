@@ -19,6 +19,7 @@ public class Preferences {
     private static final String THEME_KEY = "theme";
     private static final String CUSTOM_COLORS_KEY = "draw_custom_colors";
     private static final String DEFAULT_AUTHOR = "default_author";
+    private static final String SUB_BEAT_COUNT = "sub_beat_count";
 
 
     // Values
@@ -26,6 +27,7 @@ public class Preferences {
     private static boolean theme;
     private static boolean drawCustomColors;
     private static String defaultAuthor;
+    private static int subBeatCount;
 
 
     // READ
@@ -39,10 +41,12 @@ public class Preferences {
         theme = preferences.getBoolean(THEME_KEY, THEME_LIGHT);
         drawCustomColors = preferences.getBoolean(CUSTOM_COLORS_KEY, false);
         defaultAuthor = preferences.getString(DEFAULT_AUTHOR, "");
+        subBeatCount = preferences.getInt(SUB_BEAT_COUNT, 4);
 
         Log.i(LOG_TAG, "Dark theme: " + theme);
         Log.i(LOG_TAG, "Draw Custom Colors: " + drawCustomColors);
         Log.i(LOG_TAG, "Default Author name: '" + defaultAuthor + "'");
+        Log.i(LOG_TAG, "Sub Beat count: " + subBeatCount);
 
         Log.i(LOG_TAG, "Loaded preferences");
 
@@ -58,6 +62,7 @@ public class Preferences {
         edit.putBoolean(THEME_KEY, isDarkTheme());
         edit.putBoolean(CUSTOM_COLORS_KEY, doesDrawCustomColors());
         edit.putString(DEFAULT_AUTHOR, getDefaultAuthor());
+        edit.putInt(SUB_BEAT_COUNT, getSubBeatCount());
 
         edit.apply();
 
@@ -91,5 +96,13 @@ public class Preferences {
 
     public static void setDefaultAuthor(String defaultAuthor) {
         Preferences.defaultAuthor = defaultAuthor;
+    }
+
+    public static int getSubBeatCount() {
+        return subBeatCount;
+    }
+
+    public static void setSubBeatCount(int subBeatCount) {
+        Preferences.subBeatCount = subBeatCount;
     }
 }

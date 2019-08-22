@@ -167,7 +167,7 @@ public class InspectionSketch extends PApplet {
             // Loop runs backwards because items are being removed
             for(DifficultyNote note : getNotes()) {
                 if(note.getTime() == beatAsTime(currentBeat) && note.getLineLayer() == originRow && note.getLineIndex() == originLane) {
-                    requestNoteRemoval(note);
+                    disposeNote(note);
                 }
             }
 

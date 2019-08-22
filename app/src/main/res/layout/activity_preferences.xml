@@ -115,11 +115,20 @@
                     android:layout_height="@dimen/section_headline_spacing" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/placeholder" />
+                    android:text="@string/setting_sub_beat_count" />
+
+                <EditText
+                    android:id="@+id/settingSubBeat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/setting_sub_beat_count_hint"
+                    android:inputType="number"
+                    android:singleLine="true" />
+
             </LinearLayout>
 
         </LinearLayout>

@@ -1,28 +1,21 @@
 package at.tewan.androidmapper;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import at.tewan.androidmapper.preferences.Preferences;
+
+import static at.tewan.androidmapper.preferences.Preferences.*;
 
 public class PreferencesActivity extends AppCompatActivity {
 
     // Widgets
 
     private CheckBox settingTheme, settingCustomColors;
-    private EditText settingDefaultAuthor;
+    private EditText settingDefaultAuthor, settingSubBeat;
 
     // Methods
 
@@ -42,11 +35,13 @@ public class PreferencesActivity extends AppCompatActivity {
         settingTheme            =   findViewById(R.id.settingTheme);
         settingCustomColors     =   findViewById(R.id.settingCustomColor);
         settingDefaultAuthor    =   findViewById(R.id.settingDefaultAuthor);
+        settingSubBeat          =   findViewById(R.id.settingSubBeat);
 
         // Put preferences
-        settingTheme.setChecked(Preferences.isDarkTheme());
-        settingCustomColors.setChecked(Preferences.doesDrawCustomColors());
-        settingDefaultAuthor.setText(Preferences.getDefaultAuthor());
+        settingTheme.setChecked(isDarkTheme());
+        settingCustomColors.setChecked(doesDrawCustomColors());
+        settingDefaultAuthor.setText(getDefaultAuthor());
+        settingSubBeat.setText(String.valueOf(getSubBeatCount()));
 
         // ==========================================
         // Preference Change Events
@@ -59,6 +54,10 @@ public class PreferencesActivity extends AppCompatActivity {
         });
         settingDefaultAuthor.setOnEditorActionListener((v, actionId, event) -> {
             Preferences.setDefaultAuthor(settingDefaultAuthor.getText().toString());
+            return false;
+        });
+        settingSubBeat.setOnEditorActionListener((v, actionId, event) -> {
+            Preferences.setSubBeatCount(Integer.parseInt(settingSubBeat.getText().toString()));
             return false;
         });
 

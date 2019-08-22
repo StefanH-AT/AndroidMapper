@@ -15,6 +15,7 @@ public class TrackSketch extends PApplet {
     private int padding;
     private int laneWidth;
     private int baselineY;
+    private int beatHeight;
 
 
     private float bpm;
@@ -31,6 +32,7 @@ public class TrackSketch extends PApplet {
         padding = (int) (width * 0.1);
         laneWidth = (width - padding * 2) / lanes;
         baselineY = height - padding * 3;
+        beatHeight = laneWidth * lanes;
 
         Log.i(LOG_TAG, "Canvas Size: " + width + "x" + height);
         Log.i(LOG_TAG, "Lanes: " + lanes);
@@ -38,6 +40,7 @@ public class TrackSketch extends PApplet {
         Log.i(LOG_TAG, "Padding: " + padding);
         Log.i(LOG_TAG, "Lane width: " + laneWidth);
         Log.i(LOG_TAG, "Baseline Y: " + baselineY);
+        Log.i(LOG_TAG, "Sub Beat Amount: " + subBeatAmount);
 
     }
 
@@ -59,7 +62,7 @@ public class TrackSketch extends PApplet {
         text("fps: " + (int) frameRate, width - padding, 100);
         textAlign(LEFT);
 
-        translate(0, currentBeat * subBeatAmount * laneWidth);
+        translate(0, currentBeat * beatHeight);
 
         // Stuff that's drawn relative to the current progress
         drawBeats();
@@ -122,7 +125,7 @@ public class TrackSketch extends PApplet {
 
         for(float i = 0; i < totalBeats; i += 1 / (float) subBeatAmount) {
 
-            float y = baselineY - i * laneWidth * subBeatAmount;
+            float y = baselineY - i * beatHeight;
 
             if(i == (int) i) { // If i has no decimal places (If whole beat)
 
@@ -191,7 +194,7 @@ public class TrackSketch extends PApplet {
         // Scroll
         if(!(isMouseInTrack(ox) || isMouseInTrack(dx))) { // Only scroll if you drag outside the track area
 
-            float scrollAmount = (float) (dy - pmouseY) / laneWidth / subBeatAmount;
+            float scrollAmount = (float) (dy - pmouseY) / laneWidth / (float) (subBeatAmount / lanes);
 
             currentBeat += scrollAmount;
 
@@ -253,7 +256,7 @@ public class TrackSketch extends PApplet {
     }
 
     private float getBeatCoordinate(float beat) {
-        return (beat * subBeatAmount * -laneWidth + baselineY);
+        return (beat * -beatHeight + baselineY);
     }
 
     private float getLaneCoordinate(int lane) {

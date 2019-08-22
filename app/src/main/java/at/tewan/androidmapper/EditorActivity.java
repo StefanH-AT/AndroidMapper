@@ -77,7 +77,7 @@ public class EditorActivity extends AppCompatActivity {
         beatmapContainer = intent.getStringExtra(BEATMAP_CONTAINER);
         beatmapDifficulty = intent.getStringExtra(BEATMAP_DIFFICULTY);
 
-        Log.i(LOG_TAG, "Loading beatmap hash: " + beatmapContainer);
+        Log.i(LOG_TAG, "Beatmap container name: " + beatmapContainer);
         Log.i(LOG_TAG, "Beatmap difficulty file: " + beatmapDifficulty);
 
 
