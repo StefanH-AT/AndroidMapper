@@ -53,6 +53,7 @@
     <string name="dialog_notify_title">Important:</string>
     <string name="feature_missing">Feature not yet implemented</string>
     <string name="placeholder">&lt;placeholder&gt;</string>
+    <string name="dialog_permissions_not_granted">You didn\'t grant external storage writing permissions, which AndroidMapper relies on. Closing app</string>
 
     <string name="theme_dark">Dark Theme</string>
     <string name="theme_light">Light Theme</string>

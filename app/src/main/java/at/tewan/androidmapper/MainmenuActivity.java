@@ -44,7 +44,6 @@ public class MainmenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         Preferences.loadPreferences(this);
 
         // Set dark theme
@@ -57,12 +56,7 @@ public class MainmenuActivity extends AppCompatActivity {
             Log.i(LOG_TAG, "Using light theme");
         }
 
-
-        setContentView(R.layout.activity_mainmenu);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(newBeatmapListener);
-
+        // Requesting permissions
         if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             Log.i(LOG_TAG, "External Storage permissions not granted. Requesting...");
 
@@ -70,12 +64,23 @@ public class MainmenuActivity extends AppCompatActivity {
         } else {
             try {
                 Beatmaps.init();
+                this.onPermissionsGranted();
             } catch (IOException ex) {
-                ErrorPrinter.msg(this, "Storage is not writable!!", ex);
+                ex.printStackTrace();
             }
         }
 
+    }
 
+    /**
+     * Gets called when all permissions have been granted and the app is ready to roll!
+     */
+    private void onPermissionsGranted() {
+
+        setContentView(R.layout.activity_mainmenu);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(newBeatmapListener);
 
         beatmapList = findViewById(R.id.beatmapList);
         beatmapList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -210,15 +215,15 @@ public class MainmenuActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
         if(requestCode == PERMISSION_REQUEST_EXTERNAL_STORAGE) {
 
             // We only request one permission, so we can be sure to only get one response
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                recreate(); // Restart activity
+                onPermissionsGranted(); // Permissions were granted -> Continue application
             } else {
-                ErrorPrinter.msg(this, "You didn't grant external storage writing permissions, which AndroidMapper relies on. Closing app");
-                finish();
+                ErrorPrinter.msg(this, getString(R.string.dialog_permissions_not_granted))
+                .setOnDismissListener(dialog -> finish()); // Close app on dialog dismiss
+
             }
 
         }
