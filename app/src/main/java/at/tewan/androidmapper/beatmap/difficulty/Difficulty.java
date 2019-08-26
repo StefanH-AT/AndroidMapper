@@ -8,6 +8,7 @@ public class Difficulty {
     private ArrayList<DifficultyEvent> _events = new ArrayList<>();
     private ArrayList<DifficultyObstacle> _obstacles = new ArrayList<>();
     private ArrayList<DifficultyNote> _notes = new ArrayList<>();
+    private ArrayList<DifficultyBookmark> _bookmarks = new ArrayList<>();
 
     public String getVersion() {
         return _version;
@@ -25,6 +26,10 @@ public class Difficulty {
         return _obstacles;
     }
 
+    public ArrayList<DifficultyBookmark> getBookmarks() {
+        return _bookmarks;
+    }
+
     public void setVersion(String version) {
         this._version = version;
     }
@@ -39,5 +44,9 @@ public class Difficulty {
 
     public void setObstacles(ArrayList<DifficultyObstacle> obstacles) {
         this._obstacles = obstacles;
+    }
+
+    public void setBookmarks(ArrayList<DifficultyBookmark> bookmarks) {
+        this._bookmarks = bookmarks;
     }
 }

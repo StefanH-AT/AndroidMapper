@@ -1,6 +1,6 @@
 package at.tewan.androidmapper.beatmap.difficulty;
 
-public class DifficultyEvent extends DifficultyItem {
+public class DifficultyEvent extends DifficultyTypeItem {
 
 
     private int _value;

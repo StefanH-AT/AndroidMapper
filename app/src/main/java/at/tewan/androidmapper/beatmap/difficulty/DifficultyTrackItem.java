@@ -1,10 +1,10 @@
 package at.tewan.androidmapper.beatmap.difficulty;
 
-public abstract class DifficultyTrackItem extends DifficultyItem {
+public abstract class DifficultyTrackItem extends DifficultyTypeItem {
 
     private int _lineIndex;
 
-    protected DifficultyTrackItem(float time, int type, int lineIndex) {
+    DifficultyTrackItem(float time, int type, int lineIndex) {
         super(time, type);
         this._lineIndex = lineIndex;
     }
