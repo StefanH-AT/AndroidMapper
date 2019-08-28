@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,6 +40,7 @@ public class MainmenuActivity extends AppCompatActivity {
 
     private RecyclerView beatmapList;
     private ArrayList<Info> beatmaps;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,18 +84,14 @@ public class MainmenuActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(newBeatmapListener);
 
+        swipeRefreshLayout = findViewById(R.id.beatmapListRefresh);
+        swipeRefreshLayout.setOnRefreshListener(this::refreshBeatmaps);
+
         beatmapList = findViewById(R.id.beatmapList);
         beatmapList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         beatmapList.setItemAnimator(new DefaultItemAnimator());
 
-        try {
-            beatmaps = Beatmaps.readAllBeatmapInfos();
-        } catch (IOException ex) {
-            ErrorPrinter.msg(this, "Failed to load beatmap infos", ex);
-        }
-
-
-        beatmapList.setAdapter(new BeatmapListAdapter(getApplicationContext(), beatmaps));
+        refreshBeatmaps();
 
         /*
         beatmapList.setOnItemLongClickListener((parent, view, position, id) -> {
@@ -122,6 +120,17 @@ public class MainmenuActivity extends AppCompatActivity {
 
         });
         */
+    }
+
+    private void refreshBeatmaps() {
+        try {
+            beatmaps = Beatmaps.readAllBeatmapInfos();
+        } catch (IOException ex) {
+            ErrorPrinter.msg(this, "Failed to load beatmap infos", ex);
+        }
+
+        beatmapList.setAdapter(new BeatmapListAdapter(getApplicationContext(), beatmaps));
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     View.OnClickListener newBeatmapListener = view -> {
