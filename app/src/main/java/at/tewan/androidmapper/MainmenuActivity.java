@@ -94,7 +94,7 @@ public class MainmenuActivity extends AppCompatActivity {
 
         refreshBeatmaps();
 
-        SongConverter.init(this);
+        //SongConverter.init(this); // <= Check SongConverter.java
 
         /*
         beatmapList.setOnItemLongClickListener((parent, view, position, id) -> {

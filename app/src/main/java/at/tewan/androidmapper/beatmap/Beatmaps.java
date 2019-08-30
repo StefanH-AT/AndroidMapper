@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 import org.apache.commons.io.FileUtils;
 
@@ -262,7 +263,15 @@ public class Beatmaps {
             File infoFile = new File(container, BEATMAP_INFO_FILE);
 
             FileReader reader = new FileReader(infoFile);
-            infos.add(gson.fromJson(reader, Info.class));
+
+            try {
+
+                Info info = gson.fromJson(reader, Info.class);
+                infos.add(info);
+
+            } catch (JsonSyntaxException ex) {
+                ErrorPrinter.msg(context, infoFile.toString() + " contains invalid json data", ex);
+            }
 
 
         }

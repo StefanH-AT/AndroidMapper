@@ -1,5 +1,7 @@
 package at.tewan.androidmapper.beatmap.info;
 
+import java.util.ArrayList;
+
 public class InfoDifficultyCustomData {
 
     private String _difficultyLabel;
@@ -7,10 +9,10 @@ public class InfoDifficultyCustomData {
     private float _editorOldOffset;
     private InfoDifficultyCustomDataColor _colorLeft;
     private InfoDifficultyCustomDataColor _colorRight;
-    private String _warnings;
-    private String _information;
-    private String _suggestions;
-    private String _requirements;
+    private ArrayList<String> _warnings;
+    private ArrayList<String> _information;
+    private ArrayList<String> _suggestions;
+    private ArrayList<String> _requirements;
 
     public InfoDifficultyCustomDataColor getColorLeft() {
         return _colorLeft;
@@ -32,19 +34,19 @@ public class InfoDifficultyCustomData {
         return _difficultyLabel;
     }
 
-    public String getInformation() {
+    public ArrayList<String> getInformation() {
         return _information;
     }
 
-    public String getRequirements() {
+    public ArrayList<String> getRequirements() {
         return _requirements;
     }
 
-    public String getSuggestions() {
+    public ArrayList<String> getSuggestions() {
         return _suggestions;
     }
 
-    public String getWarnings() {
+    public ArrayList<String> getWarnings() {
         return _warnings;
     }
 
@@ -68,19 +70,19 @@ public class InfoDifficultyCustomData {
         this._editorOldOffset = editorOldOffset;
     }
 
-    public void setInformation(String information) {
+    public void setInformation(ArrayList<String> information) {
         this._information = information;
     }
 
-    public void setRequirements(String requirements) {
+    public void setRequirements(ArrayList<String> requirements) {
         this._requirements = requirements;
     }
 
-    public void setSuggestions(String suggestions) {
+    public void setSuggestions(ArrayList<String> suggestions) {
         this._suggestions = suggestions;
     }
 
-    public void setWarnings(String warnings) {
+    public void setWarnings(ArrayList<String> warnings) {
         this._warnings = warnings;
     }
 

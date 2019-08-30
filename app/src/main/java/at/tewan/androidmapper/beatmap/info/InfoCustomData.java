@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 public class InfoCustomData {
 
-    private ArrayList<InfoCustomDataContributer> _contributers;
+    private ArrayList<InfoCustomDataContributer> _contributors;
     private String _customEnvironment;
     private String _customEnvironmentHash;
 
     public InfoCustomData(ArrayList<InfoCustomDataContributer> contributers, String customEnvironment, String customEnvironmentHash) {
-        this._contributers = contributers;
+        this._contributors = contributers;
         this._customEnvironment = customEnvironment;
         this._customEnvironmentHash = customEnvironmentHash;
     }
 
     public ArrayList<InfoCustomDataContributer> getContributers() {
-        return _contributers;
+        return _contributors;
     }
 
     public String getCustomEnvironment() {
@@ -27,7 +27,7 @@ public class InfoCustomData {
     }
 
     public void setContributers(ArrayList<InfoCustomDataContributer> contributers) {
-        this._contributers = contributers;
+        this._contributors = contributers;
     }
 
     public void setCustomEnvironment(String customEnvironment) {
