@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import at.tewan.androidmapper.R;
 import at.tewan.androidmapper.beatmap.difficulty.Difficulty;
 import at.tewan.androidmapper.beatmap.info.Info;
+import at.tewan.androidmapper.util.ErrorPrinter;
 
 
 /**
@@ -31,12 +32,13 @@ public class Beatmaps {
 
     private static final String LOG_TAG = "Beatmap IO";
 
-    private static final String BEATMAP_INFO_FILE = "info.dat";
+    public static final String BEATMAP_INFO_FILE = "info.dat";
+    public static final String BEATMAP_INFO_FILE_OLD = "info.json";
     private static final int COVER_QUALITY = 80;
 
     private static final String SEPARATOR = System.getProperty("file.separator");
 
-    private static final File BEATMAPS_ROOT = Environment.getExternalStoragePublicDirectory("beatmaps");
+    public static final File BEATMAPS_ROOT = Environment.getExternalStoragePublicDirectory("beatmaps");
 
     private static final Gson gson = new Gson();
     private static final Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
@@ -125,7 +127,19 @@ public class Beatmaps {
      * @return {@link java.io.File File} array of all folders found in the beatmaps root directory
      */
     public static File[] getContainers() {
-        return BEATMAPS_ROOT.listFiles(File::isDirectory);
+
+        File[] allContainers = BEATMAPS_ROOT.listFiles(File::isDirectory);
+        ArrayList<File> interestingContainers = new ArrayList<>();
+
+        for(File f : allContainers) {
+            File infoFile = new File(f, BEATMAP_INFO_FILE);
+
+            if(infoFile.exists()) {
+                interestingContainers.add(f);
+            }
+        }
+
+        return interestingContainers.toArray(new File[0]);
     }
 
     /**
@@ -239,7 +253,7 @@ public class Beatmaps {
     /**
      * @return {@link java.util.ArrayList<Info> ArrayList<Info>} of all beatmap info files that could be found
      */
-    public static ArrayList<Info> readAllBeatmapInfos() throws IOException {
+    public static ArrayList<Info> readAllBeatmapInfos(Context context) throws IOException {
         File[] beatmapContainers = getContainers();
 
         ArrayList<Info> infos = new ArrayList<>();
@@ -249,6 +263,7 @@ public class Beatmaps {
 
             FileReader reader = new FileReader(infoFile);
             infos.add(gson.fromJson(reader, Info.class));
+
 
         }
 

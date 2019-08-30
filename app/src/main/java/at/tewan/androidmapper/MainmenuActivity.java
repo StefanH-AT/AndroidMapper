@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.beatmap.Beatmaps;
+import at.tewan.androidmapper.conversion.SongConverter;
 import at.tewan.androidmapper.mainmenu.BeatmapListAdapter;
 import at.tewan.androidmapper.preferences.Preferences;
 import at.tewan.androidmapper.util.ErrorPrinter;
@@ -93,6 +94,8 @@ public class MainmenuActivity extends AppCompatActivity {
 
         refreshBeatmaps();
 
+        SongConverter.init(this);
+
         /*
         beatmapList.setOnItemLongClickListener((parent, view, position, id) -> {
 
@@ -124,7 +127,7 @@ public class MainmenuActivity extends AppCompatActivity {
 
     private void refreshBeatmaps() {
         try {
-            beatmaps = Beatmaps.readAllBeatmapInfos();
+            beatmaps = Beatmaps.readAllBeatmapInfos(this);
         } catch (IOException ex) {
             ErrorPrinter.msg(this, "Failed to load beatmap infos", ex);
         }
@@ -187,7 +190,7 @@ public class MainmenuActivity extends AppCompatActivity {
 
                 dialog.cancel();
                 beatmaps.add(result);
-                beatmapList.getAdapter().notifyDataSetChanged();
+                refreshBeatmaps();
 
             } else {
                 Snackbar bar = Snackbar.make(view, R.string.beatmap_already_exists, Snackbar.LENGTH_LONG);
@@ -210,16 +213,32 @@ public class MainmenuActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        switch (id) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, PreferencesActivity.class);
+                startActivity(intent);
 
-            Intent intent = new Intent(this, PreferencesActivity.class);
-            startActivity(intent);
+                return true;
+            case R.id.action_refresh:
+                refreshBeatmaps();
 
+                return true;
 
-            return true;
+            case R.id.action_about:
+                openAboutDialog();
+
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openAboutDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.action_about);
+        builder.setMessage(R.string.dialog_about);
+
     }
 
     @Override

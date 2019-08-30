@@ -52,6 +52,7 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
     private ArrayList<InfoDifficulty> currentDifficulties = new ArrayList<>();
 
     private Info info;
+    private String beatmapContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String beatmapContainer = intent.getStringExtra(BEATMAP_CONTAINER);
+        beatmapContainer = intent.getStringExtra(BEATMAP_CONTAINER);
         Log.i(LOG_TAG, "Beatmap container: " + beatmapContainer);
 
         // Set dark theme
@@ -207,7 +208,7 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
             set.getDifficultyBeatmaps().add(difficulty);
 
 
-            Beatmaps.saveInfo(this, info, info.getSongName().hashCode() + "");
+            Beatmaps.saveInfo(this, info, beatmapContainer);
             currentDifficulties.add(difficulty);
             difficultyList.getAdapter().notifyDataSetChanged();
 
