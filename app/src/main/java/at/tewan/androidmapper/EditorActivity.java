@@ -38,8 +38,6 @@ import static at.tewan.androidmapper.util.ActivityArguments.*;
  * TODO: Light Event Editor
  *
  *
- *
- *
  */
 public class EditorActivity extends AppCompatActivity {
 
@@ -86,10 +84,8 @@ public class EditorActivity extends AppCompatActivity {
         try {
             difficulty = Beatmaps.readDifficulty(beatmapContainer, beatmapDifficulty);
         } catch (IOException ex) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Error loading beatmap");
-            builder.setMessage("Failed to load beatmap. Please send this error message to us: \n\n" + ex.getMessage());
-            builder.create().show();
+            
+            ErrorPrinter.msg(this, "Failed to load beatmap. Please send this error message to us:", ex);
 
             finish(); // Stop activity
         }

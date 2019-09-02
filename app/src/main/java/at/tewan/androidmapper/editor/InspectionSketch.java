@@ -9,6 +9,12 @@ import processing.event.MouseEvent;
 
 import static at.tewan.androidmapper.editor.SharedSketchData.*;
 
+/**
+ * This is one of the processing sketches that make up the functional part of the editor.
+ * The inspection sketch provides a vertical slice of the current beat, your cursor is placed on (Like a front view)
+ *
+ * It is used to place notes, bombs and to visualize the map from the front
+ */
 public class InspectionSketch extends PApplet {
 
     private static final String LOG_TAG = "Inspection";
@@ -21,7 +27,6 @@ public class InspectionSketch extends PApplet {
     @Override
     public void setup() {
         Log.i(LOG_TAG, "Canvas Size: " + width + "x" + height);
-
 
         laneWidth = width / lanes;
         rowHeight = height / rows;

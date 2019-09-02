@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.beatmap.Beatmaps;
-import at.tewan.androidmapper.conversion.SongConverter;
 import at.tewan.androidmapper.mainmenu.BeatmapListAdapter;
 import at.tewan.androidmapper.preferences.Preferences;
 import at.tewan.androidmapper.util.ErrorPrinter;
@@ -150,7 +149,7 @@ public class MainmenuActivity extends AppCompatActivity {
         EditText bpm = dialog.findViewById(R.id.inputbpm);
         Button createButton = dialog.findViewById(R.id.create);
 
-        levelAuthor.setText(Preferences.getDefaultAuthor());
+        levelAuthor.setText(Preferences.getDefaultAuthorKey());
 
 
         TextWatcher watcher = new TextWatcher() {

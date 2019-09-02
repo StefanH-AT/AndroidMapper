@@ -3,11 +3,18 @@ package at.tewan.androidmapper.editor;
 import android.util.Log;
 
 import at.tewan.androidmapper.beatmap.difficulty.DifficultyNote;
+import at.tewan.androidmapper.preferences.Preferences;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 
 import static at.tewan.androidmapper.editor.SharedSketchData.*;
 
+/**
+ * This is one of the processing sketches that make up the functional part of the mapper.
+ * The Track Editor is a top down view of the beatmap and is primarily used to have an overview of the map
+ * and to place walls.
+ *
+ */
 public class TrackSketch extends PApplet {
 
     private static final String LOG_TAG = "Track";
@@ -17,14 +24,9 @@ public class TrackSketch extends PApplet {
     private int baselineY;
     private int beatHeight;
 
-
-    private float bpm;
-
-    public TrackSketch() {
-
-        bpm = info.getBeatsPerMinute();
-
-    }
+    private MouseEvent dragOrigin;
+    private int originLane;
+    private float originBeat;
 
     @Override
     public void setup() {
@@ -49,28 +51,28 @@ public class TrackSketch extends PApplet {
 
         background(backgroundColor);
 
+        if(Preferences.isDebug()) {
+
+            textSize(38);
+            textAlign(LEFT);
+            fill(debugColorR, debugColorG, debugColorB);
+            text("CB: " + currentBeat, 126, height - 100);
+
+            textAlign(RIGHT);
+            text("fps: " + (int) frameRate, width - padding, 100);
+
+        }
+
         // Drawn absolute
-
-        textSize(38);
-        fill(255);
-        text("CB: " + currentBeat, 126, height - 100);
-
         drawVerticalLines();
         drawBaseline();
 
-        textAlign(RIGHT);
-        text("fps: " + (int) frameRate, width - padding, 100);
-        textAlign(LEFT);
-
+        // Translate to current progress
         translate(0, currentBeat * beatHeight);
 
         // Stuff that's drawn relative to the current progress
         drawNotes();
         drawBeats();
-
-
-        if(mousePressed)
-            mouseDown();
 
     }
 
@@ -94,7 +96,7 @@ public class TrackSketch extends PApplet {
         line((float) padding / 2, baselineY, width, baselineY);     // Baseline line
         int arrowHeight = 25;
 
-        fill(255);
+        fill(strokeColor);
         triangle(
                 0,
                 baselineY - arrowHeight,
@@ -149,10 +151,6 @@ public class TrackSketch extends PApplet {
 
     }
 
-    private MouseEvent dragOrigin;
-    private int originLane;
-    private float originBeat;
-
     @Override
     public void mousePressed(MouseEvent event) {
         dragOrigin = event;
@@ -201,43 +199,13 @@ public class TrackSketch extends PApplet {
 
         } else { // Note placing preview
 
-            stroke(255);
+            stroke(strokeColor);
             int notePlaceDirectionRadius = 240;
             ellipse(getLaneCoordinate(originLane), getBeatCoordinate(originBeat), notePlaceDirectionRadius, notePlaceDirectionRadius);
 
             if(dist(ox, oy, dx, dy) > notePlaceDirectionRadius) {
 
             }
-        }
-    }
-
-    private void mouseDown() {
-        if(isMouseInTrack(mouseX)) {
-            /*
-            int ox = dragOrigin.getX();
-            int oy = dragOrigin.getY();
-
-            // XY snapped to grid
-            int sx = originLane * laneWidth;
-            int sy = (int) (originBeat * subBeatAmount) * -laneWidth + baselineY;
-
-            noFill();
-            stroke(255);
-            ellipse(sx, sy, notePlaceDirectionRadius, notePlaceDirectionRadius);
-
-            if(dist(sx, sy, mouseX, mouseY) > notePlaceDirectionRadius) {
-
-                float angle = getDragAngle(sx, sy);
-                // Snapping angle to 45 degrees
-                angle = Math.round(angle / PI / 4) * PI / 4;
-
-                text("fa: " + Math.toDegrees(angle) + ", a: " + Math.toDegrees(getDragAngle(sx, sy)), 300, 200);
-
-
-                fill(0, 140, 140);
-
-            }
-*/
         }
     }
 

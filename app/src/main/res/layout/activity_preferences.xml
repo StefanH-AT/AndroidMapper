@@ -64,6 +64,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/setting_use_custom_color" />
 
+                <CheckBox
+                    android:id="@+id/settingDebug"
+                    style="@style/SettingsImportant"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setting_debug" />
+
             </LinearLayout>
 
             <LinearLayout

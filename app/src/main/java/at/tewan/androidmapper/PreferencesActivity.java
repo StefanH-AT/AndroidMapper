@@ -14,7 +14,7 @@ public class PreferencesActivity extends AppCompatActivity {
 
     // Widgets
 
-    private CheckBox settingTheme, settingCustomColors;
+    private CheckBox settingTheme, settingCustomColors, settingDebug;
     private EditText settingDefaultAuthor, settingSubBeat;
 
     // Methods
@@ -36,29 +36,34 @@ public class PreferencesActivity extends AppCompatActivity {
         settingCustomColors     =   findViewById(R.id.settingCustomColor);
         settingDefaultAuthor    =   findViewById(R.id.settingDefaultAuthor);
         settingSubBeat          =   findViewById(R.id.settingSubBeat);
+        settingDebug            =   findViewById(R.id.settingDebug);
 
         // Put preferences
         settingTheme.setChecked(isDarkTheme());
         settingCustomColors.setChecked(doesDrawCustomColors());
-        settingDefaultAuthor.setText(getDefaultAuthor());
-        settingSubBeat.setText(String.valueOf(getSubBeatCount()));
+        settingDefaultAuthor.setText(getDefaultAuthorKey());
+        settingSubBeat.setText(String.valueOf(getSubBeatCountKey()));
+        settingDebug.setChecked(isDebug());
 
         // ==========================================
         // Preference Change Events
         // ==========================================
         settingTheme.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            Preferences.setTheme(settingTheme.isChecked());
+            Preferences.setDarkTheme(isChecked);
         });
         settingCustomColors.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            Preferences.setDrawCustomColors(settingCustomColors.isChecked());
+            setDrawCustomColors(settingCustomColors.isChecked());
         });
         settingDefaultAuthor.setOnEditorActionListener((v, actionId, event) -> {
-            Preferences.setDefaultAuthor(settingDefaultAuthor.getText().toString());
+            setDefaultAuthorKey(settingDefaultAuthor.getText().toString());
             return false;
         });
         settingSubBeat.setOnEditorActionListener((v, actionId, event) -> {
-            Preferences.setSubBeatCount(Integer.parseInt(settingSubBeat.getText().toString()));
+            setSubBeatCountKey(Integer.parseInt(settingSubBeat.getText().toString()));
             return false;
+        });
+        settingDebug.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            setDebug(isChecked);
         });
 
     }

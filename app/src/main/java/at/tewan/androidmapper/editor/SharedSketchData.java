@@ -25,19 +25,21 @@ public class SharedSketchData {
 
     static int backgroundColor;
     static int strokeColor;
+    static int debugColorR, debugColorG, debugColorB;
 
-    static int lanes = 4;
-    static int rows = 3;
+    static int lanes;
+    static int rows;
     private static ArrayList<DifficultyNote> notes;
     private static ArrayList<DifficultyEvent> events;
     private static ArrayList<DifficultyObstacle> obstacles;
     static Info info;
     static Difficulty difficulty;
 
-    static float currentBeat = 0;
+    static float currentBeat;
     static float totalBeats;
     static float songDuration = 60; // Song duration in seconds // TODO: Use the actual song duration
     static int subBeatAmount;
+    static float bpm;
 
     static ToolMode toolMode;
 
@@ -45,11 +47,17 @@ public class SharedSketchData {
 
     public static void init(Info info, Difficulty difficulty, boolean theme) {
 
+        // Default values
+        currentBeat = 0;
+
+
         SharedSketchData.info = info;
         SharedSketchData.difficulty = difficulty;
 
+        bpm = info.getBeatsPerMinute();
+
         // Sub beat count
-        subBeatAmount = Preferences.getSubBeatCount();
+        subBeatAmount = Preferences.getSubBeatCountKey();
         Log.i(LOG_TAG, "Sub Beat Amount: " + subBeatAmount);
 
         // Total beat count
@@ -63,9 +71,19 @@ public class SharedSketchData {
         if(theme == Preferences.THEME_LIGHT) {
             backgroundColor = 255;
             strokeColor = 20;
+
+            debugColorR = 0;
+            debugColorG = 130;
+            debugColorB = 0;
+
         } else {
             backgroundColor = 40;
             strokeColor = 230;
+
+            debugColorR = 0;
+            debugColorG = 230;
+            debugColorB = 0;
+
         }
 
         // Draw Custom colors or default colors?
