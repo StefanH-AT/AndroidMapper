@@ -115,6 +115,16 @@ public class Beatmaps {
         return new File(BEATMAPS_ROOT, container + SEPARATOR + cover);
     }
 
+    public static Bitmap getCoverBitmap(Context context, File coverFile) {
+
+        if(coverFile.exists()) {
+            return BitmapFactory.decodeFile(coverFile.toString());
+        } else {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.no_cover);
+        }
+
+    }
+
     /**
      * @param container Beatmap container folder name
      * @param songFile File name of the song file (Example: "song.egg")

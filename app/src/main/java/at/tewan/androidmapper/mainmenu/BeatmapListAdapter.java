@@ -109,9 +109,8 @@ public class BeatmapListAdapter extends RecyclerView.Adapter<BeatmapListAdapter.
         String bpm = info.getBeatsPerMinute() + " " + context.getResources().getString(R.string.bpm);
         holder.bpm.setText(bpm);
 
-        File coverFile = Beatmaps.getCover(getContainer(i), info.getCoverImageFilename());
-
-        Bitmap bitmap = BitmapFactory.decodeFile(coverFile.toString());
+        // Load cover image
+        Bitmap bitmap = Beatmaps.getCoverBitmap(context, Beatmaps.getCover(getContainer(i), info.getCoverImageFilename()));
         holder.icon.setImageBitmap(bitmap);
 
         holder.setPosition(i);
