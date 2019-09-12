@@ -87,6 +87,7 @@ public class TrackSketch extends PApplet {
             strokeWeight(1);
             stroke(strokeColor);
             line(x, 0, x, height);
+
         }
 
     }
@@ -117,7 +118,7 @@ public class TrackSketch extends PApplet {
             else
                 fill(0, 120, 200);
 
-            rect(getLaneCoordinate(note.getLineIndex() + 1), getBeatCoordinate(timeAsBeat(note.getTime())), 40, 40);
+            rect(getLaneCoordinate(note.getLineIndex() + 1), getBeatCoordinate(note.getTime()), 40, 40);
             noFill();
 
         }

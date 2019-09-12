@@ -9,6 +9,7 @@
     <string name="new_difficulty_title">Create new Difficulty</string>
     <string name="create">Create</string>
     <string name="beatmap_already_exists">Beatmap already exists. Choose another name!</string>
+    <string name="difficulty_already_exists">Difficulty already exists.</string>
     <string name="browseSong">Browse Song</string>
 
     <string name="delete">Delete</string>

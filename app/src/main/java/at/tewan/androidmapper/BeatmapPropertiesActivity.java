@@ -3,10 +3,10 @@ package at.tewan.androidmapper;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -72,6 +72,16 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_beatmap_properties);
 
+        SwipeRefreshLayout propertiesRefresh = findViewById(R.id.propertiesRefresh);
+        propertiesRefresh.setOnRefreshListener(() -> {
+            refresh();
+            propertiesRefresh.setRefreshing(false);
+        });
+
+        refresh();
+    }
+
+    private void refresh() {
         info = Beatmaps.readBeatmapInfo(beatmapContainer);
 
         if(info == null) {
@@ -181,36 +191,49 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
 
         createBtn.setOnClickListener(view -> {
 
-            InfoDifficultySet set = null;
+            InfoDifficultySet currentDifficultySet = null;
 
-            for(InfoDifficultySet set2 : info.getDifficultyBeatmapSets()) {
-                if(set2.getBeatmapCharacteristicName().equals(characteristic))
-                    set = set2;
+            for(InfoDifficultySet existingSet : info.getDifficultyBeatmapSets()) {
+                if(existingSet.getBeatmapCharacteristicName().equals(characteristic))
+                    currentDifficultySet = existingSet;
             }
 
-            if(set == null) {
-                set = new InfoDifficultySet(characteristic);
-                info.getDifficultyBeatmapSets().add(set);
+            if(currentDifficultySet == null) {
+                currentDifficultySet = new InfoDifficultySet(characteristic);
+                info.getDifficultyBeatmapSets().add(currentDifficultySet);
             }
 
-            // TODO: Check if difficulty already exists.
 
             String diffName = (String) difficultyTypeSpinner.getSelectedItem();
 
             InfoDifficulty difficulty = new InfoDifficulty();
-            difficulty.setBeatmapFilename(set.getBeatmapCharacteristicName() + "_" + diffName + ".dat");
+            difficulty.setBeatmapFilename(currentDifficultySet.getBeatmapCharacteristicName() + "_" + diffName + ".dat");
             difficulty.setNoteJumpMovementSpeed(Float.parseFloat(njsEditText.getText().toString()));
             difficulty.setDifficulty(diffName);
             difficulty.setDifficultyRank(Difficulties.valueOf(diffName).getRank());
 
-            set.getDifficultyBeatmaps().add(difficulty);
+            boolean beatmapAlreadyExists = false;
+
+            // Only add new difficulty if it does not exist yet
+            for(InfoDifficulty diff : currentDifficultySet.getDifficultyBeatmaps()) {
+                if(diff.getDifficultyRank() == difficulty.getDifficultyRank()) {
+                    beatmapAlreadyExists = true;
+                }
+            }
+
+            if(beatmapAlreadyExists) {
+
+                Toast.makeText(this, R.string.difficulty_already_exists, Toast.LENGTH_SHORT).show();
+
+            } else {
+                currentDifficultySet.getDifficultyBeatmaps().add(difficulty);
+                Beatmaps.saveInfo(this, info, beatmapContainer);
+                currentDifficulties.add(difficulty);
+                refresh();
+                dialog.cancel();
+            }
 
 
-            Beatmaps.saveInfo(this, info, beatmapContainer);
-            currentDifficulties.add(difficulty);
-            difficultyList.getAdapter().notifyDataSetChanged();
-
-            dialog.cancel();
 
         });
 
@@ -224,7 +247,7 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if(requestCode == AUDIO_REQUEST_CODE && resultCode == RESULT_OK) {
 

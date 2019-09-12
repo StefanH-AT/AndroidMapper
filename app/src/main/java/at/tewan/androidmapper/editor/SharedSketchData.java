@@ -11,6 +11,8 @@ import at.tewan.androidmapper.beatmap.difficulty.DifficultyObstacle;
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.preferences.Preferences;
 
+// TODO: _time represents beats not seconds. Fix that
+
 public class SharedSketchData {
 
     private static final String LOG_TAG = "EditorData";
@@ -49,7 +51,8 @@ public class SharedSketchData {
 
         // Default values
         currentBeat = 0;
-
+        lanes = 4;
+        rows = 3;
 
         SharedSketchData.info = info;
         SharedSketchData.difficulty = difficulty;
@@ -159,7 +162,7 @@ public class SharedSketchData {
         return info;
     }
 
-    public static ArrayList<DifficultyNote> getNotes() {
+    static ArrayList<DifficultyNote> getNotes() {
 
         if(disposableNotes.size() > 0) {
             Log.i(LOG_TAG, "Deleting " + disposableNotes.size() + " disposable notes");
@@ -169,8 +172,6 @@ public class SharedSketchData {
 
             Log.i(LOG_TAG, "Done.");
         }
-
-
 
         return notes;
     }

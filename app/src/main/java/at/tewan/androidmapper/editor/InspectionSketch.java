@@ -67,7 +67,7 @@ public class InspectionSketch extends PApplet {
 
         for(DifficultyNote note : getNotes()) {
 
-            if(timeAsBeat(note.getTime()) == currentBeat) {
+            if(note.getTime() == currentBeat) {
 
                 if(typeAsColor(note.getType()) == RED)
                     fill(200, 0, 0);
@@ -153,7 +153,7 @@ public class InspectionSketch extends PApplet {
                 direction = CutDirection.ANY;
             }
 
-            DifficultyNote note = new DifficultyNote(beatAsTime(currentBeat), colorAsType(selectedColor), originLane, originRow, direction.ordinal());
+            DifficultyNote note = new DifficultyNote(currentBeat, colorAsType(selectedColor), originLane, originRow, direction.ordinal());
 
             getNotes().add(note);
         }
@@ -171,7 +171,7 @@ public class InspectionSketch extends PApplet {
 
             // Loop runs backwards because items are being removed
             for(DifficultyNote note : getNotes()) {
-                if(note.getTime() == beatAsTime(currentBeat) && note.getLineLayer() == originRow && note.getLineIndex() == originLane) {
+                if(note.getTime() == currentBeat && note.getLineLayer() == originRow && note.getLineIndex() == originLane) {
                     disposeNote(note);
                 }
             }

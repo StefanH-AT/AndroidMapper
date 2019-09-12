@@ -7,127 +7,134 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/propertiesRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingTop="12dp">
-
-            <LinearLayout
-                android:layout_width="128dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="6dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/cover"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/beatmap"
-                    app:srcCompat="@drawable/android_cat" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp">
-
-                <TextView
-                    android:id="@+id/songName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_music_note_white_24dp"
-                    android:drawablePadding="@dimen/text_icon_padding"
-                    android:drawableTint="?attr/colorControlNormal"
-                    android:text="@string/songName"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/songSubName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_description_white_24dp"
-                    android:drawablePadding="@dimen/text_icon_padding"
-                    android:drawableTint="?attr/colorControlNormal"
-                    android:text="@string/songSubName" />
-
-                <TextView
-                    android:id="@+id/songAuthor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_mic_white_24dp"
-                    android:drawablePadding="@dimen/text_icon_padding"
-                    android:drawableTint="?attr/colorControlNormal"
-                    android:text="@string/songAuthor" />
-
-                <TextView
-                    android:id="@+id/levelAuthor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_map_white_24dp"
-                    android:drawablePadding="@dimen/text_icon_padding"
-                    android:drawableTint="?attr/colorControlNormal"
-                    android:text="@string/levelAuthor" />
-
-                <TextView
-                    android:id="@+id/bpm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:drawableStart="@drawable/ic_av_timer_black_24dp"
-                    android:drawablePadding="@dimen/text_icon_padding"
-                    android:drawableTint="?attr/colorControlNormal"
-                    android:text="@string/bpm" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/songStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="browseSong"
-                android:text="@string/browseSong" />
-        </LinearLayout>
-
-        <Spinner
-            android:id="@+id/characteristicSelector"
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:spinnerMode="dropdown" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/difficultyList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fadeScrollbars="false"
-            android:scrollbars="none" />
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingTop="12dp">
+
+                <LinearLayout
+                    android:layout_width="128dp"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/beatmap"
+                        app:srcCompat="@drawable/android_cat" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp">
+
+                    <TextView
+                        android:id="@+id/songName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_music_note_white_24dp"
+                        android:drawablePadding="@dimen/text_icon_padding"
+                        android:drawableTint="?attr/colorControlNormal"
+                        android:text="@string/songName"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/songSubName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_description_white_24dp"
+                        android:drawablePadding="@dimen/text_icon_padding"
+                        android:drawableTint="?attr/colorControlNormal"
+                        android:text="@string/songSubName" />
+
+                    <TextView
+                        android:id="@+id/songAuthor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_mic_white_24dp"
+                        android:drawablePadding="@dimen/text_icon_padding"
+                        android:drawableTint="?attr/colorControlNormal"
+                        android:text="@string/songAuthor" />
+
+                    <TextView
+                        android:id="@+id/levelAuthor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_map_white_24dp"
+                        android:drawablePadding="@dimen/text_icon_padding"
+                        android:drawableTint="?attr/colorControlNormal"
+                        android:text="@string/levelAuthor" />
+
+                    <TextView
+                        android:id="@+id/bpm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:drawableStart="@drawable/ic_av_timer_black_24dp"
+                        android:drawablePadding="@dimen/text_icon_padding"
+                        android:drawableTint="?attr/colorControlNormal"
+                        android:text="@string/bpm" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="browseSong"
+                    android:text="@string/browseSong" />
+
+                <TextView
+                    android:id="@+id/songStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/characteristicSelector"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:spinnerMode="dropdown" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/difficultyList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fadeScrollbars="false"
+                android:scrollbars="none" />
 
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/createDifficulty"
@@ -139,4 +146,5 @@
         android:focusable="true"
         android:onClick="addDifficulty"
         android:src="@drawable/ic_add_white" />
+
 </android.support.design.widget.CoordinatorLayout>
