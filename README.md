@@ -4,6 +4,8 @@ The mobile beat saber beatmap editor.
 **I try to get a working prototype as soon as possible, so stay tuned**
 
 **Apply as tester here: https://forms.gle/FQJbGUj93Twqgdrq5**
+
+[Discord Server](https://discord.gg/f79EkwG)
  
 Android Version: 5.0
 Processing Version: 3.4  
