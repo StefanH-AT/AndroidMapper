@@ -2,7 +2,6 @@ package at.tewan.androidmapper.beatmap.difficulty;
 
 public class DifficultyObstacle extends DifficultyTrackItem {
 
-
     private float _duration;
     private int _width;
 

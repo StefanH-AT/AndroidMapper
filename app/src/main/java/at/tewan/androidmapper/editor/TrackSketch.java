@@ -19,6 +19,8 @@ public class TrackSketch extends PApplet {
 
     private static final String LOG_TAG = "Track";
 
+    private static final int OBJECT_SIZE = 50;
+
     private int padding;
     private int laneWidth;
     private int baselineY;
@@ -71,7 +73,7 @@ public class TrackSketch extends PApplet {
         translate(0, currentBeat * beatHeight);
 
         // Stuff that's drawn relative to the current progress
-        drawNotes();
+        drawNotesAndBombs();
         drawBeats();
 
     }
@@ -107,20 +109,35 @@ public class TrackSketch extends PApplet {
                 baselineY);                                     // Baseline Arrow
     }
 
-    private void drawNotes() {
+    private void drawBomb(DifficultyNote bomb) {
+        float x = getLaneCoordinate(bomb.getLineIndex() + 1);
+        float y = getBeatCoordinate(bomb.getTime());
+
+        stroke(strokeColor);
+        fill(BOMB_COLOR);
+        ellipse(x, y, OBJECT_SIZE, OBJECT_SIZE);
+    }
+
+    private void drawNote(DifficultyNote note) {
+        rectMode(RADIUS);
+
+        if(typeAsColor(note.getType()) == RED)
+            fill(colorLeftR, colorLeftG, colorLeftB);
+        else
+            fill(colorRightR, colorRightG, colorRightB);
+
+        rect(getLaneCoordinate(note.getLineIndex() + 1), getBeatCoordinate(note.getTime()), OBJECT_SIZE, OBJECT_SIZE);
+        noFill();
+    }
+
+    private void drawNotesAndBombs() {
 
         for(DifficultyNote note : getNotes()) {
 
-            rectMode(RADIUS);
-
-            if(typeAsColor(note.getType()) == RED)
-                fill(200, 0, 0);
+            if(note.getType() == DifficultyNote.TYPE_BOMB)
+                drawBomb(note);
             else
-                fill(0, 120, 200);
-
-            rect(getLaneCoordinate(note.getLineIndex() + 1), getBeatCoordinate(note.getTime()), 40, 40);
-            noFill();
-
+                drawNote(note);
         }
 
     }
@@ -165,22 +182,6 @@ public class TrackSketch extends PApplet {
     @Override
     public void mouseReleased(MouseEvent event) {
         currentBeat = constrain(Math.round(currentBeat * subBeatAmount), 0, totalBeats * subBeatAmount) / subBeatAmount;
-/*
-        if(isMouseInTrack(event.getX())) {
-
-            // Check for overlapping notes
-            for(DifficultyNote note : notes) {
-                if(note.getLineIndex() == originLane && note.getTime() == beatAsTime(originBeat))
-                    return;
-            }
-
-            // Note placing
-            DifficultyNote note = new DifficultyNote(beatAsTime(originBeat), colorAsType(selectedColor), originLane, 0, CutDirection.ANY.ordinal());
-            notes.add(note);
-
-            Log.i(LOG_TAG, "Placed note: " + note.toString());
-
-        }*/
     }
 
     @Override

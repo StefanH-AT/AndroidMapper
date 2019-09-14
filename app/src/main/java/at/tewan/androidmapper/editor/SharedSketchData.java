@@ -11,7 +11,6 @@ import at.tewan.androidmapper.beatmap.difficulty.DifficultyObstacle;
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.preferences.Preferences;
 
-// TODO: _time represents beats not seconds. Fix that
 
 public class SharedSketchData {
 
@@ -19,6 +18,7 @@ public class SharedSketchData {
 
     public static final boolean RED = false;
     public static final boolean BLUE = true;
+    public static final int BOMB_COLOR = 90;
 
     public static int colorLeftR, colorLeftG, colorLeftB;
     public static int colorRightR, colorRightG, colorRightB;

@@ -2,6 +2,8 @@ package at.tewan.androidmapper.beatmap.difficulty;
 
 public class DifficultyNote extends DifficultyTrackItem {
 
+    public static final int TYPE_BOMB = 3;
+
     private int _lineLayer;
     private int _cutDirection;
 

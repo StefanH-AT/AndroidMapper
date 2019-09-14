@@ -47,7 +47,7 @@ public class EditorActivity extends AppCompatActivity {
     private String beatmapContainer, beatmapDifficulty;
 
 
-    private ImageView noteTool, bombTool, deleteTool;
+    private ImageView noteTool, bombTool, deleteTool, wallTool, selectTool;
 
     /**
      * Big ass onCreate method. I hate writing long methods but I guess I have to get used to it.
@@ -68,6 +68,8 @@ public class EditorActivity extends AppCompatActivity {
         noteTool = findViewById(R.id.noteTool);
         bombTool = findViewById(R.id.bombTool);
         deleteTool = findViewById(R.id.deleteTool);
+        wallTool = findViewById(R.id.wallTool);
+        selectTool = findViewById(R.id.selectTool);
 
         // Read beatmap difficulty
         Intent intent = getIntent();
@@ -110,6 +112,10 @@ public class EditorActivity extends AppCompatActivity {
         setTool(view, ToolMode.REMOVE);
     }
 
+    public void select(View view) {
+        setTool(view, ToolMode.SELECT);
+    }
+
     public void note(View view) {
 
         // Toggle color when note tool is already selected
@@ -127,6 +133,14 @@ public class EditorActivity extends AppCompatActivity {
         }
 
         setTool(view, ToolMode.NOTE);
+    }
+
+    public void bomb(View view) {
+        setTool(view, ToolMode.BOMB);
+    }
+
+    public void wall(View view) {
+        setTool(view, ToolMode.WALL);
     }
 
     /**
@@ -181,9 +195,13 @@ public class EditorActivity extends AppCompatActivity {
 
     private void setTool(View view, ToolMode mode) {
 
+        // I'm not proud of how I made this, but I can't be bothered to build a more elaborate system
+
         noteTool.setBackgroundColor(getColor(R.color.invisible));
         bombTool.setBackgroundColor(getColor(R.color.invisible));
         deleteTool.setBackgroundColor(getColor(R.color.invisible));
+        selectTool.setBackgroundColor(getColor(R.color.invisible));
+        wallTool.setBackgroundColor(getColor(R.color.invisible));
 
         view.setBackgroundColor(R.attr.colorAccent);
         SharedSketchData.setToolMode(mode);

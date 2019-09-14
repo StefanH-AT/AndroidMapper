@@ -19,6 +19,8 @@ public class InspectionSketch extends PApplet {
 
     private static final String LOG_TAG = "Inspection";
 
+    private static final int OBJECT_SIZE = 50;
+
     private int laneWidth;
     private int halfLaneWidth;
     private int rowHeight;
@@ -60,44 +62,61 @@ public class InspectionSketch extends PApplet {
             mouseDown();
         }
 
-        drawNotes();
+        drawNotesAndBombs();
     }
 
-    private void drawNotes() {
+    private void drawNote(DifficultyNote note) {
+        if(typeAsColor(note.getType()) == RED)
+            fill(colorLeftR, colorLeftG, colorLeftB);
+        else
+            fill(colorRightR, colorRightG, colorRightB);
+
+        rectMode(RADIUS);
+
+        int x = getLaneCoordinate(note.getLineIndex());
+        int y = getRowCoordinate(note.getLineLayer());
+
+        CutDirection direction = CutDirection.getType(note.getCutDirection());
+
+        pushMatrix();
+
+        translate(x, y);
+        rotate(radians(direction.getDegrees()));
+
+        rect(0, 0, OBJECT_SIZE, OBJECT_SIZE);
+
+        fill(strokeColor);
+
+        int s = OBJECT_SIZE / 2; // Size
+        if(direction == CutDirection.ANY) {
+            ellipse(0, 0, s, s);
+        } else {
+            triangle(0, 0, -s, s, -s, -s);
+        }
+
+        popMatrix();
+    }
+
+    private void drawBomb(DifficultyNote bomb) {
+        int x = getLaneCoordinate(bomb.getLineIndex());
+        int y = getRowCoordinate(bomb.getLineLayer());
+
+        stroke(strokeColor);
+        fill(BOMB_COLOR);
+        ellipse(x, y, OBJECT_SIZE, OBJECT_SIZE);
+    }
+
+    private void drawNotesAndBombs() {
 
         for(DifficultyNote note : getNotes()) {
 
             if(note.getTime() == currentBeat) {
 
-                if(typeAsColor(note.getType()) == RED)
-                    fill(200, 0, 0);
+                if(note.getType() == DifficultyNote.TYPE_BOMB)
+                    drawBomb(note);
                 else
-                    fill(0, 120, 200);
+                    drawNote(note);
 
-                rectMode(RADIUS);
-
-                int x = getLaneCoordinate(note.getLineIndex());
-                int y = getRowCoordinate(note.getLineLayer());
-
-                CutDirection direction = CutDirection.getType(note.getCutDirection());
-
-                pushMatrix();
-
-                translate(x, y);
-                rotate(radians(direction.getDegrees()));
-
-                rect(0, 0, 40, 40);
-
-                fill(255);
-
-                int s = 16; // Size
-                if(direction == CutDirection.ANY) {
-                    ellipse(0, 0, s, s);
-                } else {
-                    triangle(0, 0, -s, s, -s, -s);
-                }
-
-                popMatrix();
             }
         }
 
@@ -124,12 +143,15 @@ public class InspectionSketch extends PApplet {
             translate(getLaneCoordinate(originLane), getRowCoordinate(originRow));
             rotate(getDragAngle(mouseX, mouseY));
 
-            rect(0, 0, 50, 50);
+            rect(0, 0, OBJECT_SIZE, OBJECT_SIZE);
 
-            int s = 10;
+            int s = OBJECT_SIZE / 2;
             triangle(0, 0, -s, s, -s, -s);
 
             popMatrix();
+        } else if(toolMode == ToolMode.BOMB) {
+            DifficultyNote bomb = new DifficultyNote(currentBeat, DifficultyNote.TYPE_BOMB, originLane, originRow, 0);
+            getNotes().add(bomb);
         }
     }
 
@@ -173,6 +195,7 @@ public class InspectionSketch extends PApplet {
             for(DifficultyNote note : getNotes()) {
                 if(note.getTime() == currentBeat && note.getLineLayer() == originRow && note.getLineIndex() == originLane) {
                     disposeNote(note);
+                    return; // Better return to avoid array iteration crashes
                 }
             }
 
