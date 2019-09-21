@@ -195,20 +195,19 @@ public class TrackSketch extends PApplet {
         // Scroll
         if(!(isMouseInTrack(ox) || isMouseInTrack(dx))) { // Only scroll if you drag outside the track area
 
-            float scrollAmount = (float) (dy - pmouseY) / laneWidth / (float) (subBeatAmount / lanes);
+            float scrollAmount = (float) (dy - pmouseY) / (float) (beatHeight);
 
             currentBeat += scrollAmount;
 
-        } else { // Note placing preview
+        }/* else { // Note placing preview
 
             stroke(strokeColor);
             int notePlaceDirectionRadius = 240;
-            ellipse(getLaneCoordinate(originLane), getBeatCoordinate(originBeat), notePlaceDirectionRadius, notePlaceDirectionRadius);
 
             if(dist(ox, oy, dx, dy) > notePlaceDirectionRadius) {
 
             }
-        }
+        }*/
     }
 
     private float getDragAngle(int x, int y) {

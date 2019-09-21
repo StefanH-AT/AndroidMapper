@@ -24,6 +24,7 @@ public class SharedSketchData {
     public static int colorRightR, colorRightG, colorRightB;
 
     private static ArrayList<DifficultyNote> disposableNotes = new ArrayList<>();
+    private static ArrayList<DifficultyNote> addableNotes = new ArrayList<>();
 
     static int backgroundColor;
     static int strokeColor;

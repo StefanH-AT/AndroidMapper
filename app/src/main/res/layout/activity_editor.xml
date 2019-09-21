@@ -1,8 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/trackFrame"
+            android:layout_width="320dp"
+            android:layout_height="match_parent"
+            android:elevation="@dimen/canvas_elevation">
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/inspectionFrame"
+                android:layout_width="290dp"
+                android:layout_height="192dp"
+                android:elevation="@dimen/canvas_elevation">
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <SeekBar
+                    android:id="@+id/songProgress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="save"
+                    android:text="@string/save" />
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="preview"
+                    android:text="@string/preview" />
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="exit"
+                    android:text="@string/exit" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -10,127 +85,52 @@
         android:gravity="bottom"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/selectTool"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="4dp"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="@string/eraser"
-            android:onClick="select"
-            android:padding="4dp"
-            android:paddingStart="0dp"
-            android:paddingEnd="8dp"
-            android:tint="?attr/colorControlNormal"
-            app:srcCompat="@drawable/ic_pan_tool_black_24dp" />
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/toolMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:translationZ="8dp"
+            app:menu_colorNormal="?attr/colorAccent"
+            app:menu_colorPressed="?attr/colorControlActivated"
+            app:menu_fab_label="@string/tools"
+            app:menu_labels_position="right"
+            app:menu_openDirection="up"
+            app:menu_showShadow="true">
 
-        <ImageView
-            android:id="@+id/deleteTool"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="4dp"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="@string/eraser"
-            android:onClick="delete"
-            android:tint="?attr/colorControlNormal"
-            app:srcCompat="@drawable/ic_delete_black_24dp" />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/toolNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorAccent"
+                android:onClick="selectTool"
+                android:src="@drawable/ic_action_note"
+                app:fab_label="@string/note"
+                app:fab_size="mini" />
 
-        <ImageView
-            android:id="@+id/wallTool"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="4dp"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="@string/eraser"
-            android:onClick="wall"
-            app:srcCompat="@drawable/wall" />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/toolBomb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorAccent"
+                android:onClick="selectTool"
+                android:src="@drawable/ic_action_bomb"
+                app:fab_label="@string/bomb"
+                app:fab_size="mini" />
 
-        <ImageView
-            android:id="@+id/bombTool"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="4dp"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="@string/bomb"
-            android:onClick="bomb"
-            app:srcCompat="@drawable/bomb" />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/toolDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorAccent"
+                android:onClick="selectTool"
+                android:src="@drawable/ic_delete_white_24dp"
+                app:fab_label="@string/eraser"
+                app:fab_size="mini" />
 
-        <ImageView
-            android:id="@+id/noteTool"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="4dp"
-            android:contentDescription="@string/bomb"
-            android:onClick="note"
-            android:tint="?attr/colorButtonNormal"
-            app:srcCompat="@drawable/note" />
+
+        </com.github.clans.fab.FloatingActionMenu>
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/trackFrame"
-        android:layout_width="320dp"
-        android:layout_height="match_parent"
-        android:elevation="@dimen/canvas_elevation">
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <SeekBar
-                android:id="@+id/songProgress"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/inspectionFrame"
-            android:layout_width="match_parent"
-            android:layout_height="192dp"
-            android:elevation="@dimen/canvas_elevation">
-
-        </FrameLayout>
-
-        <LinearLayout
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="save"
-                android:text="@string/save" />
-
-            <Button
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="preview"
-                android:text="@string/preview" />
-
-            <Button
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="exit"
-                android:text="@string/exit" />
-        </LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

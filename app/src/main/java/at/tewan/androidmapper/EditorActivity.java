@@ -1,15 +1,23 @@
 package at.tewan.androidmapper;
 
+import android.animation.AnimatorSet;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.io.IOException;
 
@@ -46,8 +54,8 @@ public class EditorActivity extends AppCompatActivity {
     private Difficulty difficulty;
     private String beatmapContainer, beatmapDifficulty;
 
-
-    private ImageView noteTool, bombTool, deleteTool, wallTool, selectTool;
+    private FloatingActionMenu toolMenu;
+    private FloatingActionButton toolNote, toolWall, toolBomb, toolDelete;
 
     /**
      * Big ass onCreate method. I hate writing long methods but I guess I have to get used to it.
@@ -64,12 +72,12 @@ public class EditorActivity extends AppCompatActivity {
 
         // Load layout
         setContentView(R.layout.activity_editor);
-
-        noteTool = findViewById(R.id.noteTool);
-        bombTool = findViewById(R.id.bombTool);
-        deleteTool = findViewById(R.id.deleteTool);
-        wallTool = findViewById(R.id.wallTool);
-        selectTool = findViewById(R.id.selectTool);
+        toolMenu = findViewById(R.id.toolMenu);
+        toolMenu.setIconAnimated(false);
+        toolMenu.setIconAnimationOpenInterpolator(new OvershootInterpolator());
+        toolNote = findViewById(R.id.toolNote);
+        toolBomb = findViewById(R.id.toolBomb);
+        toolDelete = findViewById(R.id.toolDelete);
 
         // Read beatmap difficulty
         Intent intent = getIntent();
@@ -101,46 +109,6 @@ public class EditorActivity extends AppCompatActivity {
         trackFragment.setView(findViewById(R.id.trackFrame), this);
         inspectionFragment.setView(findViewById(R.id.inspectionFrame), this);
 
-    }
-
-    /**
-     * Gets run when someone presses the delete tool button
-     *
-     * @param view The view that calls this event
-     */
-    public void delete(View view) {
-        setTool(view, ToolMode.REMOVE);
-    }
-
-    public void select(View view) {
-        setTool(view, ToolMode.SELECT);
-    }
-
-    public void note(View view) {
-
-        // Toggle color when note tool is already selected
-        if(getToolMode() == ToolMode.NOTE) {
-
-            selectedColor = !selectedColor;
-
-            // Set background color
-            if(selectedColor == RED)
-                noteTool.setColorFilter(Color.rgb(colorLeftR, colorLeftG, colorLeftB));
-
-            else
-                noteTool.setColorFilter(Color.rgb(colorRightR, colorRightG, colorRightB));
-
-        }
-
-        setTool(view, ToolMode.NOTE);
-    }
-
-    public void bomb(View view) {
-        setTool(view, ToolMode.BOMB);
-    }
-
-    public void wall(View view) {
-        setTool(view, ToolMode.WALL);
     }
 
     /**
@@ -193,17 +161,48 @@ public class EditorActivity extends AppCompatActivity {
         exit(null);
     }
 
-    private void setTool(View view, ToolMode mode) {
+    public void selectTool(View view) {
 
-        // I'm not proud of how I made this, but I can't be bothered to build a more elaborate system
+        // I'm not proud of this
 
-        noteTool.setBackgroundColor(getColor(R.color.invisible));
-        bombTool.setBackgroundColor(getColor(R.color.invisible));
-        deleteTool.setBackgroundColor(getColor(R.color.invisible));
-        selectTool.setBackgroundColor(getColor(R.color.invisible));
-        wallTool.setBackgroundColor(getColor(R.color.invisible));
+        TypedValue accentValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.colorAccent, accentValue, true);
 
-        view.setBackgroundColor(R.attr.colorAccent);
-        SharedSketchData.setToolMode(mode);
+        toolMenu.setMenuButtonColorNormal(accentValue.data);
+
+        switch (view.getId()) {
+            case R.id.toolNote:
+
+                // Toggle color when note tool is already selected
+                if(getToolMode() == ToolMode.NOTE) {
+                    selectedColor = !selectedColor;
+                }
+
+                // Set background color
+                if(selectedColor == RED)
+                    toolMenu.setMenuButtonColorNormal(Color.rgb(colorLeftR, colorLeftG, colorLeftB));
+                else
+                    toolMenu.setMenuButtonColorNormal(Color.rgb(colorRightR, colorRightG, colorRightB));
+
+                toolMenu.getMenuIconView().setImageResource(R.drawable.ic_action_note);
+                toolMenu.setMenuButtonLabelText(getString(R.string.note));
+
+                setToolMode(ToolMode.NOTE);
+
+            break;
+
+            case R.id.toolBomb:
+                setToolMode(ToolMode.BOMB);
+                toolMenu.getMenuIconView().setImageResource(R.drawable.ic_action_bomb);
+                toolMenu.setMenuButtonLabelText(getString(R.string.bomb));
+            break;
+
+            case R.id.toolDelete:
+                setToolMode(ToolMode.REMOVE);
+                toolMenu.getMenuIconView().setImageResource(R.drawable.ic_delete_white_24dp);
+                toolMenu.setMenuButtonLabelText(getString(R.string.delete));
+            break;
+        }
     }
+
 }
