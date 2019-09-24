@@ -37,7 +37,7 @@
                                               <map>
                                                 <entry key="color" value="000000" />
                                                 <entry key="opacityPercent" value="80" />
-                                                <entry key="paddingPercent" value="15" />
+                                                <entry key="paddingPercent" value="10" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -48,8 +48,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="D:\Projects\Java\Android\AndroidMapper\app\src\main\res\drawable\bomb.png" />
-                                      <entry key="outputName" value="ic_action_bomb" />
+                                      <entry key="imageAsset" value="D:\Projects\Java\Android\AndroidMapper\app\src\main\res\drawable\wall.png" />
+                                      <entry key="outputName" value="ic_action_wall" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="ffffff" />
                                     </map>

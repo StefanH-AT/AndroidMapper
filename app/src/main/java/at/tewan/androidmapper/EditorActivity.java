@@ -1,9 +1,7 @@
 package at.tewan.androidmapper;
 
-import android.animation.AnimatorSet;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -11,9 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -55,7 +51,7 @@ public class EditorActivity extends AppCompatActivity {
     private String beatmapContainer, beatmapDifficulty;
 
     private FloatingActionMenu toolMenu;
-    private FloatingActionButton toolNote, toolWall, toolBomb, toolDelete;
+    private FloatingActionButton toolNoteLeft, toolNoteRight, toolWall, toolBomb, toolDelete;
 
     /**
      * Big ass onCreate method. I hate writing long methods but I guess I have to get used to it.
@@ -74,10 +70,13 @@ public class EditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editor);
         toolMenu = findViewById(R.id.toolMenu);
         toolMenu.setIconAnimated(false);
-        toolMenu.setIconAnimationOpenInterpolator(new OvershootInterpolator());
-        toolNote = findViewById(R.id.toolNote);
+        toolMenu.setIconAnimationOpenInterpolator(new OvershootInterpolator(600000));
+
+        toolNoteLeft = findViewById(R.id.toolNoteLeft);
+        toolNoteRight = findViewById(R.id.toolNoteRight);
         toolBomb = findViewById(R.id.toolBomb);
         toolDelete = findViewById(R.id.toolDelete);
+        toolWall = findViewById(R.id.toolWall);
 
         // Read beatmap difficulty
         Intent intent = getIntent();
@@ -109,6 +108,9 @@ public class EditorActivity extends AppCompatActivity {
         trackFragment.setView(findViewById(R.id.trackFrame), this);
         inspectionFragment.setView(findViewById(R.id.inspectionFrame), this);
 
+
+        toolNoteLeft.setColorNormal(Color.rgb(colorLeftR, colorLeftG, colorLeftB));
+        toolNoteRight.setColorNormal(Color.rgb(colorRightR, colorRightG, colorRightB));
     }
 
     /**
@@ -144,13 +146,13 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     public void exit(View view) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.title_editor_exit);
         builder.setMessage(R.string.message_editor_exit);
 
         builder.setPositiveButton(R.string.yes, (dialog, which) -> finish());
         builder.setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss());
-
 
         builder.create().show();
 
@@ -171,30 +173,26 @@ public class EditorActivity extends AppCompatActivity {
         toolMenu.setMenuButtonColorNormal(accentValue.data);
 
         switch (view.getId()) {
-            case R.id.toolNote:
-
-                // Toggle color when note tool is already selected
-                if(getToolMode() == ToolMode.NOTE) {
-                    selectedColor = !selectedColor;
-                }
-
-                // Set background color
-                if(selectedColor == RED)
-                    toolMenu.setMenuButtonColorNormal(Color.rgb(colorLeftR, colorLeftG, colorLeftB));
-                else
-                    toolMenu.setMenuButtonColorNormal(Color.rgb(colorRightR, colorRightG, colorRightB));
-
-                toolMenu.getMenuIconView().setImageResource(R.drawable.ic_action_note);
-                toolMenu.setMenuButtonLabelText(getString(R.string.note));
-
+            case R.id.toolNoteLeft:
+                selectedColor = RED;
                 setToolMode(ToolMode.NOTE);
+            break;
 
+            case R.id.toolNoteRight:
+                selectedColor = BLUE;
+                setToolMode(ToolMode.NOTE);
             break;
 
             case R.id.toolBomb:
                 setToolMode(ToolMode.BOMB);
                 toolMenu.getMenuIconView().setImageResource(R.drawable.ic_action_bomb);
                 toolMenu.setMenuButtonLabelText(getString(R.string.bomb));
+            break;
+
+            case R.id.toolWall:
+                setToolMode(ToolMode.WALL);
+                toolMenu.getMenuIconView().setImageResource(R.drawable.ic_action_wall);
+                toolMenu.setMenuButtonLabelText(getString(R.string.wall));
             break;
 
             case R.id.toolDelete:

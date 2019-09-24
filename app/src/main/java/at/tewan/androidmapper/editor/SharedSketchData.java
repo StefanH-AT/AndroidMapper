@@ -155,6 +155,12 @@ public class SharedSketchData {
         Log.i(LOG_TAG, "Added note '" + note.toString() + "' as disposable note");
     }
 
+    static void addNote(DifficultyNote note) {
+        addableNotes.add(note);
+
+        Log.i(LOG_TAG, "Adding note '" + note.toString() + "' as disposable note");
+    }
+
     public static Difficulty getDifficulty() {
         return difficulty;
     }
@@ -166,12 +172,13 @@ public class SharedSketchData {
     static ArrayList<DifficultyNote> getNotes() {
 
         if(disposableNotes.size() > 0) {
-            Log.i(LOG_TAG, "Deleting " + disposableNotes.size() + " disposable notes");
-
             notes.removeAll(disposableNotes);
             disposableNotes.clear();
+        }
 
-            Log.i(LOG_TAG, "Done.");
+        if(addableNotes.size() > 0) {
+            notes.addAll(addableNotes);
+            addableNotes.clear();
         }
 
         return notes;

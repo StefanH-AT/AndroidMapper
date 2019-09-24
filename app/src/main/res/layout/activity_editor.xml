@@ -20,16 +20,15 @@
 
         </FrameLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="bottom"
-            android:orientation="vertical">
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="300dp"
+            android:layout_height="match_parent">
 
             <FrameLayout
                 android:id="@+id/inspectionFrame"
-                android:layout_width="290dp"
+                android:layout_width="match_parent"
                 android:layout_height="192dp"
+                android:layout_gravity="center_horizontal|center_vertical"
                 android:elevation="@dimen/canvas_elevation">
 
             </FrameLayout>
@@ -37,69 +36,112 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="bottom"
+                android:orientation="vertical">
 
-                <SeekBar
-                    android:id="@+id/songProgress"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/songProgress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:scrollbarSize="0dp">
+
+                    <Button
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="save"
+                        android:text="@string/save" />
+
+                    <Button
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="preview"
+                        android:text="@string/preview" />
+
+                    <Button
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="exit"
+                        android:text="@string/exit" />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="save"
-                    android:text="@string/save" />
-
-                <Button
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="preview"
-                    android:text="@string/preview" />
-
-                <Button
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="exit"
-                    android:text="@string/exit" />
-            </LinearLayout>
-        </LinearLayout>
+        </android.support.design.widget.CoordinatorLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.github.clans.fab.FloatingActionMenu
-            android:id="@+id/toolMenu"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="8dp"
-            android:translationZ="8dp"
-            app:menu_colorNormal="?attr/colorAccent"
-            app:menu_colorPressed="?attr/colorControlActivated"
-            app:menu_fab_label="@string/tools"
-            app:menu_labels_position="right"
-            app:menu_openDirection="up"
-            app:menu_showShadow="true">
+            android:layout_gravity="start|top"
+            android:orientation="vertical">
+
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/toolMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:translationZ="8dp"
+                app:menu_colorNormal="?attr/colorAccent"
+                app:menu_colorPressed="?attr/colorControlActivated"
+                app:menu_fab_label="@string/tools"
+                app:menu_labels_position="right"
+                app:menu_openDirection="down"
+                app:menu_showShadow="true">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/toolWall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorAccent"
+                    android:onClick="selectTool"
+                    android:src="@drawable/ic_action_wall"
+                    app:fab_label="@string/wall"
+                    app:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/toolBomb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorAccent"
+                    android:onClick="selectTool"
+                    android:src="@drawable/ic_action_bomb"
+                    app:fab_label="@string/bomb"
+                    app:fab_size="mini" />
+
+
+            </com.github.clans.fab.FloatingActionMenu>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:gravity="bottom|start"
+            android:orientation="vertical">
 
             <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/toolNote"
+                android:id="@+id/toolNoteLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorAccent"
@@ -109,13 +151,13 @@
                 app:fab_size="mini" />
 
             <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/toolBomb"
-                android:layout_width="wrap_content"
+                android:id="@+id/toolNoteRight"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorAccent"
                 android:onClick="selectTool"
-                android:src="@drawable/ic_action_bomb"
-                app:fab_label="@string/bomb"
+                android:src="@drawable/ic_action_note"
+                app:fab_label="@string/note"
                 app:fab_size="mini" />
 
             <com.github.clans.fab.FloatingActionButton
@@ -127,10 +169,8 @@
                 android:src="@drawable/ic_delete_white_24dp"
                 app:fab_label="@string/eraser"
                 app:fab_size="mini" />
+        </LinearLayout>
 
-
-        </com.github.clans.fab.FloatingActionMenu>
-
-    </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 </android.support.design.widget.CoordinatorLayout>

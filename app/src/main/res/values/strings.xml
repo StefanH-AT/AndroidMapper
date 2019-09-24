@@ -49,6 +49,7 @@
     <string name="noteBlue">Blue Note</string>
     <string name="noteRed">Red Note</string>
     <string name="bomb">Bomb</string>
+    <string name="wall">Wall</string>
     <string name="eraser">Eraser</string>
 
     <string name="dialog_error_title">An error occurred</string>

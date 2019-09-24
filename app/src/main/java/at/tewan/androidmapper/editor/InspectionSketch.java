@@ -108,7 +108,10 @@ public class InspectionSketch extends PApplet {
 
     private void drawNotesAndBombs() {
 
-        for(DifficultyNote note : getNotes()) {
+        // Avoid ConcurrentModificationException
+        DifficultyNote[] notes = getNotes().toArray(new DifficultyNote[0]);
+
+        for(DifficultyNote note : notes) {
 
             if(note.getTime() == currentBeat) {
 
@@ -151,7 +154,7 @@ public class InspectionSketch extends PApplet {
             popMatrix();
         } else if(toolMode == ToolMode.BOMB) {
             DifficultyNote bomb = new DifficultyNote(currentBeat, DifficultyNote.TYPE_BOMB, originLane, originRow, 0);
-            getNotes().add(bomb);
+            addNote(bomb);
         }
     }
 
@@ -177,7 +180,7 @@ public class InspectionSketch extends PApplet {
 
             DifficultyNote note = new DifficultyNote(currentBeat, colorAsType(selectedColor), originLane, originRow, direction.ordinal());
 
-            getNotes().add(note);
+            addNote(note);
         }
     }
 
@@ -195,7 +198,7 @@ public class InspectionSketch extends PApplet {
             for(DifficultyNote note : getNotes()) {
                 if(note.getTime() == currentBeat && note.getLineLayer() == originRow && note.getLineIndex() == originLane) {
                     disposeNote(note);
-                    return; // Better return to avoid array iteration crashes
+                    break; // Better break for loop to avoid array iteration crashes
                 }
             }
 

@@ -132,7 +132,10 @@ public class TrackSketch extends PApplet {
 
     private void drawNotesAndBombs() {
 
-        for(DifficultyNote note : getNotes()) {
+        // Avoid ConcurrentModificationException
+        DifficultyNote[] notes = getNotes().toArray(new DifficultyNote[0]);
+
+        for(DifficultyNote note : notes) {
 
             if(note.getType() == DifficultyNote.TYPE_BOMB)
                 drawBomb(note);
