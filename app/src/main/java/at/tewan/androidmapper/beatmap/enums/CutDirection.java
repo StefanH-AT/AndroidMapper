@@ -23,6 +23,10 @@ public enum CutDirection {
         return degrees;
     }
 
+    public float getRadians() {
+        return (float) Math.toRadians(getDegrees());
+    }
+
     /**
      *
      * @param degrees

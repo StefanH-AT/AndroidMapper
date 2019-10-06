@@ -29,6 +29,7 @@ public class SharedSketchData {
     static int backgroundColor;
     static int strokeColor;
     static int debugColorR, debugColorG, debugColorB;
+    static int baseColor;
 
     static int lanes;
     static int rows;
@@ -75,6 +76,7 @@ public class SharedSketchData {
         if(theme == Preferences.THEME_LIGHT) {
             backgroundColor = 255;
             strokeColor = 20;
+            baseColor = 70;
 
             debugColorR = 0;
             debugColorG = 130;
@@ -83,6 +85,7 @@ public class SharedSketchData {
         } else {
             backgroundColor = 40;
             strokeColor = 230;
+            baseColor = 160;
 
             debugColorR = 0;
             debugColorG = 230;
