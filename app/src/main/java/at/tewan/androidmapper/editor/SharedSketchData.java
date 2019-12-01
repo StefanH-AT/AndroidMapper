@@ -19,6 +19,8 @@ public class SharedSketchData {
     public static final boolean RED = false;
     public static final boolean BLUE = true;
     public static final int BOMB_COLOR = 90;
+    public static final boolean FORWARD = true;
+    public static final boolean BACKWARD = false;
 
     public static int colorLeftR, colorLeftG, colorLeftB;
     public static int colorRightR, colorRightG, colorRightB;
@@ -185,5 +187,9 @@ public class SharedSketchData {
         }
 
         return notes;
+    }
+
+    public static void moveCurrentBeat(boolean direction) {
+        currentBeat += (float) (direction ? 1 : -1) / subBeatAmount;
     }
 }

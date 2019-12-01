@@ -26,6 +26,9 @@ public class InspectionSketch extends PApplet {
     private int rowHeight;
     private int halfRowHeight;
 
+    private int originLane;
+    private int originRow;
+
     @Override
     public void setup() {
         Log.i(LOG_TAG, "Canvas Size: " + width + "x" + height);
@@ -41,6 +44,7 @@ public class InspectionSketch extends PApplet {
     public void draw() {
         background(backgroundColor);
 
+        text(String.valueOf(currentBeat), 10, 10);
 
         // Grid
         stroke(strokeColor);
@@ -124,9 +128,6 @@ public class InspectionSketch extends PApplet {
         }
 
     }
-
-    private int originLane;
-    private int originRow;
 
     private void mouseDown() {
         rectMode(RADIUS);

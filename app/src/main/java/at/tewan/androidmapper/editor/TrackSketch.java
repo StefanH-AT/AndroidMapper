@@ -35,7 +35,6 @@ public class TrackSketch extends PApplet {
     private final int objectSize = trackWidth / (lanes * 2);
 
     private static final float CAMERA_DEFAULT_ROTATION_Z = (float) 0;
-    private PVector cameraOrigin = new PVector(0, 1, 0.2f);
 
     private float fov = (int) PI / 2;
     private int farZ = 10000;
@@ -60,7 +59,7 @@ public class TrackSketch extends PApplet {
         Log.i(LOG_TAG, "Baseline Y: " + baselineY);
         Log.i(LOG_TAG, "Sub Beat Amount: " + subBeatAmount);
 
-        rotateCameraZ(CAMERA_DEFAULT_ROTATION_Z);
+        //rotateCameraZ(CAMERA_DEFAULT_ROTATION_Z);
 
     }
 
@@ -69,7 +68,16 @@ public class TrackSketch extends PApplet {
 
         background(backgroundColor);
 
-        camera(cameraOrigin.x * cameraDistance, cameraOrigin.y * cameraDistance, cameraOrigin.z * cameraDistance, 0, getBeatCoordinate(currentBeat), cameraOrigin.z, 0, 0, -1);
+        float currentBeatCoordinate = getBeatCoordinate(currentBeat);
+        camera( 0,
+                currentBeatCoordinate + 10,
+                20,
+                0,
+                currentBeatCoordinate,
+                20,
+                0,
+                0,
+                -1);
         perspective(fov, (float) width / height, 1, farZ);
 
         // Drawn absolute
@@ -77,7 +85,7 @@ public class TrackSketch extends PApplet {
         drawBaseline();
 
         // Translate to current progress
-        //translate(0, currentBeat * beatHeight, 0);
+        translate(0, currentBeat * beatHeight, 0);
 
         // Stuff that's drawn relative to the current progress
         drawNotesAndBombs();
@@ -97,19 +105,6 @@ public class TrackSketch extends PApplet {
         fill(baseColor);
         box(trackWidth, trackLength, baseHeight);
         popMatrix();
-        /*
-        for(int i = 0; i < lanes; i++) {
-
-            pushMatrix();
-            float x = getLaneCoordinate(i);
-
-            strokeWeight(1);
-            stroke(debugColorR, debugColorG, debugColorB);
-            translate(-trackWidth * 0.5f + x, 0, 0);
-            line(x, 0, x, -height);
-            popMatrix();
-
-        }*/
 
     }
 
@@ -191,8 +186,6 @@ public class TrackSketch extends PApplet {
 
         for(float i = 0; i < totalBeats; i += 1 / (float) subBeatAmount) {
 
-            float y = baselineY - i * beatHeight;
-
             pushMatrix();
             translate(-trackWidth / 2, getBeatCoordinate(i));
 
@@ -265,7 +258,7 @@ public class TrackSketch extends PApplet {
     @Override
     public void mouseDragged(MouseEvent event) {
         int ox = dragOrigin.getX();
-        int oy = dragOrigin.getY();
+        //int oy = dragOrigin.getY(); // Not needed currently
 
         int dx = event.getX();
         int dy = event.getY();
@@ -288,7 +281,7 @@ public class TrackSketch extends PApplet {
         }*/
 
         // Camera panning
-        rotateCameraZ((mouseX - pmouseX) * cameraPanSensitivity);
+        //rotateCameraZ((mouseX - pmouseX) * cameraPanSensitivity);
 
 
     }
@@ -307,7 +300,7 @@ public class TrackSketch extends PApplet {
     /*
      * CAUTION! Vector rotation matrices ahead.
      */
-
+    /*
     private void rotateCameraX(float angle) {
         float ny = (cameraOrigin.y * cos(angle) + cameraOrigin.z * -sin(angle));
         float nz = (cameraOrigin.y * sin(angle) + cameraOrigin.z * cos(angle));
@@ -327,7 +320,7 @@ public class TrackSketch extends PApplet {
         float ny = (cameraOrigin.x * sin(angle) + cameraOrigin.y * cos(angle));
         cameraOrigin.x = nx;
         cameraOrigin.y = ny;
-    }
+    }*/
 
     private boolean isMouseInTrack(int x) {
         return x > padding && x < width - padding;

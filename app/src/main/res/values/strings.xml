@@ -74,7 +74,7 @@
     <string name="setting_debug">Debug Mode</string>
 
     <string name="preferences_saved">Preferences Saved</string>
-    <string name="preferences_disclaimer">Requires restart to take effect</string>
+    <string name="preferences_disclaimer">My require restart to take effect</string>
 
     <string name="message_unsaved_changes">Do you want to discard your unsaved changes?</string>
     <string name="title_unsaved_changes">Unsaved Changes</string>

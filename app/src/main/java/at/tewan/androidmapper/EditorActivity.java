@@ -50,7 +50,6 @@ public class EditorActivity extends AppCompatActivity {
     private Difficulty difficulty;
     private String beatmapContainer, beatmapDifficulty;
 
-    private FloatingActionMenu toolMenu;
     private FloatingActionButton toolNoteLeft, toolNoteRight, toolWall, toolBomb, toolDelete;
 
     /**
@@ -68,9 +67,6 @@ public class EditorActivity extends AppCompatActivity {
 
         // Load layout
         setContentView(R.layout.activity_editor);
-        toolMenu = findViewById(R.id.toolMenu);
-        toolMenu.setIconAnimated(false);
-        toolMenu.setIconAnimationOpenInterpolator(new OvershootInterpolator(600000));
 
         toolNoteLeft = findViewById(R.id.toolNoteLeft);
         toolNoteRight = findViewById(R.id.toolNoteRight);
@@ -170,8 +166,6 @@ public class EditorActivity extends AppCompatActivity {
         TypedValue accentValue = new TypedValue();
         getTheme().resolveAttribute(R.attr.colorAccent, accentValue, true);
 
-        toolMenu.setMenuButtonColorNormal(accentValue.data);
-
         switch (view.getId()) {
             case R.id.toolNoteLeft:
                 selectedColor = RED;
@@ -185,22 +179,24 @@ public class EditorActivity extends AppCompatActivity {
 
             case R.id.toolBomb:
                 setToolMode(ToolMode.BOMB);
-                toolMenu.getMenuIconView().setImageResource(R.drawable.ic_action_bomb);
-                toolMenu.setMenuButtonLabelText(getString(R.string.bomb));
             break;
 
             case R.id.toolWall:
                 setToolMode(ToolMode.WALL);
-                toolMenu.getMenuIconView().setImageResource(R.drawable.ic_action_wall);
-                toolMenu.setMenuButtonLabelText(getString(R.string.wall));
             break;
 
             case R.id.toolDelete:
                 setToolMode(ToolMode.REMOVE);
-                toolMenu.getMenuIconView().setImageResource(R.drawable.ic_delete_white_24dp);
-                toolMenu.setMenuButtonLabelText(getString(R.string.delete));
             break;
         }
+    }
+
+    public void moveForward(View view) {
+        SharedSketchData.moveCurrentBeat(FORWARD);
+    }
+
+    public void moveBackward(View view) {
+        SharedSketchData.moveCurrentBeat(BACKWARD);
     }
 
 }

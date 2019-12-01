@@ -6,38 +6,145 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="end"
-        android:orientation="horizontal">
-
-        <FrameLayout
-            android:id="@+id/trackFrame"
-            android:layout_width="320dp"
-            android:layout_height="match_parent"
-            android:elevation="@dimen/canvas_elevation">
-
-        </FrameLayout>
+        android:layout_height="match_parent">
 
         <android.support.design.widget.CoordinatorLayout
-            android:layout_width="300dp"
-            android:layout_height="match_parent">
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toStartOf="@+id/coordinatorLayout2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
-                android:id="@+id/inspectionFrame"
+                android:id="@+id/trackFrame"
                 android:layout_width="match_parent"
-                android:layout_height="192dp"
-                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_height="match_parent"
+                android:background="#777777"
                 android:elevation="@dimen/canvas_elevation">
 
             </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start|top"
+                android:orientation="vertical"
+                android:translationZ="10dp">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/editorMoveForward"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorAccent"
+                    android:onClick="moveForward"
+                    android:src="@drawable/ic_arrow_up_white_24dp"
+                    app:fab_label="@string/note"
+                    app:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/editorMoveBackward"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorAccent"
+                    android:onClick="moveBackward"
+                    android:src="@drawable/ic_arrow_down_white_24dp"
+                    app:fab_label="@string/note"
+                    app:fab_size="mini" />
+
+            </LinearLayout>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/coordinatorLayout2"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:orientation="vertical">
+                android:gravity="top|end"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/inspectionFrame"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/toolBomb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorAccent"
+                    android:onClick="selectTool"
+                    android:src="@drawable/ic_action_bomb"
+                    app:fab_label="@string/bomb"
+                    app:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/toolWall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorAccent"
+                    android:onClick="selectTool"
+                    android:src="@drawable/ic_action_wall"
+                    app:fab_label="@string/wall"
+                    app:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/toolNoteLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorAccent"
+                    android:onClick="selectTool"
+                    android:src="@drawable/ic_action_note"
+                    app:fab_label="@string/note"
+                    app:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/toolNoteRight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorAccent"
+                    android:onClick="selectTool"
+                    android:src="@drawable/ic_action_note"
+                    app:fab_label="@string/note"
+                    app:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/toolDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorAccent"
+                    android:onClick="selectTool"
+                    android:src="@drawable/ic_delete_white_24dp"
+                    app:fab_label="@string/eraser"
+                    app:fab_size="mini" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/inspectionFrame"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:elevation="@dimen/canvas_elevation"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -83,94 +190,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-        </android.support.design.widget.CoordinatorLayout>
-    </LinearLayout>
-
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|top"
-            android:orientation="vertical">
-
-            <com.github.clans.fab.FloatingActionMenu
-                android:id="@+id/toolMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="8dp"
-                android:translationZ="8dp"
-                app:menu_colorNormal="?attr/colorAccent"
-                app:menu_colorPressed="?attr/colorControlActivated"
-                app:menu_fab_label="@string/tools"
-                app:menu_labels_position="right"
-                app:menu_openDirection="down"
-                app:menu_showShadow="true">
-
-                <com.github.clans.fab.FloatingActionButton
-                    android:id="@+id/toolWall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorAccent"
-                    android:onClick="selectTool"
-                    android:src="@drawable/ic_action_wall"
-                    app:fab_label="@string/wall"
-                    app:fab_size="mini" />
-
-                <com.github.clans.fab.FloatingActionButton
-                    android:id="@+id/toolBomb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorAccent"
-                    android:onClick="selectTool"
-                    android:src="@drawable/ic_action_bomb"
-                    app:fab_label="@string/bomb"
-                    app:fab_size="mini" />
-
-
-            </com.github.clans.fab.FloatingActionMenu>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:gravity="bottom|start"
-            android:orientation="vertical">
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/toolNoteLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorAccent"
-                android:onClick="selectTool"
-                android:src="@drawable/ic_action_note"
-                app:fab_label="@string/note"
-                app:fab_size="mini" />
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/toolNoteRight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorAccent"
-                android:onClick="selectTool"
-                android:src="@drawable/ic_action_note"
-                app:fab_label="@string/note"
-                app:fab_size="mini" />
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/toolDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorAccent"
-                android:onClick="selectTool"
-                android:src="@drawable/ic_delete_white_24dp"
-                app:fab_label="@string/eraser"
-                app:fab_size="mini" />
-        </LinearLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.design.widget.CoordinatorLayout>
