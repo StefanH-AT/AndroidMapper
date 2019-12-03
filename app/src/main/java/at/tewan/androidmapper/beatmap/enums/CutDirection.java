@@ -1,5 +1,11 @@
 package at.tewan.androidmapper.beatmap.enums;
 
+/**
+ * @author Stefan Heinz
+ *
+ * Enumeration of all default cut directions).
+ * Enumeration values include the direction in degrees (Clockwise from the right)
+ */
 public enum CutDirection {
 
     UP(270),

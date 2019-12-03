@@ -2,6 +2,9 @@ package at.tewan.androidmapper.beatmap.info;
 
 import java.util.ArrayList;
 
+/**
+ * @author Stefan Heinz
+ */
 public class InfoDifficultySet {
 
     private String _beatmapCharacteristicName;

@@ -1,5 +1,8 @@
 package at.tewan.androidmapper.beatmap.info;
 
+/**
+ * @author Stefan Heinz
+ */
 public class InfoDifficulty {
 
     private String _difficulty;

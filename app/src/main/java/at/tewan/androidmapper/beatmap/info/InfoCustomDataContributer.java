@@ -1,6 +1,8 @@
 package at.tewan.androidmapper.beatmap.info;
 
-
+/**
+ * @author Stefan Heinz
+ */
 public class InfoCustomDataContributer {
 
     private String _role;

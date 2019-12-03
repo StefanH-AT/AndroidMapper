@@ -5,7 +5,7 @@
     <dimen name="section_headline_spacing">5dp</dimen>
     <dimen name="section_vertical_padding">16dp</dimen>
 
-    <dimen name="text_icon_padding">6dp</dimen>
+    <dimen name="text_icon_padding">7dp</dimen>
 
     <dimen name="canvas_elevation">4dp</dimen>
 </resources>

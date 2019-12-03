@@ -6,6 +6,9 @@ import at.tewan.androidmapper.beatmap.difficulty.Difficulty;
 import at.tewan.androidmapper.beatmap.enums.Characteristics;
 import at.tewan.androidmapper.beatmap.info.Info;
 
+/**
+ * @author Stefan Heinz
+ */
 public class Beatmap {
 
     private Info info;

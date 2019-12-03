@@ -1,5 +1,8 @@
 package at.tewan.androidmapper.beatmap.difficulty;
 
+/**
+ * @author Stefan Heinz
+ */
 public abstract class DifficultyTypeItem extends DifficultyItem {
 
     private int _type;

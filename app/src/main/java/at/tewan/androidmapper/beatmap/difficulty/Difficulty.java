@@ -2,6 +2,12 @@ package at.tewan.androidmapper.beatmap.difficulty;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * JSON data model of difficulty files.
+ *
+ * @author Stefan Heinz
+ */
 public class Difficulty {
 
     private String _version = "2.0.0"; // Default version number

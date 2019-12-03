@@ -10,6 +10,9 @@ import at.tewan.androidmapper.preferences.Preferences;
 
 import static at.tewan.androidmapper.preferences.Preferences.*;
 
+/**
+ * @author Stefan Heinz
+ */
 public class PreferencesActivity extends AppCompatActivity {
 
     // Widgets

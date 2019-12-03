@@ -10,6 +10,9 @@ import processing.event.MouseEvent;
 import static at.tewan.androidmapper.editor.SharedSketchData.*;
 
 /**
+ *
+ * @author Stefan Heinz
+ *
  * This is one of the processing sketches that make up the functional part of the editor.
  * The inspection sketch provides a vertical slice of the current beat, your cursor is placed on (Like a front view)
  *

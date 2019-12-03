@@ -40,19 +40,19 @@
     <string name="defaultNjs">12</string>
     <string name="empty"> </string>
 
-    <string name="save">Save</string>
-    <string name="preview">Preview</string>
-    <string name="exit">Exit</string>
+    <string name="action_save">Save</string>
+    <string name="action_preview">Preview</string>
+    <string name="action_exit">Exit</string>
 
     <string name="edit">Edit</string>
 
-    <string name="tools">Tools</string>
-    <string name="note">Note</string>
-    <string name="noteBlue">Blue Note</string>
-    <string name="noteRed">Red Note</string>
-    <string name="bomb">Bomb</string>
-    <string name="wall">Wall</string>
-    <string name="eraser">Eraser</string>
+    <string name="tools_title">Tools</string>
+    <string name="tools_note">Note</string>
+    <string name="tools_note_blue">Blue Note</string>
+    <string name="tools_note_red">Red Note</string>
+    <string name="tools_bomb">Bomb</string>
+    <string name="tools_wall">Wall</string>
+    <string name="tools_eraser">Eraser</string>
 
     <string name="dialog_error_title">An error occurred</string>
     <string name="dialog_notify_title">Important:</string>
@@ -69,7 +69,7 @@
     <string name="section_functional">Functional</string>
     <string name="section_convenience">Convenience</string>
 
-    <string name="setting_theme">Use dark theme</string>
+    <string name="setting_theme">Dark theme</string>
     <string name="setting_use_custom_color">Use custom color in editor</string>
     <string name="setting_default_level_author">Default level author</string>
     <string name="setting_sub_beat_count">Sub Beat count</string>

@@ -11,7 +11,12 @@ import at.tewan.androidmapper.beatmap.difficulty.DifficultyObstacle;
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.preferences.Preferences;
 
-
+/**
+ * @author Stefan Heinz
+ *
+ *
+ *
+ */
 public class SharedSketchData {
 
     private static final String LOG_TAG = "EditorData";

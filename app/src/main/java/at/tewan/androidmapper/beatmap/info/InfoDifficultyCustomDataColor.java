@@ -4,6 +4,7 @@ package at.tewan.androidmapper.beatmap.info;
  * The color used for the left and right sabers as part of @see at.tewan.androidmapper.beatmap.DifficultyCustomData
  *
  * Range 0-1 !!
+ * @author Stefan Heinz
  */
 public class InfoDifficultyCustomDataColor {
 

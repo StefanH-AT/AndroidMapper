@@ -1,5 +1,8 @@
 package at.tewan.androidmapper.beatmap.difficulty;
 
+/**
+ * @author Stefan Heinz
+ */
 public class DifficultyItem {
 
     private float _time;

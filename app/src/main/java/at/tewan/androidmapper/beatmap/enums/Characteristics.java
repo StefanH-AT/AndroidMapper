@@ -1,5 +1,11 @@
 package at.tewan.androidmapper.beatmap.enums;
 
+/**
+ * @author Stefan Heinz
+ *
+ * Enumeration of all recognised beatmap characteristics (game modes).
+ * Enum values include characteristic name and which mod it is added by.
+ */
 public enum Characteristics {
 
     STANDARD("Standard", "Base Game"),

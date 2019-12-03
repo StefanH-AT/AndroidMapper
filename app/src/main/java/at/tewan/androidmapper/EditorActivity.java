@@ -33,7 +33,7 @@ import static at.tewan.androidmapper.util.ActivityArguments.*;
 
 /**
  * The one and only beat map editor
- *
+ * @author Stefan Heinz
  *
  * Tasks:
  * TODO: Implement Bombs

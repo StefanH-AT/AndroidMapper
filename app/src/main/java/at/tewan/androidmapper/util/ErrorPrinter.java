@@ -6,6 +6,9 @@ import android.support.v7.app.AlertDialog;
 
 import at.tewan.androidmapper.R;
 
+/**
+ * @author Stefan Heinz
+ */
 public class ErrorPrinter {
 
     public static AlertDialog msg(Context context, String text) {

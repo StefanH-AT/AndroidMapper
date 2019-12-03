@@ -6,12 +6,14 @@ import at.tewan.androidmapper.beatmap.difficulty.DifficultyNote;
 import at.tewan.androidmapper.beatmap.enums.CutDirection;
 import at.tewan.androidmapper.preferences.Preferences;
 import processing.core.PApplet;
-import processing.core.PVector;
 import processing.event.MouseEvent;
 
 import static at.tewan.androidmapper.editor.SharedSketchData.*;
 
 /**
+ *
+ * @author Stefan Heinz
+ *
  * This is one of the processing sketches that make up the functional part of the mapper.
  * The Track Editor is a top down view of the beatmap and is primarily used to have an overview of the map
  * and to place walls.

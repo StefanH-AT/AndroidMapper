@@ -28,6 +28,7 @@ import at.tewan.androidmapper.util.ErrorPrinter;
 /**
  * Provides static functions to read and write beatmaps.
  *
+ * @author Stefan Heinz
  */
 public class Beatmaps {
 

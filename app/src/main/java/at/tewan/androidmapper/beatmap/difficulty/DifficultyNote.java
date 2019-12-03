@@ -1,5 +1,8 @@
 package at.tewan.androidmapper.beatmap.difficulty;
 
+/**
+ * @author Stefan Heinz
+ */
 public class DifficultyNote extends DifficultyTrackItem {
 
     public static final int TYPE_BOMB = 3;

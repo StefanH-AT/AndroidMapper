@@ -1,5 +1,10 @@
 package at.tewan.androidmapper.beatmap.enums;
 
+/**
+ * @author Stefan Heinz
+ * Enumeration of all difficulties.
+ * Enum values include difficulty rank id
+ */
 public enum Difficulties {
     Easy(1),
     Normal(3),

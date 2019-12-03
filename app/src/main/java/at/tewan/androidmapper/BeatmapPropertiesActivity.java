@@ -29,7 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.time.Clock;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Timer;
@@ -47,6 +46,9 @@ import at.tewan.androidmapper.util.ErrorPrinter;
 
 import static at.tewan.androidmapper.util.ActivityArguments.BEATMAP_CONTAINER;
 
+/**
+ * @author Stefan Heinz
+ */
 public class BeatmapPropertiesActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "Beatmap Properties";
@@ -72,7 +74,8 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
         }
     };
 
-    private Timer songProgressSyncTimer = new Timer();
+    private final Timer songProgressSyncTimer = new Timer();
+    private boolean songProgressSynced = false;
 
     private MediaPlayer songPlayer;
 
@@ -192,11 +195,17 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
     }
 
     private void startSongProgressSync() {
-        songProgressSyncTimer.scheduleAtFixedRate(songProgressSyncTask, 0, 1000);
+        if(!songProgressSynced) {
+            //songProgressSyncTimer.scheduleAtFixedRate(songProgressSyncTask, 0, 1000);
+            songProgressSynced = true;
+        }
     }
 
     private void stopSongProgressSync() {
-        songProgressSyncTask.cancel();
+        if(songProgressSynced) {
+            songProgressSyncTask.cancel();
+            songProgressSynced = false;
+        }
     }
 
     public void toggleSong(View view) {

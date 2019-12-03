@@ -1,5 +1,8 @@
 package at.tewan.androidmapper.beatmap.difficulty;
 
+/**
+ * @author Stefan Heinz
+ */
 public class DifficultyBookmark extends DifficultyItem {
 
     private String _name;

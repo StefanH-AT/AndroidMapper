@@ -8,6 +8,8 @@ import at.tewan.androidmapper.beatmap.enums.Environments;
 /**
  * The JSON Data model for info.dat files. Also used internally.
  * Definition: https://github.com/Kylemc1413/SongCore#infodat-explanation
+ *
+ * @author Stefan Heinz
  * */
 public class Info {
 

@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+/**
+ * @author Stefan Heinz
+ */
 public class Preferences {
 
     private static final String LOG_TAG = "Preferences";

@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,12 +16,13 @@ import at.tewan.androidmapper.EditorActivity;
 import at.tewan.androidmapper.R;
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.beatmap.info.InfoDifficulty;
-import processing.event.MouseEvent;
 
 import static at.tewan.androidmapper.util.ActivityArguments.BEATMAP_CONTAINER;
 import static at.tewan.androidmapper.util.ActivityArguments.BEATMAP_DIFFICULTY;
 
-
+/**
+ * @author Stefan Heinz
+ */
 public class DifficultyListAdapter extends RecyclerView.Adapter<DifficultyListAdapter.DifficultyListAdapterHolder>  {
 
     private Context context;

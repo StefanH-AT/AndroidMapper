@@ -41,7 +41,7 @@
                     android:background="?attr/colorAccent"
                     android:onClick="moveForward"
                     android:src="@drawable/ic_arrow_up_white_24dp"
-                    app:fab_label="@string/note"
+                    app:fab_label="@string/tools_note"
                     app:fab_size="mini" />
 
                 <com.github.clans.fab.FloatingActionButton
@@ -51,7 +51,7 @@
                     android:background="?attr/colorAccent"
                     android:onClick="moveBackward"
                     android:src="@drawable/ic_arrow_down_white_24dp"
-                    app:fab_label="@string/note"
+                    app:fab_label="@string/tools_note"
                     app:fab_size="mini" />
 
             </LinearLayout>
@@ -82,7 +82,7 @@
                     android:background="?attr/colorAccent"
                     android:onClick="selectTool"
                     android:src="@drawable/ic_action_bomb"
-                    app:fab_label="@string/bomb"
+                    app:fab_label="@string/tools_bomb"
                     app:fab_size="mini" />
 
                 <com.github.clans.fab.FloatingActionButton
@@ -92,7 +92,7 @@
                     android:background="?attr/colorAccent"
                     android:onClick="selectTool"
                     android:src="@drawable/ic_action_wall"
-                    app:fab_label="@string/wall"
+                    app:fab_label="@string/tools_wall"
                     app:fab_size="mini" />
 
                 <com.github.clans.fab.FloatingActionButton
@@ -102,7 +102,7 @@
                     android:background="?attr/colorAccent"
                     android:onClick="selectTool"
                     android:src="@drawable/ic_action_note"
-                    app:fab_label="@string/note"
+                    app:fab_label="@string/tools_note"
                     app:fab_size="mini" />
 
                 <com.github.clans.fab.FloatingActionButton
@@ -112,7 +112,7 @@
                     android:background="?attr/colorAccent"
                     android:onClick="selectTool"
                     android:src="@drawable/ic_action_note"
-                    app:fab_label="@string/note"
+                    app:fab_label="@string/tools_note"
                     app:fab_size="mini" />
 
                 <com.github.clans.fab.FloatingActionButton
@@ -122,7 +122,7 @@
                     android:background="?attr/colorAccent"
                     android:onClick="selectTool"
                     android:src="@drawable/ic_delete_white_24dp"
-                    app:fab_label="@string/eraser"
+                    app:fab_label="@string/tools_eraser"
                     app:fab_size="mini" />
             </LinearLayout>
 
@@ -170,7 +170,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="save"
-                        android:text="@string/save" />
+                        android:text="@string/action_save" />
 
                     <Button
                         style="?android:attr/buttonBarButtonStyle"
@@ -178,7 +178,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="preview"
-                        android:text="@string/preview" />
+                        android:text="@string/action_preview" />
 
                     <Button
                         style="?android:attr/buttonBarButtonStyle"
@@ -186,7 +186,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="exit"
-                        android:text="@string/exit" />
+                        android:text="@string/action_exit" />
                 </LinearLayout>
             </LinearLayout>
 

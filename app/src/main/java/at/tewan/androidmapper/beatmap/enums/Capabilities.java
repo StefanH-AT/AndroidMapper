@@ -1,5 +1,11 @@
 package at.tewan.androidmapper.beatmap.enums;
 
+/**
+ * @author Stefan Heinz
+ *
+ * Enumeration of all recognised beatmap capabilities (mods)
+ * Enum values include display and mod name.
+ */
 public enum Capabilities {
 
     MAPPING_EXTENSIONS("Mapping Extensions", "Mapping Extensions"),

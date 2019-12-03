@@ -32,6 +32,11 @@ import at.tewan.androidmapper.mainmenu.BeatmapListAdapter;
 import at.tewan.androidmapper.preferences.Preferences;
 import at.tewan.androidmapper.util.ErrorPrinter;
 
+/**
+ * @author Stefan Heinz
+ *
+ * The main menu of android mapper.
+ */
 public class MainmenuActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "Main Menu Activity";

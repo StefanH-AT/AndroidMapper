@@ -13,7 +13,13 @@ import java.io.InputStream;
 import at.tewan.androidmapper.beatmap.Beatmaps;
 import at.tewan.androidmapper.util.ErrorPrinter;
 
-// TODO: Implement songe-converter
+/**
+ * @author Stefan Heinz
+ *
+ * DEPRICATED!
+ *
+ * Intent was to automatically convert outdated beatmaps back to the newest version
+ */
 public class SongConverter {
 
     private static final String LOG_TAG = "SongConverter";

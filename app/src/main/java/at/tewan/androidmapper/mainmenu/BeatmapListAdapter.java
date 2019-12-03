@@ -3,31 +3,22 @@ package at.tewan.androidmapper.mainmenu;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import at.tewan.androidmapper.BeatmapPropertiesActivity;
 import at.tewan.androidmapper.R;
-import at.tewan.androidmapper.beatmap.Beatmap;
 import at.tewan.androidmapper.beatmap.Beatmaps;
 import at.tewan.androidmapper.beatmap.info.Info;
 import at.tewan.androidmapper.preferences.Preferences;
-import at.tewan.androidmapper.util.ErrorPrinter;
 
 import static at.tewan.androidmapper.util.ActivityArguments.BEATMAP_CONTAINER;
 
