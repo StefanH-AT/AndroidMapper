@@ -8,9 +8,11 @@
     <string name="new_beatmap_title">Create new Beatmap</string>
     <string name="new_difficulty_title">Create new Difficulty</string>
     <string name="create">Create</string>
-    <string name="beatmap_already_exists">Beatmap already exists. Choose another name!</string>
+    <string name="invalid_beatmap_name">Invalid beatmap data. Does it already exist or use illegal characters?</string>
     <string name="difficulty_already_exists">Difficulty already exists.</string>
-    <string name="browseSong">Browse Song</string>
+    <string name="browse_song">Select Song</string>
+    <string name="no_song_file">No song file found</string>
+    <string name="refresh">Refresh</string>
 
     <string name="delete">Delete</string>
 
@@ -58,6 +60,7 @@
     <string name="placeholder">&lt;placeholder&gt;</string>
     <string name="dialog_permissions_not_granted">You didn\'t grant external storage writing permissions, which AndroidMapper relies on. Closing app</string>
     <string name="dialog_about">AndroidMapper © Stefan Heinz 2019.\n\nThanks to BeatGames for creating Beat Saber and thanks to all the early testers for supporting this project early on.</string>
+    <string name="error_incorrect_file">Incorrect file path</string>
 
     <string name="theme_dark">Dark Theme</string>
     <string name="theme_light">Light Theme</string>

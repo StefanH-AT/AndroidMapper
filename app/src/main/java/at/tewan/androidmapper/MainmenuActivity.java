@@ -192,7 +192,7 @@ public class MainmenuActivity extends AppCompatActivity {
                 refreshBeatmaps();
 
             } else {
-                Snackbar bar = Snackbar.make(view, R.string.beatmap_already_exists, Snackbar.LENGTH_LONG);
+                Snackbar bar = Snackbar.make(view, R.string.invalid_beatmap_name, Snackbar.LENGTH_LONG);
                 bar.show();
             }
 

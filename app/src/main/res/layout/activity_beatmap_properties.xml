@@ -55,6 +55,7 @@
                         android:drawableStart="@drawable/ic_music_note_white_24dp"
                         android:drawablePadding="@dimen/text_icon_padding"
                         android:drawableTint="?attr/colorControlNormal"
+                        android:ellipsize="marquee"
                         android:text="@string/songName"
                         android:textSize="24sp" />
 
@@ -101,21 +102,39 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="match_parent"
+                <ImageButton
+                    android:id="@+id/songPlayButton"
+                    style="@style/IconButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="browseSong"
-                    android:text="@string/browseSong" />
+                    android:onClick="toggleSong"
+                    android:tint="?attr/colorAccent"
+                    app:srcCompat="@drawable/ic_play_arrow_white_24dp" />
 
-                <TextView
-                    android:id="@+id/songStatus"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/songProgressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/songStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <Spinner

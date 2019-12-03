@@ -3,8 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/refreshProperties"
+        android:icon="@drawable/ic_refresh_white_24dp"
+        android:title="@string/refresh"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/editProperties"
-        android:icon="@drawable/ic_mode_edit_white_64dp"
+        android:icon="@drawable/ic_edit_white_24dp"
         android:title="@string/edit"
         app:showAsAction="always" />
 </menu>

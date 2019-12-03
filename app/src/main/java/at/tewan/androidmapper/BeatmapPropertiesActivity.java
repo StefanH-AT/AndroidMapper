@@ -3,9 +3,10 @@ package at.tewan.androidmapper;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,13 +21,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.time.Clock;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import at.tewan.androidmapper.beatmap.Beatmaps;
 import at.tewan.androidmapper.beatmap.enums.Characteristics;
@@ -48,6 +55,26 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
 
     private Spinner characteristicSpinner;
     private RecyclerView difficultyList;
+    private ImageButton songPlayButton;
+    private SeekBar songProgressBar;
+    private TextView songStatus;
+
+    private final TimerTask songProgressSyncTask = new TimerTask() {
+        @Override
+        public void run() {
+            if(songPlayer.isPlaying()) {
+                songProgressBar.setProgress(songPlayer.getCurrentPosition());
+                final int seconds = songPlayer.getCurrentPosition() / 1000;
+                final int minutes = seconds / 60;
+                songStatus.setText(String.format(Locale.GERMAN, "%d:%d", minutes, seconds % 60));
+            } else
+                stopSongProgressSync();
+        }
+    };
+
+    private Timer songProgressSyncTimer = new Timer();
+
+    private MediaPlayer songPlayer;
 
     private ArrayList<InfoDifficulty> currentDifficulties = new ArrayList<>();
 
@@ -77,6 +104,10 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
             refresh();
             propertiesRefresh.setRefreshing(false);
         });
+
+        songPlayButton = findViewById(R.id.songPlayButton);
+        songProgressBar = findViewById(R.id.songProgressBar);
+        songStatus = findViewById(R.id.songStatus);
 
         refresh();
     }
@@ -130,6 +161,54 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+        loadSong();
+
+    }
+
+    public void loadSong() {
+        songPlayer = MediaPlayer.create(this, Uri.fromFile(Beatmaps.getSong(beatmapContainer, info.getSongFilename())));
+
+        AudioAttributes.Builder attributesBuilder = new AudioAttributes.Builder();
+        attributesBuilder.setContentType(AudioAttributes.CONTENT_TYPE_MUSIC);
+        attributesBuilder.setUsage(AudioAttributes.USAGE_MEDIA);
+        songPlayer.setAudioAttributes(attributesBuilder.build());
+
+        songProgressBar.setMax(songPlayer.getDuration());
+        songProgressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                songPlayer.seekTo(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
+
+        startSongProgressSync();
+
+    }
+
+    private void startSongProgressSync() {
+        songProgressSyncTimer.scheduleAtFixedRate(songProgressSyncTask, 0, 1000);
+    }
+
+    private void stopSongProgressSync() {
+        songProgressSyncTask.cancel();
+    }
+
+    public void toggleSong(View view) {
+
+        if(songPlayer.isPlaying()) {
+            songPlayer.start();
+            songPlayButton.setImageDrawable(getDrawable(R.drawable.ic_play_arrow_white_24dp));
+        } else {
+            songPlayer.stop();
+            songPlayButton.setImageDrawable(getDrawable(R.drawable.ic_pause_white_24dp));
+        }
+
     }
 
     @Override
@@ -143,8 +222,15 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if(id == R.id.editProperties)
-            editProperties();
+        switch(id) {
+            case R.id.editProperties:
+                editProperties();
+                break;
+            case R.id.refreshProperties:
+                refresh();
+                break;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -233,8 +319,6 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
                 dialog.cancel();
             }
 
-
-
         });
 
     }
@@ -246,24 +330,42 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
         startActivityForResult(browserIntent, AUDIO_REQUEST_CODE);
     }
 
+    public void editProperties() {
+        Toast.makeText(this, R.string.feature_missing, Toast.LENGTH_LONG).show();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if(requestCode == AUDIO_REQUEST_CODE && resultCode == RESULT_OK) {
 
             Uri uri = data.getData();
-            File file = new File(uri.toString());
-            Log.i(LOG_TAG, "Converting audio file '" + file.toString() + "' to ogg format");
+            if(uri != null) {
+                File file = new File(uri.toString());
+                Log.i(LOG_TAG, "Converting audio file '" + file.toString() + "' to ogg format");
 
-            Toast.makeText(this, R.string.feature_missing, Toast.LENGTH_LONG).show();
-
+                Toast.makeText(this, R.string.feature_missing, Toast.LENGTH_LONG).show();
+            } else
+                Toast.makeText(this, R.string.error_incorrect_file, Toast.LENGTH_LONG).show();
 
         }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void editProperties() {
-        Toast.makeText(this, R.string.feature_missing, Toast.LENGTH_LONG).show();
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        stopSongProgressSync();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        startSongProgressSync();
+    }
+
+
 }
