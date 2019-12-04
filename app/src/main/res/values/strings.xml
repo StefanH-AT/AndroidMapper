@@ -61,6 +61,7 @@
     <string name="dialog_permissions_not_granted">You didn\'t grant external storage writing permissions, which AndroidMapper relies on. Closing app</string>
     <string name="dialog_about">AndroidMapper © Stefan Heinz 2019.\n\nThanks to BeatGames for creating Beat Saber and thanks to all the early testers for supporting this project early on.</string>
     <string name="error_incorrect_file">Incorrect file path</string>
+    <string name="error_no_song">No song</string>
 
     <string name="theme_dark">Dark Theme</string>
     <string name="theme_light">Light Theme</string>

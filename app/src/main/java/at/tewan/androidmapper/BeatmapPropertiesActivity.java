@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Timer;
@@ -76,6 +77,7 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
 
     private final Timer songProgressSyncTimer = new Timer();
     private boolean songProgressSynced = false;
+    private boolean songValid = false;
 
     private MediaPlayer songPlayer;
 
@@ -169,12 +171,28 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
     }
 
     public void loadSong() {
-        songPlayer = MediaPlayer.create(this, Uri.fromFile(Beatmaps.getSong(beatmapContainer, info.getSongFilename())));
+        songPlayer = new MediaPlayer();
 
-        AudioAttributes.Builder attributesBuilder = new AudioAttributes.Builder();
-        attributesBuilder.setContentType(AudioAttributes.CONTENT_TYPE_MUSIC);
-        attributesBuilder.setUsage(AudioAttributes.USAGE_MEDIA);
-        songPlayer.setAudioAttributes(attributesBuilder.build());
+        songPlayer.setOnErrorListener((mp, what, extra) -> {
+            songValid = false;
+            songStatus.setText(R.string.error_no_song);
+            return true;
+        });
+
+        songPlayer.setOnPreparedListener(mp -> songValid = true);
+
+        try {
+            Uri uri = Uri.fromFile(Beatmaps.getSong(beatmapContainer, info.getSongFilename()));
+            Log.i(LOG_TAG, "Loading sound file " + uri.toString());
+            songPlayer.setDataSource(this, uri);
+
+            AudioAttributes.Builder attributesBuilder = new AudioAttributes.Builder();
+            attributesBuilder.setContentType(AudioAttributes.CONTENT_TYPE_MUSIC);
+            attributesBuilder.setUsage(AudioAttributes.USAGE_MEDIA);
+            songPlayer.setAudioAttributes(attributesBuilder.build());
+        } catch (IOException ex) {
+            songValid = false;
+        }
 
         songProgressBar.setMax(songPlayer.getDuration());
         songProgressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -195,20 +213,22 @@ public class BeatmapPropertiesActivity extends AppCompatActivity {
     }
 
     private void startSongProgressSync() {
-        if(!songProgressSynced) {
-            //songProgressSyncTimer.scheduleAtFixedRate(songProgressSyncTask, 0, 1000);
+        if(!songProgressSynced && songValid) {
+            songProgressSyncTimer.scheduleAtFixedRate(songProgressSyncTask, 0, 1000);
             songProgressSynced = true;
         }
     }
 
     private void stopSongProgressSync() {
-        if(songProgressSynced) {
+        if(songProgressSynced && songValid) {
             songProgressSyncTask.cancel();
             songProgressSynced = false;
         }
     }
 
     public void toggleSong(View view) {
+
+        if(!songValid) return;
 
         if(songPlayer.isPlaying()) {
             songPlayer.start();
