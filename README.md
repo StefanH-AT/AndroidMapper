@@ -1,9 +1,8 @@
 # AndroidMapper
 The mobile beat saber beatmap editor.
 
-**I try to get a working prototype as soon as possible, so stay tuned**
-
-**Apply as tester here: https://forms.gle/FQJbGUj93Twqgdrq5**
+**This project has been abandoned and is no longer maintained!!**  
+Feel free to continue this project, but I am not going to do that, sorry. Would love to work on this but currently there is no time.
 
 [Discord Server](https://discord.gg/f79EkwG)
  
